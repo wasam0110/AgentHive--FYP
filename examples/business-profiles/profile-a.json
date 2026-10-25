@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "business_id": "demo-a",
+  "display_name": "Synthetic Business A",
+  "timezone": "Asia/Karachi",
+  "currency": "PKR",
+  "languages": [
+    "en",
+    "ur",
+    "roman-ur"
+  ],
+  "terminology": {
+    "customer": "Customer",
+    "catalog_item": "Service"
+  },
+  "capabilities": [
+    "knowledge_answer",
+    "catalog_quote",
+    "resource_booking"
+  ],
+  "adapters": {
+    "data": "sandbox_v1",
+    "execution": "sandbox_v1"
+  },
+  "knowledge_source": "demo-a-knowledge",
+  "catalog": "demo-a-catalog",
+  "resources": "demo-a-resources",
+  "policy": {
+    "max_discount_pct": 5,
+    "quote_expiry_minutes": 30,
+    "approval_expiry_hours": 48
+  }
+}

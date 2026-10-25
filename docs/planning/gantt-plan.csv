@@ -1,0 +1,97 @@
+WBS,TASK,Assigned To,PREDECESSOR,START,DAYS,END,% DONE,WORK DAYS
+Wasam-W01-A,Define request/task/result schemas plus business-profile and capability contracts,Wasam,,2026-10-26,1,2026-10-26,0,1
+Wasam-W01-B,Review shared sample payloads and first end-to-end scenario,Wasam,Wasam-W01-A,2026-10-29,1,2026-10-29,0,1
+Wasam-W02-A,Create FastAPI skeleton and typed profile validation with unknown-capability rejection,Wasam,Wasam-W01-B,2026-11-02,1,2026-11-02,0,1
+Wasam-W02-B,Add backend lint/tests and authenticated demo identity foundation,Wasam,Wasam-W02-A,2026-11-05,1,2026-11-05,0,1
+Wasam-W03-A,Implement conversation/message persistence,Wasam,Wasam-W02-B,2026-11-09,1,2026-11-09,0,1
+Wasam-W03-B,Verify history reload and denied cross-customer access,Wasam,Wasam-W03-A,2026-11-12,1,2026-11-12,0,1
+Wasam-W04-A,Build reviewed-document chunking and ingestion,Wasam,Wasam-W03-B,2026-11-16,1,2026-11-16,0,1
+Wasam-W04-B,Verify profile-scoped retrieval, source IDs and no-evidence behavior,Wasam,Wasam-W04-A,2026-11-19,1,2026-11-19,0,1
+Wasam-W05-A,Implement intake with structured intent output,Wasam,Wasam-W04-B,2026-11-23,1,2026-11-23,0,1
+Wasam-W05-B,Run supervisor with fake workers and dependency-aware routing,Wasam,Wasam-W05-A,2026-11-26,1,2026-11-26,0,1
+Wasam-W06-A,Review state schemas and Chapter 1 draft; light mids session,Wasam,Wasam-W05-B,2026-11-30,1,2026-11-30,0,1
+Wasam-W06-B,Document worker/RAG interfaces and test one invalid payload; light session,Wasam,Wasam-W06-A,2026-12-03,1,2026-12-03,0,1
+Wasam-W07-A,Review RAG evidence and failure cases; light mids session,Wasam,Wasam-W06-B,2026-12-07,1,2026-12-07,0,1
+Wasam-W07-B,Update architecture notes and fix a small test; light session,Wasam,Wasam-W07-A,2026-12-10,1,2026-12-10,0,1
+Wasam-W08-A,Connect domain workers through adapters,Wasam,Wasam-W07-B,2026-12-14,1,2026-12-14,0,1
+Wasam-W08-B,Verify support-plus-quote routing and independent task overlap,Wasam,Wasam-W08-A,2026-12-17,1,2026-12-17,0,1
+Wasam-W09-A,Persist customer/admin waiting states,Wasam,Wasam-W08-B,2026-12-21,1,2026-12-21,0,1
+Wasam-W09-B,Connect approval result and resume without losing completed tasks,Wasam,Wasam-W09-A,2026-12-24,1,2026-12-24,0,1
+Wasam-W10-A,Connect authorized execution receipts to final response,Wasam,Wasam-W09-B,2026-12-28,1,2026-12-28,0,1
+Wasam-W10-B,Run real backend journey and verify restart/duplicate-request behavior,Wasam,Wasam-W10-A,2026-12-31,1,2026-12-31,0,1
+Wasam-W11-A,Support frontend integration and fix contract defects,Wasam,Wasam-W10-B,2027-01-04,1,2027-01-04,0,1
+Wasam-W11-B,Freeze backend scope; verify same core with Profiles A/B and disabled booking,Wasam,Wasam-W11-A,2027-01-07,1,2027-01-07,0,1
+Wasam-W12-A,Run fresh-setup integration and finalize Chapter 1 material,Wasam,Wasam-W11-B,2027-01-11,1,2027-01-11,0,1
+Wasam-W12-B,Rehearse explanation of graph/RAG; fix only release-blocking defects,Wasam,Wasam-W12-A,2027-01-14,1,2027-01-14,0,1
+Arif-W01-A,Define profile-driven policy matrix and approval/consent requirements,Arif,,2026-10-26,1,2026-10-26,0,1
+Arif-W01-B,Agree proposal/receipt contracts and safety examples,Arif,Arif-W01-A,2026-10-29,1,2026-10-29,0,1
+Arif-W02-A,Implement Decimal quote service using configured catalog/currency/policy,Arif,Arif-W01-B,2026-11-02,1,2026-11-02,0,1
+Arif-W02-B,"Test price differences, invalid discounts and missing catalog values",Arif,Arif-W02-A,2026-11-05,1,2026-11-05,0,1
+Arif-W03-A,Implement proposal validation with fake data adapter,Arif,Arif-W02-B,2026-11-09,1,2026-11-09,0,1
+Arif-W03-B,"Test denied, stale and malformed proposals",Arif,Arif-W03-A,2026-11-12,1,2026-11-12,0,1
+Arif-W04-A,Add proposal/confirmation/approval data models and migrations,Arif,Arif-W03-B,2026-11-16,1,2026-11-16,0,1
+Arif-W04-B,Verify approval is bound to exact proposal version,Arif,Arif-W04-A,2026-11-19,1,2026-11-19,0,1
+Arif-W05-A,Implement approve/reject service with authorized actor checks,Arif,Arif-W04-B,2026-11-23,1,2026-11-23,0,1
+Arif-W05-B,"Test missing consent, unauthorized approver and expired proposals",Arif,Arif-W05-A,2026-11-26,1,2026-11-26,0,1
+Arif-W06-A,Review policy documentation; light mids session,Arif,Arif-W05-B,2026-11-30,1,2026-11-30,0,1
+Arif-W06-B,Prepare deployment environment inventory; light session,Arif,Arif-W06-A,2026-12-03,1,2026-12-03,0,1
+Arif-W07-A,Review safety test cases; light mids session,Arif,Arif-W06-B,2026-12-07,1,2026-12-07,0,1
+Arif-W07-B,Draft Docker/health-check requirements without inventing services,Arif,Arif-W07-A,2026-12-10,1,2026-12-10,0,1
+Arif-W08-A,Implement transactional service request and booking executor,Arif,Arif-W07-B,2026-12-14,1,2026-12-14,0,1
+Arif-W08-B,Test duplicate execution and competing booking requests,Arif,Arif-W08-A,2026-12-17,1,2026-12-17,0,1
+Arif-W09-A,Connect live data revalidation and workflow adapter,Arif,Arif-W08-B,2026-12-21,1,2026-12-21,0,1
+Arif-W09-B,Verify changed prices/slots invalidate stale consent/approval,Arif,Arif-W09-A,2026-12-24,1,2026-12-24,0,1
+Arif-W10-A,Complete Compose with explicit profile selection and isolated demo setup,Arif,Arif-W09-B,2026-12-28,1,2026-12-28,0,1
+Arif-W10-B,Run API/auth/worker smoke checks for Profiles A/B without core edits,Arif,Arif-W10-A,2026-12-31,1,2026-12-31,0,1
+Arif-W11-A,Test recovery at execution boundaries and inspect receipts,Arif,Arif-W10-B,2027-01-04,1,2027-01-04,0,1
+Arif-W11-B,Freeze backend execution; record deployment and safety evidence,Arif,Arif-W11-A,2027-01-07,1,2027-01-07,0,1
+Arif-W12-A,Verify setup from clean checkout and documented commands,Arif,Arif-W11-B,2027-01-11,1,2027-01-11,0,1
+Arif-W12-B,Rehearse approval failure demo; finalize deployment handoff,Arif,Arif-W12-A,2027-01-14,1,2027-01-14,0,1
+Asad-W01-A,List generic user journeys and profile/capability fields needed by screens,Asad,,2026-10-26,1,2026-10-26,0,1
+Asad-W01-B,"Sketch chat, approval and trace screens against shared samples",Asad,Asad-W01-A,2026-10-29,1,2026-10-29,0,1
+Asad-W02-A,Define overview count response and status meanings,Asad,Asad-W01-B,2026-11-02,1,2026-11-02,0,1
+Asad-W02-B,Write small aggregation function with synthetic fixture tests,Asad,Asad-W02-A,2026-11-05,1,2026-11-05,0,1
+Asad-W03-A,Implement protected read-only overview endpoint,Asad,Asad-W02-B,2026-11-09,1,2026-11-09,0,1
+Asad-W03-B,"Test counts, empty data and denied access using agreed backend adapter",Asad,Asad-W03-A,2026-11-12,1,2026-11-12,0,1
+Asad-W04-A,Prepare frontend component plan and mock response fixtures,Asad,Asad-W03-B,2026-11-16,1,2026-11-16,0,1
+Asad-W04-B,Define waiting/error/loading and approval-confirmation behavior,Asad,Asad-W04-A,2026-11-19,1,2026-11-19,0,1
+Asad-W05-A,Specify API client contract and frontend acceptance cases,Asad,Asad-W04-B,2026-11-23,1,2026-11-23,0,1
+Asad-W05-B,Review mock events for each supported demo journey,Asad,Asad-W05-A,2026-11-26,1,2026-11-26,0,1
+Asad-W06-A,Review Chapter 4 interface requirements; light mids session,Asad,Asad-W05-B,2026-11-30,1,2026-11-30,0,1
+Asad-W06-B,Check accessible labels and Urdu layout requirements; light session,Asad,Asad-W06-A,2026-12-03,1,2026-12-03,0,1
+Asad-W07-A,Review screen flow and sample API data; light mids session,Asad,Asad-W06-B,2026-12-07,1,2026-12-07,0,1
+Asad-W07-B,Resolve documented contract questions and small overview defects,Asad,Asad-W07-A,2026-12-10,1,2026-12-10,0,1
+Asad-W08-A,Finalize configurable labels, currency/timezone and capability-aware mock screens,Asad,Asad-W07-B,2026-12-14,1,2026-12-14,0,1
+Asad-W08-B,Verify overview endpoint against available real data models,Asad,Asad-W08-A,2026-12-17,1,2026-12-17,0,1
+Asad-W09-A,Verify backend APIs match frontend fixtures,Asad,Asad-W08-B,2026-12-21,1,2026-12-21,0,1
+Asad-W09-B,Prepare concise AI implementation brief and frontend test plan,Asad,Asad-W09-A,2026-12-24,1,2026-12-24,0,1
+Asad-W10-A,Generate/build frontend foundation and demo chat using AI assistance,Asad,Asad-W09-B,2026-12-28,1,2026-12-28,0,1
+Asad-W10-B,"Connect API client, login/session flow and conversation display",Asad,Asad-W10-A,2026-12-31,1,2026-12-31,0,1
+Asad-W11-A,Build approval and basic inspector screens; connect real APIs,Asad,Asad-W10-B,2027-01-04,1,2027-01-04,0,1
+Asad-W11-B,"Verify consent, approvals, REST recovery and capability-aware UI; add frontend CI",Asad,Asad-W11-A,2027-01-07,1,2027-01-07,0,1
+Asad-W12-A,Run user journeys from clean setup and correct UI defects,Asad,Asad-W11-B,2027-01-11,1,2027-01-11,0,1
+Asad-W12-B,Rehearse complete demo and supply verified Chapter 4 screenshots,Asad,Asad-W12-A,2027-01-14,1,2027-01-14,0,1
+shizza-W01-A,Define generic customer/catalog/resource records and two synthetic profile datasets,shizza,,2026-10-26,1,2026-10-26,0,1
+shizza-W01-B,"Create report outline, submission inventory and supervisor questions",shizza,shizza-W01-A,2026-10-29,1,2026-10-29,0,1
+shizza-W02-A,Implement generic customer/catalog/resource/status tables and profile-scoped seed fixtures,shizza,shizza-W01-B,2026-11-02,1,2026-11-02,0,1
+shizza-W02-B,Provide read adapters plus reusable sample records and tests,shizza,shizza-W02-A,2026-11-05,1,2026-11-05,0,1
+shizza-W03-A,Build Support worker with a fake retrieval adapter,shizza,shizza-W02-B,2026-11-09,1,2026-11-09,0,1
+shizza-W03-B,"Test evidence references, missing status facts and escalation",shizza,shizza-W03-A,2026-11-12,1,2026-11-12,0,1
+shizza-W04-A,Build Sales worker calling the quote interface,shizza,shizza-W03-B,2026-11-16,1,2026-11-16,0,1
+shizza-W04-B,Test valid service proposal and no invented price behavior,shizza,shizza-W04-A,2026-11-19,1,2026-11-19,0,1
+shizza-W05-A,Build Scheduling worker using availability interface,shizza,shizza-W04-B,2026-11-23,1,2026-11-23,0,1
+shizza-W05-B,Test proposed slots and lack of premature booking confirmation,shizza,shizza-W05-A,2026-11-26,1,2026-11-26,0,1
+shizza-W06-A,Review literature sources and citations; light mids session,shizza,shizza-W05-B,2026-11-30,1,2026-11-30,0,1
+shizza-W06-B,Organize actual meeting notes and report gaps; no invented meetings,shizza,shizza-W06-A,2026-12-03,1,2026-12-03,0,1
+shizza-W07-A,Draft feasibility estimates with labelled assumptions; light session,shizza,shizza-W06-B,2026-12-07,1,2026-12-07,0,1
+shizza-W07-B,Review SDG evidence needs and update schedule assumptions,shizza,shizza-W07-A,2026-12-10,1,2026-12-10,0,1
+shizza-W08-A,Connect reusable workers to profile-scoped retrieval and read adapters,shizza,shizza-W07-B,2026-12-14,1,2026-12-14,0,1
+shizza-W08-B,Verify structured proposals in shared contract tests,shizza,shizza-W08-A,2026-12-17,1,2026-12-17,0,1
+shizza-W09-A,Add limited English/Roman Urdu/Urdu scenario fixtures,shizza,shizza-W08-B,2026-12-21,1,2026-12-21,0,1
+shizza-W09-B,"Review uncertainty, conflicts and clarification responses",shizza,shizza-W09-A,2026-12-24,1,2026-12-24,0,1
+shizza-W10-A,Run worker suite for Profiles A/B, including disabled booking,shizza,shizza-W09-B,2026-12-28,1,2026-12-28,0,1
+shizza-W10-B,Assemble Chapters 1–4 draft and trace claims to evidence,shizza,shizza-W10-A,2026-12-31,1,2026-12-31,0,1
+shizza-W11-A,Review full demo; fix domain/data defects,shizza,shizza-W10-B,2027-01-04,1,2027-01-04,0,1
+shizza-W11-B,Complete report draft and checklist; request supervisor review,shizza,shizza-W11-A,2027-01-07,1,2027-01-07,0,1
+shizza-W12-A,Apply received feedback and reconcile report with actual build,shizza,shizza-W11-B,2027-01-11,1,2027-01-11,0,1
+shizza-W12-B,"Finalize report package, pending signatures list and demo evidence",shizza,shizza-W12-A,2027-01-14,1,2027-01-14,0,1

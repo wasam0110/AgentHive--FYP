@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "business_id": "demo-b",
+  "display_name": "Synthetic Business B",
+  "timezone": "UTC",
+  "currency": "USD",
+  "languages": [
+    "en",
+    "ur",
+    "roman-ur"
+  ],
+  "terminology": {
+    "customer": "Customer",
+    "catalog_item": "Product"
+  },
+  "capabilities": [
+    "knowledge_answer",
+    "catalog_quote"
+  ],
+  "adapters": {
+    "data": "sandbox_v1",
+    "execution": "sandbox_v1"
+  },
+  "knowledge_source": "demo-b-knowledge",
+  "catalog": "demo-b-catalog",
+  "resources": null,
+  "policy": {
+    "max_discount_pct": 0,
+    "quote_expiry_minutes": 15,
+    "approval_expiry_hours": 24
+  }
+}

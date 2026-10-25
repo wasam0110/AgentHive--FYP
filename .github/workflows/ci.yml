@@ -1,0 +1,70 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  starter-checks:
+    name: Starter checks (no application tests yet)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Check required starter files and tracked local files
+        shell: bash
+        run: |
+          set -euo pipefail
+          for path in AGENTS.md README.md docs/PRD.md .gitignore; do
+            test -s "$path" || { echo "Missing or empty required file: $path"; exit 1; }
+          done
+          python3 - <<'PY'
+          from pathlib import PurePosixPath
+          import subprocess
+          import sys
+
+          # Filename hygiene only: this does not scan file contents for secrets.
+          paths = subprocess.check_output(["git", "ls-files", "-z"]).decode().split("\0")
+          blocked = []
+          for path in filter(None, paths):
+              parts = PurePosixPath(path).parts
+              name = parts[-1]
+              local_env = (name == ".env" or name.startswith(".env.")) and name != ".env.example"
+              local_folder = any(part in {".venv", "node_modules", "__pycache__", ".next"} for part in parts)
+              if local_env or local_folder or name in {"AGENTS.local.md", "Wasam-instructions.md", "Asad-instructions.md", "Arif-instructions.md", "shizza-instructions.md"} or path.startswith("submissions/private/"):
+                  blocked.append(path)
+          if blocked:
+              print("Remove personal instructions or local environment/build files from Git:")
+              print("\n".join(blocked))
+              sys.exit(1)
+          print("Starter files and tracked-file hygiene passed. Application tests are not configured yet.")
+          PY
+
+      - name: Check patch whitespace
+        shell: bash
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          PR_BASE: ${{ github.event.pull_request.base.sha }}
+          PUSH_BEFORE: ${{ github.event.before }}
+        run: |
+          set -euo pipefail
+          if [[ "$EVENT_NAME" == "pull_request" ]]; then
+            git diff --check "$PR_BASE...HEAD"
+          elif [[ -n "$PUSH_BEFORE" && ! "$PUSH_BEFORE" =~ ^0+$ ]] && git cat-file -e "$PUSH_BEFORE^{commit}" 2>/dev/null; then
+            git diff --check "$PUSH_BEFORE" HEAD
+          else
+            git diff --check "$(git hash-object -t tree /dev/null)" HEAD
+          fi

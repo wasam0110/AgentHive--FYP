@@ -1,0 +1,38 @@
+# Optional personal learning instructions
+AGENTS.local.md
+
+# Local credentials; add a placeholder-only example when configuration exists.
+.env
+.env.*
+!.env.example
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# JavaScript and generated builds
+node_modules/
+.next/
+dist/
+build/
+coverage/
+
+# Local machine and temporary files
+.DS_Store
+Thumbs.db
+*.log
+*.sqlite3
+
+# Personal member instructions and completed administrative records
+Wasam-instructions.md
+Arif-instructions.md
+Asad-instructions.md
+shizza-instructions.md
+submissions/private/
