@@ -46,8 +46,8 @@ Start 26 October 2026; lighter early-December sessions during mids; core integra
 ## Setup
 
 ```bash
-git clone https://github.com/wasam0110/AgentHive_FYP.git
-cd AgentHive_FYP
+git clone https://github.com/wasam0110/AgentHive--FYP.git
+cd AgentHive--FYP
 ```
 
 Agree shared schemas, fixtures and policy boundaries first. Application install/run commands will be documented when their implementations exist. Planned stack: Python/FastAPI, LangGraph, PostgreSQL, ChromaDB, Next.js/TypeScript and Docker Compose; compatible versions will be pinned at implementation time.
