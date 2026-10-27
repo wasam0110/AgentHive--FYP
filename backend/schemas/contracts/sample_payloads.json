@@ -1,0 +1,139 @@
+{
+  "_note": "Shared test fixtures — W01-A draft. Amounts are illustrative only. Real prices come from Arif's quote service (W02-A). Do not use these numbers in production.",
+  "conversations": [
+    {
+      "conversation_id": "conv-001",
+      "customer_id": "cust-001",
+      "business_id": "demo-a",
+      "status": "queued",
+      "language_preference": "en",
+      "created_at": "2026-10-26T08:00:00Z",
+      "updated_at": "2026-10-26T08:00:00Z"
+    }
+  ],
+  "messages": [
+    {
+      "message_id": "msg-001",
+      "conversation_id": "conv-001",
+      "customer_id": "cust-001",
+      "sender": "customer",
+      "content": "I have a complaint about my last service and I also want to get a quote for a new one",
+      "language": "en",
+      "created_at": "2026-10-26T08:00:01Z"
+    }
+  ],
+  "intake_output": {
+    "conversation_id": "conv-001",
+    "run_id": "run-001",
+    "raw_message": "I have a complaint about my last service and I also want to get a quote for a new one",
+    "language_detected": "en",
+    "intents": [
+      {
+        "intent_type": "support_complaint",
+        "confidence": "high",
+        "entities": { "complaint_topic": "last service" },
+        "missing_fields": []
+      },
+      {
+        "intent_type": "service_request",
+        "confidence": "high",
+        "entities": { "catalog_item_hint": "new service" },
+        "missing_fields": ["catalog_item_id"]
+      }
+    ],
+    "clarification_needed": true,
+    "clarification_question": "Which service would you like a quote for?"
+  },
+  "task_definitions": [
+    {
+      "task_id": "task-001",
+      "run_id": "run-001",
+      "conversation_id": "conv-001",
+      "intent_type": "support_complaint",
+      "assigned_worker": "support",
+      "dependencies": [],
+      "input_payload": {
+        "customer_id": "cust-001",
+        "complaint_topic": "last service"
+      },
+      "created_at": "2026-10-26T08:00:02Z"
+    },
+    {
+      "task_id": "task-002",
+      "run_id": "run-001",
+      "conversation_id": "conv-001",
+      "intent_type": "service_request",
+      "assigned_worker": "sales",
+      "dependencies": [],
+      "input_payload": {
+        "customer_id": "cust-001",
+        "catalog_item_id": "item-abc"
+      },
+      "created_at": "2026-10-26T08:00:02Z"
+    }
+  ],
+  "worker_results": [
+    {
+      "task_id": "task-001",
+      "worker": "support",
+      "status": "completed",
+      "summary": "Service outage reported; known issue referenced in status record SR-2026-11.",
+      "evidence": [
+        {
+          "source_id": "sr-2026-11",
+          "source_type": "status_record",
+          "excerpt": "Known outage, resolution estimate: 24h"
+        }
+      ],
+      "proposed_action": null,
+      "clarification_question": null,
+      "error_detail": null
+    }
+  ],
+  "action_proposals": [
+    {
+      "proposal_id": "prop-001",
+      "proposal_version": 1,
+      "action_type": "service_request",
+      "conversation_id": "conv-001",
+      "run_id": "run-001",
+      "payload": {
+        "catalog_item_id": "item-abc",
+        "quantity": 1,
+        "unit_price_decimal": "PLACEHOLDER_FROM_ARIF",
+        "discount_pct": 0,
+        "total_decimal": "PLACEHOLDER_FROM_ARIF",
+        "currency": "PKR",
+        "quote_valid_until": "PLACEHOLDER_FROM_ARIF"
+      },
+      "requires_customer_confirmation": true,
+      "requires_admin_approval": true,
+      "policy_version": "v1",
+      "profile_version": 1,
+      "created_at": "2026-10-26T08:00:05Z",
+      "expires_at": "PLACEHOLDER_FROM_ARIF"
+    }
+  ],
+  "task_status_records": [
+    {
+      "task_id": "task-001",
+      "run_id": "run-001",
+      "conversation_id": "conv-001",
+      "intent_type": "support_complaint",
+      "assigned_worker": "support",
+      "status": "completed",
+      "proposal_id": null,
+      "updated_at": "2026-10-26T08:00:10Z"
+    },
+    {
+      "task_id": "task-002",
+      "run_id": "run-001",
+      "conversation_id": "conv-001",
+      "intent_type": "service_request",
+      "assigned_worker": "sales",
+      "status": "waiting_customer",
+      "proposal_id": "prop-001",
+      "updated_at": "2026-10-26T08:00:10Z"
+    }
+  ]
+}

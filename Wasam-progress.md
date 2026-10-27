@@ -10,7 +10,7 @@ Statuses: Not started → In progress → Standalone verified → Integration pe
 
 | Session | Planned date | Deliverable | Status | Actual date | Evidence / PR / test | Dependency / next handoff |
 |---|---|---|---|---|---|---|
-| W01-A | 2026-10-26 | Define request/task/result schemas plus business-profile and capability contracts | Not started | — | — | Use shared contracts; record live handoff when applicable |
+| W01-A | 2026-10-26 | Define request/task/result schemas plus business-profile and capability contracts | In progress | 2026-10-27 | backend/schemas/contracts/ — business_profile.md, task_contracts.md, conversation_contracts.md, sample_payloads.json, README.md — branch: w01a-schema-contracts | Arif: confirm policy field names (W01-B). Shizza: confirm adapter/catalog/resource ref IDs (W01-B). Asad: confirm conversation status fields for Overview (W01-B). |
 | W01-B | 2026-10-29 | Review shared sample payloads and first end-to-end scenario | Not started | — | — | Use shared contracts; record live handoff when applicable |
 | W02-A | 2026-11-02 | Create FastAPI skeleton and typed profile validation with unknown-capability rejection | Not started | — | — | Use shared contracts; record live handoff when applicable |
 | W02-B | 2026-11-05 | Add backend lint/tests and authenticated demo identity foundation | Not started | — | — | Use shared contracts; record live handoff when applicable |
@@ -39,15 +39,17 @@ Statuses: Not started → In progress → Standalone verified → Integration pe
 
 Append entries rather than overwriting prior evidence:
 
-- Session and actual date:
-- Implemented or reviewed:
-- Files / commit / PR:
-- Commands run and observed results:
-- Mocked dependencies versus real integrations:
-- What I can explain:
-- Report sections updated:
-- Blocker, owner and next action:
-- Reviewer and review date, if actually reviewed:
+### W01-A — 2026-10-27
+
+- Session and actual date: W01-A — 2026-10-27
+- Implemented or reviewed: Defined BusinessProfile + capability registry contract, IntakeOutput/TaskDefinition/WorkerResult/ActionProposal/TaskStatus contracts, ConversationRecord/MessageRecord/RunRecord contracts, shared sample payloads JSON.
+- Files / commit / PR: backend/schemas/contracts/README.md, business_profile.md, task_contracts.md, conversation_contracts.md, sample_payloads.json — docs/learning/schema-contracts.md — docs/planning/gantt-plan.csv (Wasam-W04-B fix) — docs/planning/decision-log.md (new row) — branch w01a-schema-contracts
+- Commands run and observed results: Design-only session. No runtime commands claimed. CI hygiene checks run before commit (git ls-files and git diff --cached --check).
+- Mocked dependencies versus real integrations: ALL integrations are mocked at this stage. Arif's quote service (unit_price, total, expiry) → placeholder strings in sample_payloads.json. Shizza's worker implementations → agreed WorkerResult shape not yet built. Asad's UI → agreed ConversationRecord/TaskStatusRecord field names; no screen built yet.
+- What I can explain: The five contract shapes and why each field exists, the dependency rules table, why amounts use Decimal strings, why capabilities are code-registered not profile-defined, why customer_id is never trusted from a message body.
+- Report sections updated: None this session (design output only; Shizza will pull technical facts into Ch. 4 after review).
+- Blocker, owner and next action: No blocker. Pending teammate confirmation of open points listed in each contract file. Next: W01-B (2026-10-29) — review shared sample payloads and first end-to-end scenario with team.
+- Reviewer and review date, if actually reviewed: Pending
 
 ## Final handoff
 
