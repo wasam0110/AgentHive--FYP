@@ -12,6 +12,8 @@ Agent Hive is an independent, configurable multi-agent customer-operations platf
 - [CI guide](docs/CI.md)
 - [University formats and submission workflow](docs/university/README.md)
 - [Submission checklist](docs/planning/submission-checklist.md)
+- [Schema and capability contracts](backend/schemas/contracts/README.md) — W01-A design output;review before
+   implementing consumers
 
 ## Responsibilities
 
