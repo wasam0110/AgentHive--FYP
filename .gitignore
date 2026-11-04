@@ -36,3 +36,16 @@ Arif-instructions.md
 Asad-instructions.md
 shizza-instructions.md
 submissions/private/
+
+# Imported prototype exclusions
+# Private runtime state and browser artifacts
+.local/
+*.db
+*.db-wal
+*.db-shm
+*.tsbuildinfo
+frontend/playwright-report/
+frontend/test-results/
+
+# Private weekly assistant prompts, distributed directly to members
+/docs/prompts/
