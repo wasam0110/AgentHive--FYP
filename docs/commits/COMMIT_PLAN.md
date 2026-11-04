@@ -2,9 +2,9 @@
 
 Prepared at Wasam's request on **2026-10-30 (Asia/Karachi)**. The complete prototype is imported locally and remains uncommitted. No automatic staging, commit or push is authorized. This plan supersedes the ZIP's one-baseline recommendation and its cross-dependent owner staging commands.
 
-See [Project origin](docs/PROJECT_ORIGIN.md) for the original generation and import record. Import, automated review/testing and any fixes have their actual dates recorded separately. Human member review, understanding, future sessions and supervisor approval remain pending. Do not change Git authors or backdate commits to simulate independent authorship.
+See [Project origin](../PROJECT_ORIGIN.md) for the original generation and import record. Import, automated review/testing and any fixes have their actual dates recorded separately. Human member review, understanding, future sessions and supervisor approval remain pending. Do not change Git authors or backdate commits to simulate independent authorship.
 
-Base: `1c35bb5e4c2ef4ab59d7bf5580e42a8b5d6a8c9c`. Preserve pre-existing FIRST_COMMIT.md deletion, Wasam W01-A correction and decision-log correction; these are not part of B01. Retired member instructions have been replaced by privately shared, ignored Tuesday prompts.
+Base: `1c35bb5e4c2ef4ab59d7bf5580e42a8b5d6a8c9c`. Preserve the historical W01-A and decision-log corrections. The obsolete root FIRST_COMMIT.md guide has been retired. Retired member instructions have been replaced by privately shared, ignored Tuesday prompts.
 
 **Commit B01 first.** The shared schema and single migration chain belong to all four owners; Wasam coordinates them. B02 and B04 can follow independently after B01. B03 needs B02; B05 needs B02/B04; B06 joins those modules. B07 then connects the UI; B08 adds complete CI/deployment; B09 reconciles final documentation.
 
@@ -19,7 +19,7 @@ Owner: Wasam coordinates; all four review shared contracts. Dependencies: existi
 Exact files:
 
 - `.gitignore`
-- `COMMIT_PLAN.md`
+- `docs/commits/COMMIT_PLAN.md`
 - `alembic.ini`
 - `backend/__init__.py`
 - `backend/config.py`

@@ -67,3 +67,17 @@ The source came from the documented prototype; publication and automated checks 
 Actual checks/results are recorded in docs/commits/verification.md. Commit/push pending at preparation time; remote CI is not yet observed. No other weekly session is marked complete.
 
 Observed local results (4 November 2026): Ruff passed; eight foundation tests passed; fresh SQLite upgrade and Alembic metadata check passed. No application modules outside B01 were present. Remote CI remains unobserved; PostgreSQL and HTTP integration are outside this candidate.
+
+## W02 push evidence - 4 November 2026
+
+- Published B01 on branch wasam/w02-foundation; SHA 081b1bebce1c5d9852d1350ec47e4a47b3028d59. Remote branch SHA verified after push; confirmation recorded at 2026-11-04T22:48:07+05:00 (Asia/Karachi).
+- Based on current main 433a3c1c1a0559ce14957cf55302b1b52eb46541. Exact scope: 24 B01 files plus dated additions to Wasam-progress.md and Chapter 4; no other local progress rewrites or imported modules included.
+- Independent candidate checks passed: Ruff, eight foundation tests, fresh SQLite migration and metadata comparison; staged hygiene and whitespace passed. Snapshot: C:/Users/wasam/AppData/Local/AgentHive-imports/20261104-w02-candidate-check/publication-evidence.json.
+- No PR created or merge performed. GitHub Actions API initially returned no push workflow run for this SHA; remote CI not yet observed. Human review remains pending. W02 is in progress; B02 identity is the next prerequisite task after the foundation reaches the agreed integration base.
+- This entry was recorded locally after the foundation push and is included in the next normal documentation cleanup commit.
+
+## Documentation cleanup - 4 November 2026
+
+Moved the shared commit plan to docs/commits/COMMIT_PLAN.md and removed the obsolete FIRST_COMMIT.md guide. Updated active plan references and the staging manifest. Documentation/manifest checks and whitespace validation passed; application behavior is unchanged, so runtime tests were not rerun.
+
+Follow-up observation: foundation PR #2 has merged into main (3244df6). This documentation cleanup is on wasam/docs-cleanup; no new merge is performed by this task.

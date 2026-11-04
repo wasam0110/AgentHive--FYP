@@ -10,7 +10,7 @@
       "dependencies": [],
       "files": [
         ".gitignore",
-        "COMMIT_PLAN.md",
+        "docs/commits/COMMIT_PLAN.md",
         "alembic.ini",
         "backend/__init__.py",
         "backend/config.py",
