@@ -58,3 +58,7 @@ This chapter defines intended behavior. Link implemented requirements to evidenc
 ## Configuration requirements
 
 Validate business profiles at startup; route only enabled capabilities; load the configured catalog and knowledge sources; retain profile/policy versions on proposals. Run Profile A/B smoke tests with isolated data and unchanged core code. Reject unknown adapters, missing references and disabled booking. The UI displays configured terminology/currency without weakening backend validation.
+
+## Implementation evidence - shared foundation, 4 November 2026
+
+B01 implements validated business-profile inputs, strict request/intake schemas and relational storage with foreign-key and uniqueness constraints. These structures support later account, conversation and controlled-action modules. Schema availability alone does not implement authentication, worker execution, consent or approval. The foundation is checked in isolation from the uncommitted application; see docs/commits/verification.md for observed results. Human review and supervisor acceptance remain pending.
