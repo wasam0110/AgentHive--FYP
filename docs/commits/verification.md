@@ -25,6 +25,17 @@ The initial snapshot also passed these checks. The final snapshot reruns after d
 
 This verifies the foundation's profile/schema/storage behavior only. It does not verify a runnable HTTP application, consent/execution services, frontend or PostgreSQL. Human review is pending and **no staging/commit/push is authorized**.
 
+## Arif W01-A documentation candidate - 10 November 2026
+
+The proposed documentation change is based on the committed B01 base and contains only
+the policy matrix, proposal/decision/receipt contract additions, database responsibility
+notes, learning note and Arif progress evidence. No B02 identity files or B03 service
+files were copied from the reference source.
+
+`python scripts/check_repository.py` and `git diff --check` passed. This is a
+documentation-only check; it does not establish quote, approval, transaction, or receipt
+runtime behavior. The candidate remains uncommitted pending human/team review.
+
 ## B02?B09
 
 Not independently verified. Their prerequisites have not been committed. The complete imported application passed 49 backend tests, frontend checks and two browser journeys, but that does not satisfy the independent batch rule. First commit the approved prerequisites, then export that committed base and overlay only the next batch's exact files, run its listed checks and record results with actual dates. No future work is complete.

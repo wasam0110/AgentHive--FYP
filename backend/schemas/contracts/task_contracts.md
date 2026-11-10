@@ -129,6 +129,44 @@ class ActionProposal:
 - `resource_booking` requires `resource_booking` to be in the active profile's capabilities.
   If not present, the Supervisor must return a denial before creating a TaskDefinition for it.
 
+## Consent, approval and receipt contract
+
+These records are append-only decisions and execution evidence, not fields that an agent
+may set to bypass the policy gate.
+
+```python
+class ProposalDecision:
+    decision_id: str           # server-assigned UUID
+    proposal_id: str
+    proposal_version: int      # must equal the current proposal version
+    actor_id: str              # authenticated customer or administrator
+    decision_type: str          # "customer_consent" | "admin_approval"
+    decision: str               # "accepted" | "rejected"
+    created_at: str             # UTC ISO-8601
+
+class ExecutionReceipt:
+    receipt_id: str             # canonical result identifier
+    proposal_id: str
+    proposal_version: int
+    idempotency_key: str        # unique for the controlled action
+    status: str                 # "succeeded" | "failed"
+    result_reference: str | None
+    created_at: str              # UTC ISO-8601
+```
+
+The policy gate requires accepted customer consent before administrator approval. Both
+accepted decisions must reference the current proposal version. A price, slot, payload,
+profile fingerprint or expiry change invalidates earlier decisions and requires a new
+version. The executor checks for an existing receipt before retrying and returns that
+receipt instead of applying the mutation twice.
+
+### Safety examples
+
+- A read-only catalog enquiry has no `ActionProposal`, consent, approval or receipt.
+- A discount above the active profile cap is denied even when the customer asks for it.
+- An approval for version 1 cannot execute proposal version 2 after its price changes.
+- A repeated request with the same idempotency key returns one canonical receipt.
+
 ---
 
 ## TaskStatus — persisted status for each task in a run (Asad reads for UI)

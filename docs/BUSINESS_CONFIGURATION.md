@@ -17,6 +17,25 @@ Draft specification, not an implemented loader. Agent Hive uses a reusable core 
 | knowledge_source / catalog / resources | References resolved by permitted adapters |
 | policy | Explicit discount cap, quote and approval expiry; typed values with units |
 
+## Policy and approval matrix
+
+The active profile supplies policy values; it does not grant permissions by itself.
+The backend policy gate must apply these checks in order before an action can execute:
+
+| Action state or input | Required condition | Result when the condition is false |
+|---|---|---|
+| Quote creation | Catalog item exists, is active, and uses the profile currency | Reject the proposal |
+| Discount | `0 <= discount_pct <= policy.max_discount_pct` | Reject the proposal |
+| Customer confirmation | Customer confirms the exact `proposal_id` and `proposal_version` before `quote_expiry_minutes` elapses | Keep the action awaiting consent |
+| Administrator approval | An authorized administrator approves the same proposal version after customer confirmation and before `approval_expiry_hours` elapses | Keep the action awaiting approval or reject it |
+| Revalidation | Current profile fingerprint, price, eligibility, availability and expiry match the proposal | Require a new proposal version and new consent |
+| Execution | All preceding checks pass and the idempotency key has no committed receipt | Allow one controlled mutation |
+
+Customer consent and administrator approval are separate decisions. Neither an LLM
+response, silence, or a stale decision can substitute for either decision. A policy or
+profile change changes the fingerprint used for revalidation; it must not rewrite older
+records or retroactively make an approval valid.
+
 ## Boundaries
 
 Business profile configuration changes supported behavior within implemented capabilities. A new integration or action requires a typed adapter, tests, authorization checks and deployment approval. RAG documents cannot grant tools or override policy. Configuration is not a programming language.

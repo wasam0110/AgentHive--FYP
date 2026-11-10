@@ -10,7 +10,7 @@ Statuses: Not started → In progress → Standalone verified → Integration pe
 
 | Session | Planned date | Deliverable | Status | Actual date | Evidence / PR / test | Dependency / next handoff |
 |---|---|---|---|---|---|---|
-| W01-A | 2026-10-26 | Define profile-driven policy matrix and approval/consent requirements | Not started | — | — | Use shared contracts; record live handoff when applicable |
+| W01-A | 2026-10-26 | Define profile-driven policy matrix and approval/consent requirements | Standalone verified | 2026-11-10 | Documentation contract review on `arif/w01-policy-contracts`; `python scripts/check_repository.py` and `git diff --check` passed | Human/team review and B02/B03 integration remain pending |
 | W01-B | 2026-10-29 | Agree proposal/receipt contracts and safety examples | Not started | — | — | Use shared contracts; record live handoff when applicable |
 | W02-A | 2026-11-02 | Implement Decimal quote service using configured catalog/currency/policy | Not started | — | — | Use shared contracts; record live handoff when applicable |
 | W02-B | 2026-11-05 | Test price differences, invalid discounts and missing catalog values | Not started | — | — | Use shared contracts; record live handoff when applicable |
@@ -39,15 +39,15 @@ Statuses: Not started → In progress → Standalone verified → Integration pe
 
 Append entries rather than overwriting prior evidence:
 
-- Session and actual date:
-- Implemented or reviewed:
-- Files / commit / PR:
-- Commands run and observed results:
-- Mocked dependencies versus real integrations:
-- What I can explain:
-- Report sections updated:
-- Blocker, owner and next action:
-- Reviewer and review date, if actually reviewed:
+- Session and actual date: 2026-11-10
+- Implemented or reviewed: W01-A policy matrix, consent/approval/receipt contract, and proposal storage boundaries.
+- Files / commit / PR: `docs/BUSINESS_CONFIGURATION.md`, `docs/DATABASE.md`, `backend/schemas/contracts/task_contracts.md`, `docs/learning/policy-contracts.md`; no commit or PR created.
+- Commands run and observed results: `python scripts/check_repository.py` and `git diff --check` passed on the proposed documentation change; no runtime service test was applicable.
+- Mocked dependencies versus real integrations: proposal, decision, mutation and receipt services are not implemented; B02 identity and B03 service prerequisites are not committed on `main`.
+- What I can explain: Decimal-string money boundaries, profile/policy fingerprint versus proposal version, separate customer/admin decisions, revalidation, idempotency and transaction safety.
+- Report sections updated: none; requirements remain a draft and no runtime behavior is claimed.
+- Blocker, owner and next action: B02 identity by Wasam must be committed before B03 services can be independently prepared; obtain teammate review of W01-A contracts.
+- Reviewer and review date, if actually reviewed: pending.
 
 ## Final handoff
 
