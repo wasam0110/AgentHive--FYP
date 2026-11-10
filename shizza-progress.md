@@ -10,7 +10,7 @@ Dates below are plans, not attendance or completion claims. Record one dated wee
 
 | Week | Planned Tuesday | Deliverable | Status | Actual date | Evidence / PR / test |
 |---|---|---|---|---|---|
-| W01 | 2026-10-27 | Define generic customer/catalog/resource records and two synthetic profile datasets; Create report outline, submission inventory and supervisor questions | Not started | — | — |
+| W01 | 2026-10-27 | Define generic customer/catalog/resource records and two synthetic profile datasets; Create report outline, submission inventory and supervisor questions | In progress | 2026-11-06 | Reviewed committed Profile A/B, business-profile contract, Chapter 4 outline, Chapter 1 review items and submission inventory on `shizza/w01-profile-review` (`f17a06d`). Profile/contract checks and `git diff --check` passed; seed/read adapters, owner review and supervisor confirmation remain pending. No application behavior is claimed. |
 | W02 | 2026-11-03 | Implement generic customer/catalog/resource/status tables and profile-scoped seed fixtures; Provide read adapters plus reusable sample records and tests | Not started | — | — |
 | W03 | 2026-11-10 | Build Support worker with a fake retrieval adapter; Test evidence references, missing status facts and escalation | Not started | — | — |
 | W04 | 2026-11-17 | Build Sales worker calling the quote interface; Test valid service proposal and no invented price behavior | Not started | — | — |
@@ -25,7 +25,7 @@ Dates below are plans, not attendance or completion claims. Record one dated wee
 
 ## Work log
 
-No individual work or tests recorded yet.
+- **6 November 2026 - W01 combined session:** Reviewed committed Profile A/B distinctions, the business-profile contract, Chapter 4 requirements, Chapter 1 review items and submission inventory at base `a3f1083`. A enables `resource_booking` while B does not, and their catalog/knowledge references differ. A clean documentation-only snapshot with `shizza-progress.md` overlaid passed the profile/report assertions using Python 3.14 and `git diff --check`; no application runtime tests were run. Seed/read adapters remain blocked on B02/B04, and owner/supervisor review remains pending. Branch `shizza/w01-profile-review` contains commit `f17a06d`; no PR was created.
 
 **Planning:** On 30 October 2026, the former A/B schedule was combined into 12 Tuesday sessions. The archived schedule is retained for historical context and does not create additional current sessions or completion claims. [Previous schedule](docs/planning/archive/pre-tuesday-progress.md).
 

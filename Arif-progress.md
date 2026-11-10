@@ -10,7 +10,7 @@ Dates below are plans, not attendance or completion claims. Record one dated wee
 
 | Week | Planned Tuesday | Deliverable | Status | Actual date | Evidence / PR / test |
 |---|---|---|---|---|---|
-| W01 | 2026-10-27 | Define profile-driven policy matrix and approval/consent requirements; Agree proposal/receipt contracts and safety examples | Not started | — | — |
+| W01 | 2026-10-27 | Define profile-driven policy matrix and approval/consent requirements; Agree proposal/receipt contracts and safety examples | In progress | 2026-11-10 | W01-A policy/approval/receipt contract review completed on `arif/w01-policy-contracts` (`bec19b4`); repository and whitespace checks passed. W01-B and human/team review remain pending; no runtime behavior claimed. |
 | W02 | 2026-11-03 | Implement Decimal quote service using configured catalog/currency/policy; Test price differences, invalid discounts and missing catalog values | Not started | — | — |
 | W03 | 2026-11-10 | Implement proposal validation with fake data adapter; Test denied, stale and malformed proposals | Not started | — | — |
 | W04 | 2026-11-17 | Add proposal/confirmation/approval data models and migrations; Verify approval is bound to exact proposal version | Not started | — | — |
@@ -25,7 +25,7 @@ Dates below are plans, not attendance or completion claims. Record one dated wee
 
 ## Work log
 
-No individual work or tests recorded yet.
+- **10 November 2026 - W01 combined session:** Reviewed the policy matrix, consent/approval/receipt contracts and proposal storage boundaries on `arif/w01-policy-contracts`. `python scripts/check_repository.py` and `git diff --check` passed for the documentation change. Proposal, decision, mutation and receipt services remain unimplemented; B02 identity and B03 integration prerequisites remain pending. Published commit `bec19b4bc57ba1798e18b147a6e794a8dbb2a685`; publication evidence commit `a4adbc9` was also pushed. No PR was created and human/team review remains pending.
 
 **Planning:** On 30 October 2026, the former A/B schedule was combined into 12 Tuesday sessions. The archived schedule is retained for historical context and does not create additional current sessions or completion claims. [Previous schedule](docs/planning/archive/pre-tuesday-progress.md).
 
