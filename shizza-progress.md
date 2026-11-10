@@ -1,66 +1,34 @@
 # Shizza FYP-I progress
 
-Owner: Shizza
+**Scope:** Domain agents, reference data/read tools, seed fixtures and academic documentation coordination.
+**Target:** 15 January 2027. One Tuesday session each week; unfinished work carries forward.
+**Cadence:** One combined contribution session per Tuesday each week. The former A/B tasks are combined into the single weekly deliverable shown below.
 
-Module: Domain agents, reference data/read tools, seed fixtures and academic documentation coordination.
+[Weekly scopes and dependencies](docs/planning/WEEKLY_COMMIT_PLAN.md) | [Push checklist](docs/planning/PUSH_CHECKLIST.md)
 
-Target: 15 January 2027. This is a plan; no implementation or attendance is asserted.
+Dates below are plans, not attendance or completion claims. Record one dated weekly entry for each actual session, with any unfinished work carried forward. Aim for one focused commit when ready.
 
-Statuses: Not started → In progress → Standalone verified → Integration pending → Integrated and verified. Use Blocked with a reason when independent work is not possible. Document tasks may use Reviewed after an identified reviewer confirms them. Do not infer progress from dates.
+| Week | Planned Tuesday | Deliverable | Status | Actual date | Evidence / PR / test |
+|---|---|---|---|---|---|
+| W01 | 2026-10-27 | Define generic customer/catalog/resource records and two synthetic profile datasets; Create report outline, submission inventory and supervisor questions | In progress | 2026-11-06 | Reviewed committed Profile A/B, business-profile contract, Chapter 4 outline, Chapter 1 review items and submission inventory on `shizza/w01-profile-review` (`f17a06d`). Profile/contract checks and `git diff --check` passed; seed/read adapters, owner review and supervisor confirmation remain pending. No application behavior is claimed. |
+| W02 | 2026-11-03 | Implement generic customer/catalog/resource/status tables and profile-scoped seed fixtures; Provide read adapters plus reusable sample records and tests | Not started | — | — |
+| W03 | 2026-11-10 | Build Support worker with a fake retrieval adapter; Test evidence references, missing status facts and escalation | Not started | — | — |
+| W04 | 2026-11-17 | Build Sales worker calling the quote interface; Test valid service proposal and no invented price behavior | Not started | — | — |
+| W05 | 2026-11-24 | Build Scheduling worker using availability interface; Test proposed slots and lack of premature booking confirmation | Not started | — | — |
+| W06 | 2026-12-01 | Review literature sources and citations; light mids session; Organize actual meeting notes and report gaps; no invented meetings | Not started | — | — |
+| W07 | 2026-12-08 | Draft feasibility estimates with labelled assumptions; light session; Review SDG evidence needs and update schedule assumptions | Not started | — | — |
+| W08 | 2026-12-15 | Connect reusable workers to profile-scoped retrieval and read adapters; Verify structured proposals in shared contract tests | Not started | — | — |
+| W09 | 2026-12-22 | Add limited English/Roman Urdu/Urdu scenario fixtures; Review uncertainty, conflicts and clarification responses | Not started | — | — |
+| W10 | 2026-12-29 | Run worker suite for Profiles A/B, including disabled booking; Assemble Chapters 1–4 draft and trace claims to evidence | Not started | — | — |
+| W11 | 2027-01-05 | Review full demo; fix domain/data defects; Complete report draft and checklist; request supervisor review | Not started | — | — |
+| W12 | 2027-01-12 | Apply received feedback and reconcile report with actual build; Finalize report package, pending signatures list and demo evidence | Not started | — | — |
 
-| Session | Planned date | Deliverable | Status | Actual date | Evidence / PR / test | Dependency / next handoff |
-|---|---|---|---|---|---|---|
-| W01-A | 2026-10-26 | Define generic customer/catalog/resource records and two synthetic profile datasets | In progress | 2026-11-06 | Reviewed committed Profile A/B and business-profile contract at base `a3f1083`; A enables booking while B does not, and their catalog/knowledge references differ. Seed/read adapters remain pending; no integration is claimed. | B01 is committed; seed/read adapter work waits for B02/B04 on the agreed base |
-| W01-B | 2026-10-29 | Create report outline, submission inventory and supervisor questions | In progress | 2026-11-06 | Reviewed the Chapter 4 outline, Chapter 1 review items, and submission inventory. Official scope/calendar, sources, and supervisor decisions remain pending; these existing artifacts were not newly authored in this session. | Owner review and supervisor confirmation remain pending; official dates are unconfirmed |
-| W02-A | 2026-11-02 | Implement generic customer/catalog/resource/status tables and profile-scoped seed fixtures | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W02-B | 2026-11-05 | Provide read adapters plus reusable sample records and tests | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W03-A | 2026-11-09 | Build Support worker with a fake retrieval adapter | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W03-B | 2026-11-12 | Test evidence references, missing status facts and escalation | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W04-A | 2026-11-16 | Build Sales worker calling the quote interface | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W04-B | 2026-11-19 | Test valid service proposal and no invented price behavior | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W05-A | 2026-11-23 | Build Scheduling worker using availability interface | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W05-B | 2026-11-26 | Test proposed slots and lack of premature booking confirmation | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W06-A | 2026-11-30 | Review literature sources and citations; light mids session | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W06-B | 2026-12-03 | Organize actual meeting notes and report gaps; no invented meetings | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W07-A | 2026-12-07 | Draft feasibility estimates with labelled assumptions; light session | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W07-B | 2026-12-10 | Review SDG evidence needs and update schedule assumptions | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W08-A | 2026-12-14 | Connect reusable workers to profile-scoped retrieval and read adapters | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W08-B | 2026-12-17 | Verify structured proposals in shared contract tests | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W09-A | 2026-12-21 | Add limited English/Roman Urdu/Urdu scenario fixtures | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W09-B | 2026-12-24 | Review uncertainty, conflicts and clarification responses | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W10-A | 2026-12-28 | Run worker suite for Profiles A/B, including disabled booking | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W10-B | 2026-12-31 | Assemble Chapters 1–4 draft and trace claims to evidence | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W11-A | 2027-01-04 | Review full demo; fix domain/data defects | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W11-B | 2027-01-07 | Complete report draft and checklist; request supervisor review | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W12-A | 2027-01-11 | Apply received feedback and reconcile report with actual build | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W12-B | 2027-01-14 | Finalize report package, pending signatures list and demo evidence | Not started | — | — | Use shared contracts; record live handoff when applicable |
+## Work log
 
-## Session evidence log
+- **6 November 2026 - W01 combined session:** Reviewed committed Profile A/B distinctions, the business-profile contract, Chapter 4 requirements, Chapter 1 review items and submission inventory at base `a3f1083`. A enables `resource_booking` while B does not, and their catalog/knowledge references differ. A clean documentation-only snapshot with `shizza-progress.md` overlaid passed the profile/report assertions using Python 3.14 and `git diff --check`; no application runtime tests were run. Seed/read adapters remain blocked on B02/B04, and owner/supervisor review remains pending. Branch `shizza/w01-profile-review` contains commit `f17a06d`; no PR was created.
 
-Append entries rather than overwriting prior evidence:
+**Planning:** On 30 October 2026, the former A/B schedule was combined into 12 Tuesday sessions. The archived schedule is retained for historical context and does not create additional current sessions or completion claims. [Previous schedule](docs/planning/archive/pre-tuesday-progress.md).
 
-- Session and actual date:
-- Implemented or reviewed:
-- Files / commit / PR:
-- Commands run and observed results:
-- Mocked dependencies versus real integrations:
-- What I can explain:
-- Report sections updated:
-- Blocker, owner and next action:
-- Reviewer and review date, if actually reviewed:
+**Next:** Review W01 contracts and the dependencies for your first contribution.
 
-### W01 catch-up review - 2026-11-06 (Asia/Karachi)
-
-- Reviewed committed Profile A/B, the business-profile contract, Chapter 4 requirements draft, Chapter 1 review items, and submission checklist at base `a3f1083a34d3c8d8c22e7207a287cda450068db8`.
-- The profiles have distinct business/catalog/knowledge references; Profile A enables `resource_booking` and Profile B does not. This checks fixture intent only, not seeded-data or adapter behavior.
-- The report outline, supervisor review items, and submission inventory already exist in committed files. No report content or application behavior was added; source authorship is unchanged.
-- Clean snapshot from base `a3f1083a34d3c8d8c22e7207a287cda450068db8`, with only `shizza-progress.md` overlaid: profile distinction and required report/checklist assertions passed with Python 3.14 standard library; `git diff --check` passed. Documentation-only review; no application runtime tests were run.
-- W01-A/W01-B remain in progress pending owner review and remaining evidence. B02 and B04 are not committed in `main`; B05 seed/read integration remains blocked on those prerequisites. Commit pending; not pushed.
-- Reviewer and review date: owner review pending.
-
-## Final handoff
-
-- Standalone verification: Not started.
-- Live integration verification: Not started.
-- Documentation reviewed: Not started.
-- Known limitations: Not yet assessed.
+For each session, add a short dated note: work/files changed, checks and results, mocked or live dependencies, learning/review, affected docs, and next step. After a push, add the real SHA and observed PR/CI status. Follow the push checklist for details.

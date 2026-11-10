@@ -1,72 +1,48 @@
 # Wasam FYP-I progress
 
-Owner: Wasam
+**Scope:** Core backend, authentication foundation, conversations, orchestration and RAG.
+**Target:** 15 January 2027. One Tuesday session each week; unfinished work carries forward.
+**Cadence:** One combined contribution session per Tuesday each week. The former A/B tasks are combined into the single weekly deliverable shown below.
 
-Module: Core backend, authentication foundation, conversations, orchestration and RAG.
+[Weekly scopes and dependencies](docs/planning/WEEKLY_COMMIT_PLAN.md) | [Push checklist](docs/planning/PUSH_CHECKLIST.md)
 
-Target: 15 January 2027. This is a plan; no implementation or attendance is asserted.
+Dates below are plans, not attendance or completion claims. Record one dated weekly entry for each actual session, with any unfinished work carried forward. Aim for one focused commit when ready.
 
-Statuses: Not started → In progress → Standalone verified → Integration pending → Integrated and verified. Use Blocked with a reason when independent work is not possible. Document tasks may use Reviewed after an identified reviewer confirms them. Do not infer progress from dates.
+| Week | Planned Tuesday | Deliverable | Status | Actual date | Evidence / PR / test |
+|---|---|---|---|---|---|
+| W01 | 2026-10-27 | Define request/task/result schemas plus business-profile and capability contracts; Review shared sample payloads and first end-to-end scenario | In progress (historical W01-A reviewed; remainder pending) | 2026-10-27 (W01-A only) | Historical W01-A evidence below; weekly work incomplete |
+| W02 | 2026-11-03 | Create FastAPI skeleton and typed profile validation with unknown-capability rejection; Add backend lint/tests and authenticated demo identity foundation | In progress (B01 pushed; B02 pending) | 2026-11-04 | 081b1be on wasam/w02-foundation; isolated checks passed |
+| W03 | 2026-11-10 | Implement conversation/message persistence; Verify history reload and denied cross-customer access | Not started | — | — |
+| W04 | 2026-11-17 | Build reviewed-document chunking and ingestion; Verify profile-scoped retrieval, source IDs and no-evidence behavior | Not started | — | — |
+| W05 | 2026-11-24 | Implement intake with structured intent output; Run supervisor with fake workers and dependency-aware routing | Not started | — | — |
+| W06 | 2026-12-01 | Review state schemas and Chapter 1 draft; light mids session; Document worker/RAG interfaces and test one invalid payload; light session | Not started | — | — |
+| W07 | 2026-12-08 | Review RAG evidence and failure cases; light mids session; Update architecture notes and fix a small test; light session | Not started | — | — |
+| W08 | 2026-12-15 | Connect domain workers through adapters; Verify support-plus-quote routing and independent task overlap | Not started | — | — |
+| W09 | 2026-12-22 | Persist customer/admin waiting states; Connect approval result and resume without losing completed tasks | Not started | — | — |
+| W10 | 2026-12-29 | Connect authorized execution receipts to final response; Run real backend journey and verify restart/duplicate-request behavior | Not started | — | — |
+| W11 | 2027-01-05 | Support frontend integration and fix contract defects; Freeze backend scope; verify same core with Profiles A/B and disabled booking | Not started | — | — |
+| W12 | 2027-01-12 | Run fresh-setup integration and finalize Chapter 1 material; Rehearse explanation of graph/RAG; fix only release-blocking defects | Not started | — | — |
 
-| Session | Planned date | Deliverable | Status | Actual date | Evidence / PR / test | Dependency / next handoff |
-|---|---|---|---|---|---|---|
-| W01-A | 2026-10-26 | Define request/task/result schemas plus business-profile and capability contracts | In progress | 2026-10-27 | backend/schemas/contracts/ — business_profile.md, task_contracts.md, conversation_contracts.md, sample_payloads.json, README.md — branch: w01a-schema-contracts | Arif: confirm policy field names (W01-B). Shizza: confirm adapter/catalog/resource ref IDs (W01-B). Asad: confirm conversation status fields for Overview (W01-B). |
-| W01-B | 2026-10-29 | Review shared sample payloads and first end-to-end scenario | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W02-A | 2026-11-02 | Create FastAPI skeleton and typed profile validation with unknown-capability rejection | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W02-B | 2026-11-05 | Add backend lint/tests and authenticated demo identity foundation | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W03-A | 2026-11-09 | Implement conversation/message persistence | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W03-B | 2026-11-12 | Verify history reload and denied cross-customer access | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W04-A | 2026-11-16 | Build reviewed-document chunking and ingestion | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W04-B | 2026-11-19 | Verify profile-scoped retrieval, source IDs and no-evidence behavior | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W05-A | 2026-11-23 | Implement intake with structured intent output | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W05-B | 2026-11-26 | Run supervisor with fake workers and dependency-aware routing | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W06-A | 2026-11-30 | Review state schemas and Chapter 1 draft; light mids session | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W06-B | 2026-12-03 | Document worker/RAG interfaces and test one invalid payload; light session | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W07-A | 2026-12-07 | Review RAG evidence and failure cases; light mids session | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W07-B | 2026-12-10 | Update architecture notes and fix a small test; light session | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W08-A | 2026-12-14 | Connect domain workers through adapters | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W08-B | 2026-12-17 | Verify support-plus-quote routing and independent task overlap | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W09-A | 2026-12-21 | Persist customer/admin waiting states | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W09-B | 2026-12-24 | Connect approval result and resume without losing completed tasks | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W10-A | 2026-12-28 | Connect authorized execution receipts to final response | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W10-B | 2026-12-31 | Run real backend journey and verify restart/duplicate-request behavior | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W11-A | 2027-01-04 | Support frontend integration and fix contract defects | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W11-B | 2027-01-07 | Freeze backend scope; verify same core with Profiles A/B and disabled booking | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W12-A | 2027-01-11 | Run fresh-setup integration and finalize Chapter 1 material | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W12-B | 2027-01-14 | Rehearse explanation of graph/RAG; fix only release-blocking defects | Not started | — | — | Use shared contracts; record live handoff when applicable |
+## Work log
 
-## Session evidence log
+- **27 October 2026 ? W01-A:** Defined profile, capability, task and conversation contracts with sample payloads. Design and Git hygiene checks only; integrations were mocked. Teammate contract review remains pending. [Original session record](docs/planning/archive/progress-evidence-2026-10-31.md).
+- **30 October 2026 ? Local prototype setup:** Imported the prototype, configured the environment and prepared dependency-based commit batches. Checks passed: 49 backend tests, lint, frontend types/build, SQLite migration/seed and two browser journeys. Demo agents and mocked provider calls were used; PostgreSQL, Docker and real providers remain unverified. [Test evidence](docs/VERIFICATION.md).
+- **30 October 2026 ? Planning:** Combined the schedule into 12 Tuesdays per member; checked all 48 weekly entries against the Gantt plan. No future session was completed.
+- **31 October 2026 ? Workflow cleanup:** Prepared four private Tuesday prompts, retired the old member instructions and updated onboarding. Checked ignore rules, weekly rows and repository hygiene. Shortened these progress files; earlier evidence remains in the archive. No application tests were rerun for these documentation edits.
 
-Append entries rather than overwriting prior evidence:
+- **31 October 2026 - Repository cleanup:** Removed the duplicate HTML handover and unused formatter; simplified documentation and centralized the origin record. Frontend lint/types/build, dependency consistency and schedule checks passed. [Details](docs/VERIFICATION.md).
 
-### W01-A — 2026-10-27
+- **31 October 2026 - Team package preparation:** Selected the non-ignored project files and checked private-file exclusions and local credential values. Prepared separate private prompt copies and a reference-package setup guide. No application changes or publication.
 
-- Session and actual date: W01-A — 2026-10-27
-- Implemented or reviewed: Defined BusinessProfile + capability registry contract, IntakeOutput/TaskDefinition/WorkerResult/ActionProposal/TaskStatus contracts, ConversationRecord/MessageRecord/RunRecord contracts, shared sample payloads JSON.
-- Files / commit / PR: backend/schemas/contracts/README.md, business_profile.md, task_contracts.md, conversation_contracts.md, sample_payloads.json — docs/learning/schema-contracts.md — docs/planning/gantt-plan.csv (Wasam-W04-B fix) — docs/planning/decision-log.md (new row) — branch w01a-schema-contracts
-- Commands run and observed results: Design-only session. No runtime commands claimed. CI hygiene checks run before commit (git ls-files and git diff --cached --check).
-- Mocked dependencies versus real integrations: ALL integrations are mocked at this stage. Arif's quote service (unit_price, total, expiry) → placeholder strings in sample_payloads.json. Shizza's worker implementations → agreed WorkerResult shape not yet built. Asad's UI → agreed ConversationRecord/TaskStatusRecord field names; no screen built yet.
-- What I can explain: The five contract shapes and why each field exists, the dependency rules table, why amounts use Decimal strings, why capabilities are code-registered not profile-defined, why customer_id is never trusted from a message body.
-- Report sections updated: None this session (design output only; Shizza will pull technical facts into Ch. 4 after review).
-- Blocker, owner and next action: No blocker. Pending teammate confirmation of open points listed in each contract file. Next: W01-B (2026-10-29) — review shared sample payloads and first end-to-end scenario with team.
-- Reviewer and review date, if actually reviewed: Pending
+- **31 October 2026 - Visual refinement:** Requested a softer 60/30/10 palette and clearer typography. Updated shared frontend styles and self-hosted fonts; adjusted inspector sizing for mobile. Frontend lint/types/build passed. Design rationale: [visual theme](docs/learning/visual-theme.md). Asad review and independent batch verification remain pending.
 
-## Final handoff
+- **4 November 2026 - W02 combined session:** Prepared the ISP pitch demo (Alpha Max branding, Karachi reference offers, isolated fixtures and read-only enquiry support), then added the customer-aware demo with account-linked context, area incidents, durable ticket responses, scoped reads and connection isolation tests. The backend suite passed 59 tests, including the earlier 54-test ISP checkpoint; desktop/mobile offer and enquiry checks passed. Also consolidated onboarding, archived the original ZIP manifest and prepared the private teammate handoff guide. Client approval, human code review, teammate completion and publication remain pending; no additional weekly session is inferred. [Evidence](docs/VERIFICATION.md), [implementation guide](docs/ISP_PITCH.md), and [customer-context guide](docs/learning/customer-service-context.md).
 
-- Standalone verification: Not started.
-- Live integration verification: Not started.
-- Documentation reviewed: Not started.
-- Known limitations: Not yet assessed.
+**Next:** Review B01 on wasam/w02-foundation and merge it through the team's normal review process when authorized. Then prepare B02 against a committed base containing B01. The original prototype checkout remains on its earlier branch; other imported changes are uncommitted. B02-B09 still require independent verification. Human review remains pending.
 
-## W02 foundation contribution - 4 November 2026
+[Project background](docs/PROJECT_ORIGIN.md).
 
-Catch-up for the Tuesday 3 November scope. B01 adds validated business configuration, strict request/intake schemas, shared SQL models, migrations and isolated foundation tests. It includes storage contracts for later modules; it does not expose the HTTP application, authenticate customers, run workers or execute business actions. W02 remains in progress: B02 authentication and later integration are pending.
-
-The source came from the documented prototype; publication and automated checks were prepared at Wasam's request. Individual understanding and teammate review are not asserted. Review focus: profile validation/fingerprints, foreign keys/uniqueness, session factories and why a table does not authorize an action. Compare the complete B01 manifest and learning/shared-foundation.md before follow-on work.
-
-Actual checks/results are recorded in docs/commits/verification.md. Commit/push pending at preparation time; remote CI is not yet observed. No other weekly session is marked complete.
-
-Observed local results (4 November 2026): Ruff passed; eight foundation tests passed; fresh SQLite upgrade and Alembic metadata check passed. No application modules outside B01 were present. Remote CI remains unobserved; PostgreSQL and HTTP integration are outside this candidate.
+For each session, add a short dated note: work/files changed, checks and results, mocked or live dependencies, learning/review, affected docs, and next step. After a push, add the real SHA and observed PR/CI status. Follow the push checklist for details.
 
 ## W02 push evidence - 4 November 2026
 
@@ -74,10 +50,10 @@ Observed local results (4 November 2026): Ruff passed; eight foundation tests pa
 - Based on current main 433a3c1c1a0559ce14957cf55302b1b52eb46541. Exact scope: 24 B01 files plus dated additions to Wasam-progress.md and Chapter 4; no other local progress rewrites or imported modules included.
 - Independent candidate checks passed: Ruff, eight foundation tests, fresh SQLite migration and metadata comparison; staged hygiene and whitespace passed. Snapshot: C:/Users/wasam/AppData/Local/AgentHive-imports/20261104-w02-candidate-check/publication-evidence.json.
 - No PR created or merge performed. GitHub Actions API initially returned no push workflow run for this SHA; remote CI not yet observed. Human review remains pending. W02 is in progress; B02 identity is the next prerequisite task after the foundation reaches the agreed integration base.
-- This entry was recorded locally after the foundation push and is included in the next normal documentation cleanup commit.
+- This post-push entry remains local for the next reviewed contribution; no evidence-only follow-up commit is created.
 
 ## Documentation cleanup - 4 November 2026
 
 Moved the shared commit plan to docs/commits/COMMIT_PLAN.md and removed the obsolete FIRST_COMMIT.md guide. Updated active plan references and the staging manifest. Documentation/manifest checks and whitespace validation passed; application behavior is unchanged, so runtime tests were not rerun.
 
-Follow-up observation: foundation PR #2 has merged into main (3244df6). This documentation cleanup is on wasam/docs-cleanup; no new merge is performed by this task.
+- **4 November 2026 - Cleanup push:** Published 80e1c664858d3671946967037e072d9f4f9a1736 on wasam/docs-cleanup; remote SHA confirmed at 2026-11-04T22:54:29+05:00. Plan moved to docs/commits/COMMIT_PLAN.md, obsolete FIRST_COMMIT.md removed. Link/manifest/hygiene/whitespace checks passed. New PR/merge and remote CI not yet observed. Post-push evidence retained locally for the next normal contribution.

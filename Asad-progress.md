@@ -1,57 +1,34 @@
 # Asad FYP-I progress
 
-Owner: Asad
+**Scope:** Frontend dashboard/simulator and read-only operations overview API.
+**Target:** 15 January 2027. One Tuesday session each week; unfinished work carries forward.
+**Cadence:** One combined contribution session per Tuesday each week. The former A/B tasks are combined into the single weekly deliverable shown below.
 
-Module: Frontend dashboard/simulator and read-only operations overview API.
+[Weekly scopes and dependencies](docs/planning/WEEKLY_COMMIT_PLAN.md) | [Push checklist](docs/planning/PUSH_CHECKLIST.md)
 
-Target: 15 January 2027. This is a plan; no implementation or attendance is asserted.
+Dates below are plans, not attendance or completion claims. Record one dated weekly entry for each actual session, with any unfinished work carried forward. Aim for one focused commit when ready.
 
-Statuses: Not started → In progress → Standalone verified → Integration pending → Integrated and verified. Use Blocked with a reason when independent work is not possible. Document tasks may use Reviewed after an identified reviewer confirms them. Do not infer progress from dates.
+| Week | Planned Tuesday | Deliverable | Status | Actual date | Evidence / PR / test |
+|---|---|---|---|---|---|
+| W01 | 2026-10-27 | List generic user journeys and profile/capability fields needed by screens; Sketch chat, approval and trace screens against shared samples | Not started | — | — |
+| W02 | 2026-11-03 | Define overview count response and status meanings; Write small aggregation function with synthetic fixture tests | Not started | — | — |
+| W03 | 2026-11-10 | Implement protected read-only overview endpoint; Test counts, empty data and denied access using agreed backend adapter | Not started | — | — |
+| W04 | 2026-11-17 | Prepare frontend component plan and mock response fixtures; Define waiting/error/loading and approval-confirmation behavior | Not started | — | — |
+| W05 | 2026-11-24 | Specify API client contract and frontend acceptance cases; Review mock events for each supported demo journey | Not started | — | — |
+| W06 | 2026-12-01 | Review Chapter 4 interface requirements; light mids session; Check accessible labels and Urdu layout requirements; light session | Not started | — | — |
+| W07 | 2026-12-08 | Review screen flow and sample API data; light mids session; Resolve documented contract questions and small overview defects | Not started | — | — |
+| W08 | 2026-12-15 | Finalize configurable labels, currency/timezone and capability-aware mock screens; Verify overview endpoint against available real data models | Not started | — | — |
+| W09 | 2026-12-22 | Verify backend APIs match frontend fixtures; Prepare a concise implementation brief and frontend test plan | Not started | — | — |
+| W10 | 2026-12-29 | Generate/build frontend foundation and demo chat; Connect API client, login/session flow and conversation display | Not started | — | — |
+| W11 | 2027-01-05 | Build approval and basic inspector screens; connect real APIs; Verify consent, approvals, REST recovery and capability-aware UI; add frontend CI | Not started | — | — |
+| W12 | 2027-01-12 | Run user journeys from clean setup and correct UI defects; Rehearse complete demo and supply verified Chapter 4 screenshots | Not started | — | — |
 
-| Session | Planned date | Deliverable | Status | Actual date | Evidence / PR / test | Dependency / next handoff |
-|---|---|---|---|---|---|---|
-| W01-A | 2026-10-26 | List generic user journeys and profile/capability fields needed by screens | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W01-B | 2026-10-29 | Sketch chat, approval and trace screens against shared samples | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W02-A | 2026-11-02 | Define overview count response and status meanings | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W02-B | 2026-11-05 | Write small aggregation function with synthetic fixture tests | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W03-A | 2026-11-09 | Implement protected read-only overview endpoint | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W03-B | 2026-11-12 | Test counts, empty data and denied access using agreed backend adapter | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W04-A | 2026-11-16 | Prepare frontend component plan and mock response fixtures | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W04-B | 2026-11-19 | Define waiting/error/loading and approval-confirmation behavior | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W05-A | 2026-11-23 | Specify API client contract and frontend acceptance cases | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W05-B | 2026-11-26 | Review mock events for each supported demo journey | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W06-A | 2026-11-30 | Review Chapter 4 interface requirements; light mids session | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W06-B | 2026-12-03 | Check accessible labels and Urdu layout requirements; light session | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W07-A | 2026-12-07 | Review screen flow and sample API data; light mids session | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W07-B | 2026-12-10 | Resolve documented contract questions and small overview defects | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W08-A | 2026-12-14 | Finalize configurable labels, currency/timezone and capability-aware mock screens | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W08-B | 2026-12-17 | Verify overview endpoint against available real data models | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W09-A | 2026-12-21 | Verify backend APIs match frontend fixtures | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W09-B | 2026-12-24 | Prepare concise AI implementation brief and frontend test plan | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W10-A | 2026-12-28 | Generate/build frontend foundation and demo chat using AI assistance | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W10-B | 2026-12-31 | Connect API client, login/session flow and conversation display | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W11-A | 2027-01-04 | Build approval and basic inspector screens; connect real APIs | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W11-B | 2027-01-07 | Verify consent, approvals, REST recovery and capability-aware UI; add frontend CI | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W12-A | 2027-01-11 | Run user journeys from clean setup and correct UI defects | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W12-B | 2027-01-14 | Rehearse complete demo and supply verified Chapter 4 screenshots | Not started | — | — | Use shared contracts; record live handoff when applicable |
+## Work log
 
-## Session evidence log
+No individual work or tests recorded yet.
 
-Append entries rather than overwriting prior evidence:
+**Planning:** On 30 October 2026, the former A/B schedule was combined into 12 Tuesday sessions. The archived schedule is retained for historical context and does not create additional current sessions or completion claims. [Previous schedule](docs/planning/archive/pre-tuesday-progress.md).
 
-- Session and actual date:
-- Implemented or reviewed:
-- Files / commit / PR:
-- Commands run and observed results:
-- Mocked dependencies versus real integrations:
-- What I can explain:
-- Report sections updated:
-- Blocker, owner and next action:
-- Reviewer and review date, if actually reviewed:
+**Next:** Review W01 contracts and the dependencies for your first contribution.
 
-## Final handoff
-
-- Standalone verification: Not started.
-- Live integration verification: Not started.
-- Documentation reviewed: Not started.
-- Known limitations: Not yet assessed.
+For each session, add a short dated note: work/files changed, checks and results, mocked or live dependencies, learning/review, affected docs, and next step. After a push, add the real SHA and observed PR/CI status. Follow the push checklist for details.
