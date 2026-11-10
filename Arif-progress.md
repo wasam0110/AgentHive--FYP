@@ -41,13 +41,15 @@ Append entries rather than overwriting prior evidence:
 
 - Session and actual date: 2026-11-10
 - Implemented or reviewed: W01-A policy matrix, consent/approval/receipt contract, and proposal storage boundaries.
-- Files / commit / PR: `docs/BUSINESS_CONFIGURATION.md`, `docs/DATABASE.md`, `backend/schemas/contracts/task_contracts.md`, `docs/learning/policy-contracts.md`; no commit or PR created.
+- Files / commit / PR: `docs/BUSINESS_CONFIGURATION.md`, `docs/DATABASE.md`, `backend/schemas/contracts/task_contracts.md`, `docs/learning/policy-contracts.md`; commit `bec19b4bc57ba1798e18b147a6e794a8dbb2a685` pushed on `arif/w01-policy-contracts`; PR not created.
 - Commands run and observed results: `python scripts/check_repository.py` and `git diff --check` passed on the proposed documentation change; no runtime service test was applicable.
 - Mocked dependencies versus real integrations: proposal, decision, mutation and receipt services are not implemented; B02 identity and B03 service prerequisites are not committed on `main`.
 - What I can explain: Decimal-string money boundaries, profile/policy fingerprint versus proposal version, separate customer/admin decisions, revalidation, idempotency and transaction safety.
 - Report sections updated: none; requirements remain a draft and no runtime behavior is claimed.
 - Blocker, owner and next action: B02 identity by Wasam must be committed before B03 services can be independently prepared; obtain teammate review of W01-A contracts.
 - Reviewer and review date, if actually reviewed: pending.
+
+- Publication evidence: 2026-11-10 21:38:59 +05:00 — `git push -u origin arif/w01-policy-contracts` succeeded; remote branch tracks `origin/arif/w01-policy-contracts`. GitHub suggested creating a pull request; no PR was created.
 
 ## Final handoff
 
