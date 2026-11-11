@@ -136,13 +136,43 @@
       "status": "Pending isolated verification"
     },
     {
+      "id": "B05a",
+      "owner": "Shizza",
+      "title": "Profile-scoped synthetic fixture contract",
+      "dependencies": [
+        "B01"
+      ],
+      "files": [
+        "docs/BUSINESS_CONFIGURATION.md",
+        "docs/commits/COMMIT_PLAN.md",
+        "docs/commits/staging-manifests.json",
+        "docs/commits/verification.md",
+        "docs/VERIFICATION.md",
+        "examples/seed-fixtures/demo-a.json",
+        "examples/seed-fixtures/demo-b.json",
+        "scripts/seed_fixtures.py",
+        "shizza-progress.md",
+        "tests/unit/test_seed_fixtures.py"
+      ],
+      "understand": "A code-owned allowlist selects fixture data; typed validation rejects malformed records and mismatched profile references before database writes. This slice does not persist rows or implement read tools.",
+      "checks": "In a clean snapshot of committed HEAD plus only these files, run python -m pytest -q tests/unit/test_seed_fixtures.py and ruff check scripts/seed_fixtures.py tests/unit/test_seed_fixtures.py; run git diff --check for tracked edits and git diff --no-index --check against an empty file for each new path.",
+      "documentation": [
+        "shizza-progress.md",
+        "docs/BUSINESS_CONFIGURATION.md",
+        "docs/VERIFICATION.md",
+        "docs/commits/verification.md"
+      ],
+      "status": "Candidate independently verified 2026-11-11; human review and publication pending"
+    },
+    {
       "id": "B05",
       "owner": "Shizza",
       "title": "Synthetic seed, reference tools and read workflow",
       "dependencies": [
         "B01",
         "B02",
-        "B04"
+        "B04",
+        "B05a"
       ],
       "files": [
         "backend/agents/workflow.py",
@@ -150,12 +180,9 @@
         "backend/tools/reference.py",
         "scripts/seed.py",
         "tests/unit/test_seed_workflow.py",
-        "scripts/seed_fixtures.py",
         "backend/services/reference_offers.py",
         "examples/business-profiles/profile-isp.json",
         "examples/reference-offers/stormfiber-karachi.json",
-        "examples/seed-fixtures/demo-a.json",
-        "examples/seed-fixtures/demo-b.json",
         "examples/seed-fixtures/isp-pitch.json",
         "backend/rag/knowledge/isp-pitch/coverage.md",
         "backend/rag/knowledge/isp-pitch/ref-01.md",

@@ -6,11 +6,11 @@ See [Project origin](../PROJECT_ORIGIN.md) for the original generation and impor
 
 Base: `1c35bb5e4c2ef4ab59d7bf5580e42a8b5d6a8c9c`. Preserve the historical W01-A and decision-log corrections. The obsolete root FIRST_COMMIT.md guide has been retired. Retired member instructions have been replaced by privately shared, ignored Tuesday prompts.
 
-**Commit B01 first.** The shared schema and single migration chain belong to all four owners; Wasam coordinates them. B02 and B04 can follow independently after B01. B03 needs B02; B05 needs B02/B04; B06 joins those modules. B07 then connects the UI; B08 adds complete CI/deployment; B09 reconciles final documentation.
+**Commit B01 first.** The shared schema and single migration chain belong to all four owners; Wasam coordinates them. B02 and B04 can follow independently after B01. B03 needs B02. B05a is a separately testable fixture-contract slice that needs only B01; the full B05 seed/read workflow needs B02, B04, and B05a. B06 joins those modules. B07 then connects the UI; B08 adds complete CI/deployment; B09 reconciles final documentation.
 
 Exact paths are listed below and in `docs/commits/staging-manifests.json`; no directory globs are staging authorization. Documentation-update lists are handoff requirements: add only actual dated evidence and approved hunks when that work happens. Later additions to tests or docs must be added explicitly to the batch manifest and retested.
 
-**Verification rule:** export the then-current committed HEAD and overlay only the proposed batch. Dependencies must already be committed in that HEAD. Never copy other pending batches, the working .env, installed source modules, or the integration conftest into that snapshot. Install dependencies from its lockfiles, clear PYTHONPATH, use disposable data, and save base SHA, source hashes, commands and results. Only that result can establish independent verification. The full imported tree passing proves integration only. B02-B09 remain pending independent verification; their focused tests are supplied, but isolated checks and member reviews must happen before those commits. B01 uses `scripts/verify_batch.py`; it refuses later batches rather than hiding missing prerequisites.
+**Verification rule:** export the then-current committed HEAD and overlay only the proposed batch. Dependencies must already be committed in that HEAD. Never copy other pending batches, the working .env, installed source modules, or the integration conftest into that snapshot. Install dependencies from its lockfiles, clear PYTHONPATH, use disposable data, and save base SHA, source hashes, commands and results. Only that result can establish independent verification. The full imported tree passing proves integration only. B02-B05 and B06-B09 remain pending independent verification; B05a's candidate result is recorded below. B01 uses `scripts/verify_batch.py`; it refuses later batches rather than hiding missing prerequisites.
 
 ## B01 ? Shared validated configuration and SQL foundation
 
@@ -129,9 +129,36 @@ Update after actual work: Wasam-progress.md; docs/ARCHITECTURE.md; docs/learning
 
 Status: see docs/commits/verification.md; future work is not complete.
 
+## B05a ? Profile-scoped synthetic fixture contract
+
+Owner: Shizza. Dependencies: B01.
+
+This independently testable W02 slice validates the registered demo A/B seed-fixture data and profile references. It does not persist rows, implement read adapters, or complete B05; those parts remain gated on B02 and B04.
+
+Exact files:
+
+- `docs/BUSINESS_CONFIGURATION.md`
+- `docs/commits/COMMIT_PLAN.md`
+- `docs/commits/staging-manifests.json`
+- `docs/commits/verification.md`
+- `docs/VERIFICATION.md`
+- `examples/seed-fixtures/demo-a.json`
+- `examples/seed-fixtures/demo-b.json`
+- `scripts/seed_fixtures.py`
+- `shizza-progress.md`
+- `tests/unit/test_seed_fixtures.py`
+
+Understand: A code-owned allowlist selects fixture data; typed validation rejects malformed records and mismatched profile references before database writes. The slice has no database or retrieval side effects.
+
+Checks: Export committed HEAD and overlay only these exact files; from the snapshot root run `python -m pytest -q tests/unit/test_seed_fixtures.py` and `ruff check scripts/seed_fixtures.py tests/unit/test_seed_fixtures.py`. In the working checkout, run `git diff --check` for tracked edits and `git diff --no-index --check` against an empty file for each new path. These checks do not verify database seeding, read tools, or workflow integration.
+
+Update after actual work: shizza-progress.md; docs/BUSINESS_CONFIGURATION.md; docs/VERIFICATION.md; docs/commits/verification.md.
+
+Status: see docs/commits/verification.md; this slice does not complete B05.
+
 ## B05 ? Synthetic seed, reference tools and read workflow
 
-Owner: Shizza. Dependencies: B01, B02, B04.
+Owner: Shizza. Dependencies: B01, B02, B04, B05a.
 
 Exact files:
 
@@ -140,12 +167,9 @@ Exact files:
 - `backend/tools/reference.py`
 - `scripts/seed.py`
 - `tests/unit/test_seed_workflow.py`
-- `scripts/seed_fixtures.py`
 - `backend/services/reference_offers.py`
 - `examples/business-profiles/profile-isp.json`
 - `examples/reference-offers/stormfiber-karachi.json`
-- `examples/seed-fixtures/demo-a.json`
-- `examples/seed-fixtures/demo-b.json`
 - `examples/seed-fixtures/isp-pitch.json`
 - `backend/rag/knowledge/isp-pitch/coverage.md`
 - `backend/rag/knowledge/isp-pitch/ref-01.md`
