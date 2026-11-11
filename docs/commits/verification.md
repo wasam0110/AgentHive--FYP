@@ -74,3 +74,17 @@ The earlier customer-context B01 hashes are superseded by documentation/manifest
 Base: 433a3c1c1a0559ce14957cf55302b1b52eb46541 (current origin/main). Candidate: the exact B01 manifest files plus only the dated foundation additions to Wasam-progress.md and docs/report/04-planning-and-requirements.md. No other uncommitted modules or prior local progress rewrites are included. Snapshot: C:/Users/wasam/AppData/Local/AgentHive-imports/20261104-w02-candidate-check. Its publication-evidence.json records the full candidate path/hash list and actual command results. Run lint, eight foundation tests, fresh SQLite migration/metadata comparison, hygiene and whitespace checks before publication. Remote starter CI checks hygiene only; application CI and PostgreSQL remain later work.
 
 Observed local results (4 November 2026): Ruff passed; eight foundation tests passed; fresh SQLite upgrade and Alembic metadata check passed. No application modules outside B01 were present. Remote CI remains unobserved; PostgreSQL and HTTP integration are outside this candidate.
+
+## Shizza W02 fixture-contract candidate (B05a) - 11 November 2026
+
+Base: committed `main` at `0f3b4ab87b831e650941df5dc94d900983246d82`. The snapshot was created with `git archive HEAD` and only the B05a candidate paths were overlaid. The source-only snapshot is `C:\Users\mhamz\AppData\Local\AgentHive-verify\20261111-B05a-final`; its virtual environment and `batch-evidence.json` are outside the snapshot. The evidence JSON records the complete path/hash list, environment, commands, and outputs.
+
+Python 3.14.0; isolated virtual environment with the pinned test dependencies from requirements.txt (`pytest==9.2.0`, `pydantic==2.14.1`, `pycountry==26.2.16`, `python-dotenv==1.2.4`, `ruff==0.17.3`, `tzdata==2026.6`). `PYTHONPATH`, `DATABASE_URL`, `BUSINESS_PROFILE`, and `CHROMA_PATH` were cleared. Import resolution confirmed `backend` came from the snapshot.
+
+| Check | Result |
+|---|---|
+| `python -m pytest -q tests/unit/test_seed_fixtures.py` | Passed: 6 tests |
+| `ruff check scripts/seed_fixtures.py tests/unit/test_seed_fixtures.py` | Passed |
+| `git diff --check` for tracked edits; `git diff --no-index --check` against empty input for each new path | Passed; no whitespace diagnostics |
+
+The initial test attempt exposed missing timezone data in the minimal environment, not a source failure. Installing the pinned `tzdata==2026.6` dependency and rerunning produced the result above. No database or retrieval integration ran; B02 and B04 are not committed on `main`, and full B05 remains pending. Candidate is not staged, committed, or pushed; human review is pending. Evidence JSON: `C:\Users\mhamz\AppData\Local\AgentHive-verify\20261111-B05a-final-evidence.json`.

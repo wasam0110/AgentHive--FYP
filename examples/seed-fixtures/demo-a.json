@@ -1,0 +1,27 @@
+{
+  "knowledge_directory": "demo-a",
+  "catalog_reference": "demo-a-catalog",
+  "resource_reference": "demo-a-resources",
+  "customers": [
+    "Amina Khan",
+    "Omar Ali"
+  ],
+  "resource_label": "Specialist",
+  "items": [
+    {
+      "name": "Discovery session",
+      "description": "A focused introductory session to understand your needs.",
+      "price": "2500.00"
+    },
+    {
+      "name": "Complete service",
+      "description": "A comprehensive service appointment with a specialist.",
+      "price": "7500.00"
+    },
+    {
+      "name": "Follow-up consultation",
+      "description": "Review progress and discuss next steps.",
+      "price": "1500.00"
+    }
+  ]
+}
