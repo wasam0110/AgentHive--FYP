@@ -87,7 +87,7 @@ Understand: Decimal prices, exact-version consent, admin authority, expiry, tran
 
 Checks: Direct price/redaction smoke: pytest -q tests/unit/test_quote_service.py. Full consent, expiry, stale approval, duplicate and concurrent execution safety tests run at B06; do not expose these services through HTTP before B06.
 
-Update after actual work: Arif-progress.md; docs/DATABASE.md; docs/API.md; docs/learning/FUNCTION_GUIDE.md; docs/report/04-planning-and-requirements.md.
+Update after actual work: Arif-progress.md; docs/DATABASE.md; docs/API.md; docs/learning/FUNCTION_GUIDE.md; docs/learning/policy-contracts.md; docs/commits/verification.md; docs/report/04-planning-and-requirements.md.
 
 Status: see docs/commits/verification.md; future work is not complete.
 

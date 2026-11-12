@@ -36,6 +36,38 @@ files were copied from the reference source.
 documentation-only check; it does not establish quote, approval, transaction, or receipt
 runtime behavior. The candidate remains uncommitted pending human/team review.
 
+## Arif W02/W03 quote and proposal-validation candidate - 12 November 2026
+
+Base: committed `origin/main` at `98ee63e62a7b666793f4220064c12e819be30a6e` (B01 plus
+the merged Shizza fixture-contract work). B02 identity files are still absent. Only
+`backend/services/approvals.py`, `backend/services/quotes.py`,
+`backend/services/redaction.py`, `tests/unit/test_quote_service.py`,
+`Arif-progress.md`, `docs/DATABASE.md`, `docs/learning/policy-contracts.md`,
+`docs/commits/COMMIT_PLAN.md`, `docs/commits/staging-manifests.json` and this evidence
+file were overlaid. The code adds quote calculation, read-only proposal revalidation and
+recursive trace redaction; it does not expose a route or implement consent, administrator
+approval, execution or receipt creation.
+
+The clean snapshot at `C:\Users\PC\AppData\Local\Temp\AgentHive-Arif-Nov12-98ee63e` was
+exported from committed HEAD and overlaid only with the listed candidate code and
+documentation files. Observed checks:
+
+| Check | Result |
+|---|---|
+| `python scripts/check_repository.py` | Passed |
+| `python -m pytest -q tests/unit/test_quote_service.py tests/unit/test_foundation.py` | 36 passed |
+| `python -m ruff check backend/services/quotes.py backend/services/approvals.py backend/services/redaction.py tests/unit/test_quote_service.py` | Passed |
+| `git diff --cached --check` | Passed |
+
+This verifies the focused standalone quote and proposal-validation behavior, not the
+complete B03 batch. The B03 dependency on committed B02 identity is still unmet; there
+is no authenticated API wiring, customer-consent flow, administrator approval, execution
+transaction, or receipt replay in this candidate.
+
+The local `batch-evidence.json` in the snapshot records each overlaid file's SHA-256,
+commands and observed results. Any source edit invalidates those hashes and requires a
+fresh snapshot run.
+
 ## B02?B09
 
 Not independently verified. Their prerequisites have not been committed. The complete imported application passed 49 backend tests, frontend checks and two browser journeys, but that does not satisfy the independent batch rule. First commit the approved prerequisites, then export that committed base and overlay only the next batch's exact files, run its listed checks and record results with actual dates. No future work is complete.

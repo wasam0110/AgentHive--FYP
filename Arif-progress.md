@@ -11,11 +11,11 @@ Statuses: Not started → In progress → Standalone verified → Integration pe
 | Session | Planned date | Deliverable | Status | Actual date | Evidence / PR / test | Dependency / next handoff |
 |---|---|---|---|---|---|---|
 | W01-A | 2026-10-26 | Define profile-driven policy matrix and approval/consent requirements | Standalone verified | 2026-11-10 | Documentation contract review on `arif/w01-policy-contracts`; `python scripts/check_repository.py` and `git diff --check` passed | Human/team review and B02/B03 integration remain pending |
-| W01-B | 2026-10-29 | Agree proposal/receipt contracts and safety examples | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W02-A | 2026-11-02 | Implement Decimal quote service using configured catalog/currency/policy | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W02-B | 2026-11-05 | Test price differences, invalid discounts and missing catalog values | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W03-A | 2026-11-09 | Implement proposal validation with fake data adapter | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W03-B | 2026-11-12 | Test denied, stale and malformed proposals | Not started | — | — | Use shared contracts; record live handoff when applicable |
+| W01-B | 2026-10-29 | Agree proposal/receipt contracts and safety examples | In progress | — | Draft contract and examples exist; teammate agreement/review is pending | Ask contract owners to confirm; do not claim team agreement |
+| W02-A | 2026-11-02 | Implement Decimal quote service using configured catalog/currency/policy | Standalone verified | 2026-11-12 | `tests/unit/test_quote_service.py`; 28 tests passed with W02/W03 validation coverage | B02/API integration and controlled approval remain pending |
+| W02-B | 2026-11-05 | Test price differences, invalid discounts and missing catalog values | Standalone verified | 2026-11-12 | Profile A/B prices/currencies and invalid catalog/policy cases in `tests/unit/test_quote_service.py` | Uses fake adapter; live catalog integration remains pending |
+| W03-A | 2026-11-09 | Implement proposal validation with fake data adapter | Standalone verified | 2026-11-12 | `backend/services/approvals.py::validate`; stale, expired and changed terms rejected | Not wired to authenticated APIs; B02 integration pending |
+| W03-B | 2026-11-12 | Test denied, stale and malformed proposals | Standalone verified | 2026-11-12 | Denied, stale, closed, malformed, expiry, changed-policy/price and booking-conflict cases in 28 passing focused tests | Consent, admin approval and execution tests are later work |
 | W04-A | 2026-11-16 | Add proposal/confirmation/approval data models and migrations | Not started | — | — | Use shared contracts; record live handoff when applicable |
 | W04-B | 2026-11-19 | Verify approval is bound to exact proposal version | Not started | — | — | Use shared contracts; record live handoff when applicable |
 | W05-A | 2026-11-23 | Implement approve/reject service with authorized actor checks | Not started | — | — | Use shared contracts; record live handoff when applicable |
@@ -51,9 +51,19 @@ Append entries rather than overwriting prior evidence:
 
 - Publication evidence: 2026-11-10 21:38:59 +05:00 — `git push -u origin arif/w01-policy-contracts` succeeded; remote branch tracks `origin/arif/w01-policy-contracts`. GitHub suggested creating a pull request; no PR was created.
 
+- Session and actual date: 2026-11-12
+- Implemented or reviewed: W02-A/W02-B deterministic quote calculation and tests; W03-A/W03-B standalone proposal revalidation and denied/stale/malformed tests. W01-B remains a draft pending teammate agreement.
+- Files / commit / PR: `backend/services/quotes.py`, `backend/services/approvals.py`, `backend/services/redaction.py`, `tests/unit/test_quote_service.py`, `docs/DATABASE.md`, `docs/learning/policy-contracts.md`, `docs/commits/COMMIT_PLAN.md`, `docs/commits/staging-manifests.json`, `docs/commits/verification.md`, and this progress file; prepared on `arif/w02-w03-pricing-validation`; no commit or PR created.
+- Commands run and observed results: `.venv\Scripts\python.exe -m pytest -q tests\unit\test_quote_service.py` — 28 passed; including foundation tests, 36 passed in the clean snapshot. Ruff and repository hygiene checks passed; exact snapshot evidence is recorded in `docs/commits/verification.md`.
+- Mocked dependencies versus real integrations: the quote and validation tests use an in-memory fake catalog/slot adapter. No authenticated API, consent flow, admin approval, transaction executor, receipt replay, or live database catalog integration is claimed.
+- What I can explain: catalog-backed Decimal quote inputs/outputs, half-up cent rounding, policy and profile checks, proposal revalidation, stale-version/expiry failures, why validation does not authorize an actor, and recursive trace redaction.
+- Report sections updated: database and learning guidance updated; academic report draft not changed because no integrated behavior is established.
+- Blocker, owner and next action: Wasam's B02 identity batch is not committed to `main`; integrate the services only after B02 is merged. Teammate confirmation for W01-B remains pending.
+- Reviewer and review date, if actually reviewed: pending.
+
 ## Final handoff
 
-- Standalone verification: Not started.
+- Standalone verification: Quote and proposal-validation candidate tests pass; exact B03 dependency-gated verification remains pending B02.
 - Live integration verification: Not started.
-- Documentation reviewed: Not started.
-- Known limitations: Not yet assessed.
+- Documentation reviewed: Updated by the contributor; peer review pending.
+- Known limitations: Authentication, ownership checks, consent/admin decisions, execution transactions and receipt replay are not implemented in this contribution.

@@ -89,6 +89,8 @@
         "docs/DATABASE.md",
         "docs/API.md",
         "docs/learning/FUNCTION_GUIDE.md",
+        "docs/learning/policy-contracts.md",
+        "docs/commits/verification.md",
         "docs/report/04-planning-and-requirements.md"
       ],
       "status": "Pending isolated verification"
