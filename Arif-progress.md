@@ -53,13 +53,15 @@ Append entries rather than overwriting prior evidence:
 
 - Session and actual date: 2026-11-12
 - Implemented or reviewed: W02-A/W02-B deterministic quote calculation and tests; W03-A/W03-B standalone proposal revalidation and denied/stale/malformed tests. W01-B remains a draft pending teammate agreement.
-- Files / commit / PR: `backend/services/quotes.py`, `backend/services/approvals.py`, `backend/services/redaction.py`, `tests/unit/test_quote_service.py`, `docs/DATABASE.md`, `docs/learning/policy-contracts.md`, `docs/commits/COMMIT_PLAN.md`, `docs/commits/staging-manifests.json`, `docs/commits/verification.md`, and this progress file; prepared on `arif/w02-w03-pricing-validation`; no commit or PR created.
+- Files / commit / PR: `backend/services/quotes.py`, `backend/services/approvals.py`, `backend/services/redaction.py`, `tests/unit/test_quote_service.py`, `docs/DATABASE.md`, `docs/learning/policy-contracts.md`, `docs/commits/COMMIT_PLAN.md`, `docs/commits/staging-manifests.json`, `docs/commits/verification.md`, and this progress file; commit `d0fdb58d97f4a62545e1413ff16689e84968fba3` pushed on `arif/w02-w03-pricing-validation`; PR not created.
 - Commands run and observed results: `.venv\Scripts\python.exe -m pytest -q tests\unit\test_quote_service.py` — 28 passed; including foundation tests, 36 passed in the clean snapshot. Ruff and repository hygiene checks passed; exact snapshot evidence is recorded in `docs/commits/verification.md`.
 - Mocked dependencies versus real integrations: the quote and validation tests use an in-memory fake catalog/slot adapter. No authenticated API, consent flow, admin approval, transaction executor, receipt replay, or live database catalog integration is claimed.
 - What I can explain: catalog-backed Decimal quote inputs/outputs, half-up cent rounding, policy and profile checks, proposal revalidation, stale-version/expiry failures, why validation does not authorize an actor, and recursive trace redaction.
 - Report sections updated: database and learning guidance updated; academic report draft not changed because no integrated behavior is established.
 - Blocker, owner and next action: Wasam's B02 identity batch is not committed to `main`; integrate the services only after B02 is merged. Teammate confirmation for W01-B remains pending.
 - Reviewer and review date, if actually reviewed: pending.
+
+- Publication evidence: 2026-11-12 22:05:27 +05:00 — `git push -u origin arif/w02-w03-pricing-validation` succeeded. GitHub suggested creating a pull request; no PR was created and CI status was not checked.
 
 ## Final handoff
 
