@@ -37,6 +37,18 @@ Enforce authentication, ownership, role checks, proposal versioning, consent and
 
 Use the detailed PRD requirements for full-release traceability; add actual test paths when implemented.
 
+### 4.2.1 Interface journey contract (Asad W01 design)
+
+The proposed chat screen separates persisted conversation/task state from an
+unsent local message draft. The approval screen presents one exact proposal
+version and keeps customer confirmation distinct from administrator approval.
+The trace screen displays task status and source-labelled evidence; it does not
+expose hidden model reasoning or infer success from a missing result. Configured
+business terminology and currency affect display only, while identity, role and
+action authorization remain server-side. The contract is a design draft based
+on the committed shared samples, not evidence that these screens or APIs run;
+see [the screen/API contract](../API.md).
+
 ## 4.3 Existing system study
 
 ### 4.3.1 Overview

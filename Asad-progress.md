@@ -10,8 +10,8 @@ Statuses: Not started → In progress → Standalone verified → Integration pe
 
 | Session | Planned date | Deliverable | Status | Actual date | Evidence / PR / test | Dependency / next handoff |
 |---|---|---|---|---|---|---|
-| W01-A | 2026-10-26 | List generic user journeys and profile/capability fields needed by screens | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W01-B | 2026-10-29 | Sketch chat, approval and trace screens against shared samples | Not started | — | — | Use shared contracts; record live handoff when applicable |
+| W01-A | 2026-10-26 | List generic user journeys and profile/capability fields needed by screens | In progress | 2026-11-15 | W01 design candidate in docs/API.md and Chapter 4; sample assertions and whitespace checks passed in a clean snapshot; not published | B01 is committed; review candidate; frontend types deferred to B07 |
+| W01-B | 2026-10-29 | Sketch chat, approval and trace screens against shared samples | In progress | 2026-11-15 | W01 design candidate in docs/API.md and Chapter 4; sample assertions and whitespace checks passed in a clean snapshot; not published | B01 is committed; review candidate; frontend types deferred to B07 |
 | W02-A | 2026-11-02 | Define overview count response and status meanings | Not started | — | — | Use shared contracts; record live handoff when applicable |
 | W02-B | 2026-11-05 | Write small aggregation function with synthetic fixture tests | Not started | — | — | Use shared contracts; record live handoff when applicable |
 | W03-A | 2026-11-09 | Implement protected read-only overview endpoint | Not started | — | — | Use shared contracts; record live handoff when applicable |
@@ -38,6 +38,17 @@ Statuses: Not started → In progress → Standalone verified → Integration pe
 ## Session evidence log
 
 Append entries rather than overwriting prior evidence:
+
+### 2026-11-15 - W01 design candidate (publication pending)
+
+- Implemented or reviewed: mapped generic chat, approval and trace journeys to the committed conversation, task, proposal and profile contracts; distinguished server state from local form state and recorded role/data boundaries.
+- Files / commit / PR: `docs/API.md`, `docs/report/04-planning-and-requirements.md`, `Asad-progress.md`; W01-only publication authorized, commit and push pending.
+- Commands run and observed results: from a clean snapshot, Node assertions against `sample_payloads.json`, the screen contract and its report link passed; `git diff --check` and the new-file trailing-whitespace check passed. A first inline assertion had a wording typo and failed; the corrected assertion passed without source changes.
+- Mocked dependencies versus real integrations: design and committed synthetic sample only; no API, frontend, authentication or browser journey ran.
+- What I can explain: proposal versions bind consent and approval; the UI presents backend state without treating local choices as authorization. Student review/understanding is pending.
+- Report sections updated: Chapter 4 interface journey contract.
+- Blocker, owner and next action: B06/B07 API and frontend integration are not present on `main`; retain `frontend/src/lib/types.ts` for B07 and do not claim a live journey. W02 overview implementation awaits B06. Verify the planned B03-to-B02 dependency with Arif/Wasam: B03 and B05a commits are on `main`, but B02 auth, B04 and full B05 are not.
+- Reviewer and review date: pending.
 
 - Session and actual date:
 - Implemented or reviewed:

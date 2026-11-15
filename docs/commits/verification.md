@@ -120,3 +120,18 @@ Python 3.14.0; isolated virtual environment with the pinned test dependencies fr
 | `git diff --check` for tracked edits; `git diff --no-index --check` against empty input for each new path | Passed; no whitespace diagnostics |
 
 The initial test attempt exposed missing timezone data in the minimal environment, not a source failure. Installing the pinned `tzdata==2026.6` dependency and rerunning produced the result above. No database or retrieval integration ran; B02 and B04 are not committed on `main`, and full B05 remains pending. Candidate is not staged, committed, or pushed; human review is pending. Evidence JSON: `C:\Users\mhamz\AppData\Local\AgentHive-verify\20261111-B05a-final-evidence.json`.
+
+## Asad W01 design candidate - 15 November 2026
+
+- Base: committed `main`, `36ffdbceab3f5d076aa3e61dadd5b103c3af2b12`.
+- Snapshot: `/Users/apple/Desktop/doc/AgentHive-FYP-w01-authorized-snapshot`; exported with `git archive HEAD`, then only `Asad-progress.md`, `docs/API.md`, `docs/report/04-planning-and-requirements.md`, `docs/VERIFICATION.md` and this evidence file were overlaid.
+- Environment: macOS; Git 2.39.2; Node.js 26.13.0; Python 3.9.6. Python 3.12, Node.js 24 and `tsc` were unavailable. No dependencies were installed.
+- Checks from the snapshot root: an inline Node assertion check parsed `backend/schemas/contracts/sample_payloads.json` and checked the conversation/message link, waiting-customer task, evidence source, proposal version, separate confirmation/approval flags, screen contract fields, design-only label, Chapter 4 subsection and relative link. All assertions passed. `git diff --check` and a trailing-whitespace scan of the new API document also passed.
+- Retry note: the first assertion script failed on a typo in its expected wording (`not a frontend-only decisions`); correcting the assertion to match the document produced a pass with no source changes.
+- Candidate paths: `Asad-progress.md`, `docs/API.md`, `docs/report/04-planning-and-requirements.md`, `docs/VERIFICATION.md`, `docs/commits/verification.md`.
+- Candidate SHA-256 (design/progress payload; evidence files are excluded to avoid self-referential checksums):
+  - `Asad-progress.md`: `e56ccccf1d8f5a0f021c2e05770894f1416121feac74e4e402ef7797de092a87`
+  - `docs/API.md`: `0e0b21ef249d4219e573184f606786c93df5005f8540be59574473c767f49617`
+  - `docs/report/04-planning-and-requirements.md`: `64df9e31ed0ea3ab0aa6d34b4cb38b42f567782ece4597a4238e4959bd2b68d9`
+- Dependency evidence: B01 (`081b1be`) and B05a (`b0cf68a`) are ancestors of base. B03 code is also present, but the planned B02 authentication prerequisite is absent; B04, full B05, B06 and B07 are absent. Do not treat the presence of B03 as proof that B02 is satisfied.
+- Limits: this is a design/fixture-document check, not an API, frontend typecheck, browser, authorization or end-to-end result. W01-only publication was authorized after review; commit/push is pending. W01 remains in progress because the frontend type contract is deferred to B07.
