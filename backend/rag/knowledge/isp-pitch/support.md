@@ -1,0 +1,2 @@
+# Slow internet and Wi-Fi support
+Generic demo troubleshooting, not an approved Alpha Max policy. Ask whether one device or all devices are affected, when the issue started, and whether an Ethernet connection behaves differently. Check router power and cable connections without factory resetting equipment. Record indicator lights and a speed-test result for operator review. Never claim an outage, a repair or a guaranteed speed without verified service data. Do not request Wi-Fi or account passwords.

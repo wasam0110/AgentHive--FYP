@@ -1,0 +1,38 @@
+{
+  "knowledge_directory": "isp-pitch",
+  "catalog_reference": null,
+  "resource_reference": null,
+  "customers": [
+    "Amina Khan",
+    "Omar Ali"
+  ],
+  "resource_label": "Specialist",
+  "items": [],
+  "connections": [
+    {
+      "customer": 1,
+      "label": "Home",
+      "city": "Karachi",
+      "area": "Gulshan-e-Iqbal",
+      "address": "Demo House 12, Sample Street (fictional)",
+      "plan": "Sample 30 Mbps connection (not an approved offer)",
+      "account_status": "active"
+    },
+    {
+      "customer": 2,
+      "label": "Home",
+      "city": "Karachi",
+      "area": "North Nazimabad",
+      "address": "Demo House 24, Sample Street (fictional)",
+      "plan": "Sample 20 Mbps connection (not an approved offer)",
+      "account_status": "active"
+    }
+  ],
+  "incidents": [
+    {
+      "city": "Karachi",
+      "area": "Gulshan-e-Iqbal",
+      "summary": "Sample area connectivity interruption under investigation. Restoration time is unconfirmed."
+    }
+  ]
+}

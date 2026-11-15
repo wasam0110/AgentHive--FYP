@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "business_id": "alpha-max-pitch",
+  "display_name": "Alpha max internet services",
+  "timezone": "Asia/Karachi",
+  "currency": "PKR",
+  "languages": [
+    "en",
+    "ur",
+    "roman-ur"
+  ],
+  "terminology": {
+    "customer": "Subscriber",
+    "catalog_item": "Service",
+    "welcome_heading": "Connected homes. Clearer support.",
+    "welcome_description": "Explore broadband options and support enquiries in the Karachi pitch workspace.",
+    "scenario_1": "I need help with slow internet and Wi-Fi troubleshooting.",
+    "scenario_2": "Show me the monthly broadband plans and prices.",
+    "scenario_3": "I need help understanding installation charges and service availability.",
+    "workspace_label": "ISP pitch / reference data",
+    "welcome_eyebrow": "Alpha Max / Karachi pitch",
+    "offers_heading": "Broadband plans & pricing",
+    "reference_notice": "Pitch workspace: StormFiber reference offers, not approved Alpha Max prices. Customer records are synthetic; no live billing or activation."
+  },
+  "capabilities": [
+    "knowledge_answer",
+    "reference_information",
+    "service_context"
+  ],
+  "adapters": {
+    "data": "sandbox_v1",
+    "execution": "sandbox_v1"
+  },
+  "knowledge_source": "isp-pitch-knowledge",
+  "catalog": null,
+  "resources": null,
+  "policy": {
+    "max_discount_pct": 0,
+    "quote_expiry_minutes": 30,
+    "approval_expiry_hours": 48
+  },
+  "reference_catalog": "stormfiber-karachi"
+}

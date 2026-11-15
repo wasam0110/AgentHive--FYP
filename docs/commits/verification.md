@@ -152,3 +152,11 @@ ModuleNotFoundError: No module named 'backend.services.service_context'
 - `.\.venv\Scripts\python.exe -m pytest -q tests/unit/test_retrieval_service.py`: **passed, 1 test**.
 - Ruff on `backend/agents`, `backend/rag` and `tests/unit/test_retrieval_service.py`: **passed**.
 - This is focused B04 evidence only. It does not establish B05 seed/read integration or B06 conversation/API, ownership, restart or safety behavior.
+
+## B05 seed/read workflow verification - 2026-11-16
+
+- Restored the planned B05 seed/read workflow after B04 was committed.
+- `.\.venv\Scripts\python.exe -m pytest -q tests/unit/test_seed_workflow.py`: **passed, 1 test**.
+- Ruff on the exact B05 source/test paths: **passed**.
+- The test verifies repeatable profile-B seeding retains the original password hash, does not create disabled booking slots, and denies scheduling while allowing the seeded sales result.
+- This is focused B05 evidence only. B06 HTTP conversation, ownership, restart, queue and approval safety checks remain pending.
