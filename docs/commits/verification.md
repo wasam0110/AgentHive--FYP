@@ -145,3 +145,10 @@ ModuleNotFoundError: No module named 'backend.services.service_context'
 ```
 
 `backend.services.service_context` is part of the uncommitted B04/prototype scope. Therefore W03 conversation persistence, history reload and cross-customer denial remain blocked; no B06 runtime result or integration completion is claimed. The candidate files remain preserved in the local `pre-B06 prototype worktree 2026-11-16` stash for a later exact-batch verification.
+
+## B04 retrieval/provider verification - 2026-11-16
+
+- Restored exact B04 retrieval/provider files from the preserved prototype stash; no B05 or B06 source was restored.
+- `.\.venv\Scripts\python.exe -m pytest -q tests/unit/test_retrieval_service.py`: **passed, 1 test**.
+- Ruff on `backend/agents`, `backend/rag` and `tests/unit/test_retrieval_service.py`: **passed**.
+- This is focused B04 evidence only. It does not establish B05 seed/read integration or B06 conversation/API, ownership, restart or safety behavior.
