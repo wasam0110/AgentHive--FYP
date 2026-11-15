@@ -135,3 +135,13 @@ The initial test attempt exposed missing timezone data in the minimal environmen
   - `docs/report/04-planning-and-requirements.md`: `64df9e31ed0ea3ab0aa6d34b4cb38b42f567782ece4597a4238e4959bd2b68d9`
 - Dependency evidence: B01 (`081b1be`) and B05a (`b0cf68a`) are ancestors of base. B03 code is also present, but the planned B02 authentication prerequisite is absent; B04, full B05, B06 and B07 are absent. Do not treat the presence of B03 as proof that B02 is satisfied.
 - Limits: this is a design/fixture-document check, not an API, frontend typecheck, browser, authorization or end-to-end result. W01-only publication was authorized after review; commit/push is pending. W01 remains in progress because the frontend type contract is deferred to B07.
+
+## W03/B06 dependency review - 2026-11-16
+
+The conversation/API candidate was checked after B03 quote validation and B05 fixture-contract work became available on `main`. Test collection stopped before execution with:
+
+```text
+ModuleNotFoundError: No module named 'backend.services.service_context'
+```
+
+`backend.services.service_context` is part of the uncommitted B04/prototype scope. Therefore W03 conversation persistence, history reload and cross-customer denial remain blocked; no B06 runtime result or integration completion is claimed. The candidate files remain preserved in the local `pre-B06 prototype worktree 2026-11-16` stash for a later exact-batch verification.
