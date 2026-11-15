@@ -1,10 +1,10 @@
 # Policy, consent and receipt contracts
 
-## W01-A scope
+## Scope and user flow
 
-This note explains the policy boundary reviewed for Arif's pricing and controlled-action
-work. The current change is documentation and contract design; it does not implement a
-quote service, approval endpoint or executor.
+This note explains Arif's pricing and proposal-validation work. Quote calculation and
+proposal revalidation are implemented as standalone services; no HTTP endpoint,
+customer-consent handler, admin-approval handler or executor is wired yet.
 
 ## User flow
 
@@ -21,19 +21,35 @@ revalidation and, when terms change, fresh consent and approval.
 
 ## Important contract choices
 
-- Money crosses the contract as decimal strings and is calculated with `Decimal`, not
-  binary floating point.
+- `quote(db, profile, item_id, quantity, discount_pct, slot_id)` reads catalog and slot
+  records through its database input and returns canonical terms without writing data.
+  It calculates with `Decimal` and rounds totals to cents using `ROUND_HALF_UP`.
+- `validate(db, proposal, profile, version)` returns no value and raises an explicit
+  HTTP error for malformed, closed, stale, expired or changed terms. It rechecks current
+  profile, catalog price and booking state. It does **not** authenticate a user or
+  authorize an action; its future caller must do that separately.
+- `redact(value)` returns a recursively filtered copy for traces, preserving safe IDs
+  while hiding common credentials and email addresses.
 - Customer consent and administrator approval are separate append-only decisions.
-- Replays use a unique idempotency key and return the existing execution receipt.
-- An executor rechecks policy and authoritative data; an agent result cannot authorize a
-  write.
+- The current schema permits one receipt per proposal; request-level idempotency is not
+  modeled or implemented.
+- Future execution must recheck policy and authoritative data; an agent result cannot
+  authorize a write. Transactions, consent, admin approval, and receipt replay are not
+  implemented in this standalone slice.
 
-An event-sourced history could derive current state by replaying every event, but the
-versioned proposal plus append-only decisions are easier to inspect for this FYP scope.
+The catalog is read through the supplied database session rather than accepting a price
+from a worker. An alternative is to store prices as integer minor units; Decimal strings
+match the existing contract and are easy to inspect, so no conversion layer is needed.
+The current validator uses a fake adapter in its unit tests; an event-sourced history
+could model every decision, but it is unnecessary for these focused checks.
 
 ## Verification
 
-The isolated check for this documentation-only contribution is `python
-scripts/check_repository.py` plus `git diff --check`. No runtime approval or quote test is
-claimed because the B02 identity prerequisite and B03 services are not committed on the
-base branch.
+```powershell
+python -m pytest -q tests/unit/test_quote_service.py
+python -m ruff check backend/services/quotes.py backend/services/approvals.py backend/services/redaction.py tests/unit/test_quote_service.py
+```
+
+The fake adapter covers different profile prices/currencies, policy denials, malformed
+data, stale terms, expiry, price changes, booking conflicts and redaction. These tests do
+not establish B02 identity integration or consent/approval/execution safety.

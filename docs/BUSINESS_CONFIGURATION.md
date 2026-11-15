@@ -1,6 +1,6 @@
 # Business configuration contract
 
-Draft specification, not an implemented loader. Agent Hive uses a reusable core plus validated profiles and allowlisted adapters. No industry or named client is assumed.
+Profile validation is implemented in `backend/config.py`; the standalone seed-fixture contract is implemented in `scripts/seed_fixtures.py`. Database seeding, read adapters, and workflow wiring remain pending. Agent Hive uses a reusable core plus validated profiles and allowlisted adapters. No industry or named client is assumed.
 
 ## Proposed fields
 
@@ -44,9 +44,9 @@ Keep customer, conversation, proposal and receipt identity stable. Pin profile/p
 
 ## First two synthetic fixtures
 
-examples/business-profiles/profile-a.json enables support, quote and booking. profile-b.json enables support and quote; booking must fail as unsupported. They intentionally use different policy values and currency. Each fixture references its own synthetic catalog and knowledge fixture to be created during implementation. Missing referenced data must fail setup clearly. No fixtures contain credentials or real client data.
+`examples/business-profiles/profile-a.json` enables support, quote, and booking; `profile-b.json` enables support and quote, with booking disabled. They intentionally use different policy values and currencies. `scripts/seed_fixtures.py` maps only the registered knowledge references to `examples/seed-fixtures/demo-a.json` and `demo-b.json`, validates their catalog/resource references, and rejects unknown references before a seeding caller can write records. The fixtures contain fictional sample customers and catalog entries, not credentials or client data.
 
-Acceptance: configure each separately without editing core code; verify catalog/evidence identity, locale/branding, discount enforcement, disabled tools, invalid-profile rejection and profile version on proposals. These examples are not runnable until the loader and adapters exist.
+This standalone contract does not create database rows, ingest knowledge documents, or provide read adapters. Those remain part of the dependency-gated seed/read workflow. Full acceptance still requires isolated A/B seeding, catalog/evidence identity, locale/branding, discount enforcement, disabled-tool behavior, and proposal profile-version checks.
 
 ## Ownership
 
