@@ -25,20 +25,19 @@ The initial snapshot also passed these checks. The final snapshot reruns after d
 
 This verifies the foundation's profile/schema/storage behavior only. It does not verify a runnable HTTP application, consent/execution services, frontend or PostgreSQL. Human review is pending and **no staging/commit/push is authorized**.
 
-## Arif W01-A documentation candidate - 10 November 2026
-
-The proposed documentation change is based on the committed B01 base and contains only
-the policy matrix, proposal/decision/receipt contract additions, database responsibility
-notes, learning note and Arif progress evidence. No B02 identity files or B03 service
-files were copied from the reference source.
-
-`python scripts/check_repository.py` and `git diff --check` passed. This is a
-documentation-only check; it does not establish quote, approval, transaction, or receipt
-runtime behavior. The candidate remains uncommitted pending human/team review.
-
 ## B02?B09
 
 Not independently verified. Their prerequisites have not been committed. The complete imported application passed 49 backend tests, frontend checks and two browser journeys, but that does not satisfy the independent batch rule. First commit the approved prerequisites, then export that committed base and overlay only the next batch's exact files, run its listed checks and record results with actual dates. No future work is complete.
+
+## B02 identity smoke - 2026-11-16
+
+B02 was reviewed against the integrated B01 base. The exact B02 source scope was `backend/api/__init__.py`, `backend/api/auth.py`, `backend/services/__init__.py`, `backend/services/data.py`, `backend/services/security.py` and `tests/unit/test_identity.py`.
+
+| Check | Observed result |
+|---|---|
+| `.\.venv\Scripts\python.exe -m pytest -q tests/unit/test_identity.py` | Passed: 1 test |
+
+This smoke verifies wrong-password rejection, Argon2 password verification, hashed session-token persistence and role denial. HTTP expiry/logout, complete CSRF/origin behavior and cross-customer integration safety remain B06 checks. Full imported-tree results do not replace this focused evidence; human review and publication remain pending.
 
 ## Tuesday planning edits - 2026-10-30
 
@@ -69,8 +68,6 @@ B01 was retested as committed HEAD plus only its exact manifest: lint, eight fou
 
 The earlier customer-context B01 hashes are superseded by documentation/manifest cleanup. Current snapshot location: C:/Users/wasam/AppData/Local/AgentHive-imports/20261104-cleanup-B01. Read its batch-evidence.json for actual results and current hashes; later batches still need their committed prerequisites and independent checks.
 
-## Wasam W02 publication candidate - 4 November 2026
+## Plan relocation - 4 November 2026
 
-Base: 433a3c1c1a0559ce14957cf55302b1b52eb46541 (current origin/main). Candidate: the exact B01 manifest files plus only the dated foundation additions to Wasam-progress.md and docs/report/04-planning-and-requirements.md. No other uncommitted modules or prior local progress rewrites are included. Snapshot: C:/Users/wasam/AppData/Local/AgentHive-imports/20261104-w02-candidate-check. Its publication-evidence.json records the full candidate path/hash list and actual command results. Run lint, eight foundation tests, fresh SQLite migration/metadata comparison, hygiene and whitespace checks before publication. Remote starter CI checks hygiene only; application CI and PostgreSQL remain later work.
-
-Observed local results (4 November 2026): Ruff passed; eight foundation tests passed; fresh SQLite upgrade and Alembic metadata check passed. No application modules outside B01 were present. Remote CI remains unobserved; PostgreSQL and HTTP integration are outside this candidate.
+The active plan is now docs/commits/COMMIT_PLAN.md. The old snapshot paths/hashes are historical following this documentation move. Cleanup commit 80e1c66 passed documentation/manifest/hygiene checks; application code did not change and runtime tests were not rerun.
