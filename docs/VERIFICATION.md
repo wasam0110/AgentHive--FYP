@@ -18,4 +18,32 @@
 - Checks: Node assertions against the committed shared sample and W01 documents passed; `git diff --check` and trailing-whitespace checks passed.
 - Limits: documentation/fixture contract validation only. No TypeScript, backend, frontend, browser or live API test ran. The host has Node 26.13.0 and Python 3.9.6, not the handoff's Node 24/Python 3.12. B06/B07 are not integrated.
 - First assertion attempt: one inline assertion used incorrect expected wording and failed; the corrected assertion passed without source changes.
-- Full isolated snapshot details and candidate hashes: `docs/commits/verification.md`. W01-only publication was authorized after review; commit/push is pending.
+- Full isolated snapshot details and candidate hashes: `docs/commits/verification.md`. At candidate-verification time, publication was pending; see the dated follow-up below for the actual merge result.
+
+## Asad W01 publication follow-up - 15 November 2026
+
+The W01 documentation candidate was committed as `364248a0c4ec097f0220413f066b97d7b384e7f3` on `asad/w01-screen-contract`. [PR #7](https://github.com/wasam0110/AgentHive--FYP/pull/7) was merged to `main` at `cb4a4b277bb452dadff06cef34cbfaa30f6ef601` on 2026-11-15.
+
+GitHub push run `43750137494` and pull-request run `43750314776` both succeeded. Each ran only `Starter checks (no application tests yet)`, which checks required starter files, tracked-file hygiene and patch whitespace. These results do not add application-test coverage to the design-only snapshot checks above. No formal GitHub review is recorded; human review and student understanding remain pending.
+
+## Asad W02 overview-count candidate - 15 November 2026
+
+- Base: committed `main` at `cb4a4b277bb452dadff06cef34cbfaa30f6ef601`.
+- Scope: proposed count-only response/status definitions in `docs/API.md`, plus a pure conversation-status aggregator and synthetic unit tests. No endpoint, database query, authentication or frontend integration was added.
+- Snapshot: `/tmp/AgentHive-FYP-w02-snapshot`, a detached worktree at the committed base with the W02 helper/test and final `docs/API.md` overlaid; the API document includes the W01 screen-layout addendum.
+- Environment and result: Python 3.9.6 workspace venv; standard-library `unittest` only. `python -m unittest discover -s tests/unit -p 'test_overview.py'` passed (3 tests) from the snapshot root.
+- Limits: pytest, Ruff, full application tests, API/auth integration and browser checks were not run. The B06 overview design/review gate remains pending; this result verifies only the independent helper and count contract.
+
+## Asad W01 layout addendum - 17 November 2026
+
+- Scope: added low-fidelity text layouts for chat, approval and trace to `docs/API.md`; no frontend code or screenshots were added.
+- Check: Node assertions confirmed all three layouts, the local draft/send area, exact-version approval details, evidence IDs, and separation of customer consent from administrator approval; the same assertions passed in the combined clean snapshot.
+- Status and limits: this addendum is local on `asad/w02-overview-counts`, not part of merged PR #7; human review remains pending.
+
+## Asad W01/W02 revalidation on updated main - 17 November 2026
+
+- Base: current `origin/main` at `0303cf15a509f7ff9ca6831967a54d0a40d4c084`.
+- Snapshot: `/tmp/AgentHive-FYP-w01-w02-pr-snapshot`, a detached worktree at that base with only the W01/W02 candidate files overlaid.
+- Checks: W02 standard-library `unittest` passed (3 tests); Node assertions verified the W01 layouts, parsed the W02 response JSON, matched its eight status keys to the helper, and confirmed the current-main integration note; `git diff --check` and new-file trailing-whitespace checks passed.
+- Limits: no pytest/Ruff, database/API test, or browser journey ran. The current B06 route exists but does not call the helper or emit all known zero-count buckets. CI remains starter-only.
+- SHA-256: `backend/services/overview.py` `76f41b9597135c58f55c63b152823ab511534610f274416a8479f343f461eeff`; `tests/unit/test_overview.py` `a66b05d290df5667d1c99476fb1dd01eea960b1c7eff318d8da7201ee10784e3`; `docs/API.md` `204f955cc0b1597f03f051f7f7934e7935e145681424a307eef82ca6f2640585`.
