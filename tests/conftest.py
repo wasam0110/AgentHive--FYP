@@ -150,4 +150,3 @@ def isp(env, tmp_path):
         yield SimpleNamespace(settings=settings, profile=settings.profile(), app=app,
                               client=client, factory=factory, password=env.password)
     engine.dispose()
-
