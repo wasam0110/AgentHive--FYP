@@ -217,3 +217,12 @@ The W01-B low-fidelity text layouts for chat, approval and trace were added to `
 - Results: 3 standard-library W02 tests passed. Node assertions verified the three layouts, W02 JSON/status-key agreement, and the B06 current-main note. `git diff --check` and new-file trailing-whitespace checks passed.
 - Source hashes: `backend/services/overview.py` `76f41b9597135c58f55c63b152823ab511534610f274416a8479f343f461eeff`; `tests/unit/test_overview.py` `a66b05d290df5667d1c99476fb1dd01eea960b1c7eff318d8da7201ee10784e3`; `docs/API.md` `204f955cc0b1597f03f051f7f7934e7935e145681424a307eef82ca6f2640585`.
 - Limits: the B06 overview route exists on this base but does not call this helper; no route/database/authorization test or browser flow ran. Human and owner review remain pending.
+
+### Asad W03 overview route verification - 17 November 2026
+
+- Base: merged `origin/main` at `1bce284da8517ad9ba3892c25d0088e742f31021`; detached snapshot `/tmp/AgentHive-FYP-w03-merged-snapshot` with only the candidate `tests/test_auth.py` overlaid.
+- `python -m pytest -q tests/test_auth.py`: **10 passed** under Python 3.12.
+- `ruff check tests/test_auth.py`: **passed**.
+- Coverage includes customer denial, empty overview aggregates, exact counts for queued/waiting/completed conversations, and the existing authentication, CSRF, ownership, evaluator-role and request-validation tests.
+- SHA-256: `tests/test_auth.py` `76b6bfa434e04c70187ef028402466fcf9566b823396712b710fd60f2de51fea`.
+- Limits: the `/overview` route is B06 code already on main and was not changed here. Its business filter was reviewed but no cross-business regression case was added. The route still emits dynamic status buckets and does not use Asad's W02 fixed-bucket helper. No browser/UI test ran.

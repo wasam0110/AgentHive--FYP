@@ -1,5 +1,5 @@
 from fastapi.testclient import TestClient
-from backend.db.models import AuthSession
+from backend.db.models import AuthSession, Conversation
 from sqlalchemy import select
 from conftest import new_conversation
 
@@ -53,6 +53,50 @@ def test_evaluator_cannot_write(env):
     client = env.login("evaluator")
     assert client.get("/api/v1/overview").status_code == 200
     assert client.post("/api/v1/conversations", json={"customer_id": "demo-a-customer-1"}).status_code == 403
+
+
+def test_customer_cannot_read_overview(env):
+    customer = env.login("customer")
+
+    assert customer.get("/api/v1/overview").status_code == 403
+
+
+def test_overview_returns_empty_aggregates(env):
+    response = env.client.get("/api/v1/overview")
+
+    assert response.status_code == 200
+    result = response.json()
+    assert result["total"] == 0
+    assert result["completed"] == 0
+    assert result["pending"] == 0
+    assert result["status_counts"] == {}
+    assert result["completion_rate"] is None
+    assert result["average_seconds"] is None
+    assert result["oldest_pending"] is None
+    assert result["recent"] == []
+    assert len(result["series"]) == 7
+    assert all(day["count"] == 0 for day in result["series"])
+
+
+def test_overview_counts_conversation_statuses(env):
+    conversation_ids = [new_conversation(env) for _ in range(3)]
+    statuses = ["queued", "waiting_customer", "completed"]
+    with env.factory.begin() as db:
+        for conversation_id, status in zip(conversation_ids, statuses):
+            db.get(Conversation, conversation_id).status = status
+
+    response = env.client.get("/api/v1/overview")
+
+    assert response.status_code == 200
+    result = response.json()
+    assert result["total"] == 3
+    assert result["completed"] == 1
+    assert result["completion_rate"] == 33
+    assert result["status_counts"] == {
+        "queued": 1,
+        "waiting_customer": 1,
+        "completed": 1,
+    }
 
 
 def test_unknown_input_fields_and_large_body_rejected(env):

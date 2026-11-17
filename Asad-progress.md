@@ -11,11 +11,11 @@ Statuses: Not started → In progress → Standalone verified → Integration pe
 | Session | Planned date | Deliverable | Status | Actual date | Evidence / PR / test | Dependency / next handoff |
 |---|---|---|---|---|---|---|
 | W01-A | 2026-10-26 | List generic user journeys and profile/capability fields needed by screens | Standalone verified | 2026-11-15 | Design contract and Chapter 4 update passed isolated sample assertions and whitespace checks; merged by PR #7 (`cb4a4b2`) | B01 is committed; human review/understanding pending; UI types remain future work |
-| W01-B | 2026-10-29 | Sketch chat, approval and trace screens against shared samples | Standalone verified | 2026-11-17 | Initial contract merged by PR #7 (`cb4a4b2`); low-fidelity text layouts added and checked in combined snapshot; no rendered UI | B01 is committed; layout addendum not published; human review/understanding pending |
-| W02-A | 2026-11-02 | Define overview count response and status meanings | Standalone verified | 2026-11-15 | Count response JSON and eight meanings checked against helper; current B06 route uses dynamic buckets, so exact response alignment needs owner review | Review current route with Wasam; do not claim the helper is integrated |
-| W02-B | 2026-11-05 | Write small aggregation function with synthetic fixture tests | Standalone verified | 2026-11-15 | Pure status aggregator; all 3 focused tests passed on `cb4a4b2` and were rerun on current main `0303cf1` on 2026-11-17 | Helper is not called by current B06 route; ask Wasam before wiring it in |
-| W03-A | 2026-11-09 | Implement protected read-only overview endpoint | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W03-B | 2026-11-12 | Test counts, empty data and denied access using agreed backend adapter | Not started | — | — | Use shared contracts; record live handoff when applicable |
+| W01-B | 2026-10-29 | Sketch chat, approval and trace screens against shared samples | Standalone verified | 2026-11-17 | Initial contract merged by PR #7 (`cb4a4b2`); text layouts and evidence pushed in `8494e86` on `asad/w02-overview-counts`; no rendered UI | PR not opened; human review/understanding pending |
+| W02-A | 2026-11-02 | Define overview count response and status meanings | Standalone verified | 2026-11-15 | Count response JSON and eight meanings checked against helper; published in `8494e86`; current B06 route uses dynamic buckets, so exact response alignment needs owner review | Review current route with Wasam; helper is not integrated |
+| W02-B | 2026-11-05 | Write small aggregation function with synthetic fixture tests | Standalone verified | 2026-11-15 | Pure status aggregator; 3 focused tests passed on `cb4a4b2` and reran on current main `0303cf1`; published in `8494e86` | Helper is not called by current B06 route; ask Wasam before wiring it in |
+| W03-A | 2026-11-09 | Implement protected read-only overview endpoint | Integrated and verified | 2026-11-17 | B06 route is on main; implementation is Wasam's. Asad verified access/count behavior without changing the shared endpoint | Review count-contract alignment before frontend integration |
+| W03-B | 2026-11-12 | Test counts, empty data and denied access using agreed backend adapter | Standalone verified | 2026-11-17 | 10 tests in `tests/test_auth.py` passed in a clean Python 3.12 snapshot; Ruff passed | Tests are local on `asad/w03-overview-tests`; commit/PR review still needed |
 | W04-A | 2026-11-16 | Prepare frontend component plan and mock response fixtures | Not started | — | — | Use shared contracts; record live handoff when applicable |
 | W04-B | 2026-11-19 | Define waiting/error/loading and approval-confirmation behavior | Not started | — | — | Use shared contracts; record live handoff when applicable |
 | W05-A | 2026-11-23 | Specify API client contract and frontend acceptance cases | Not started | — | — | Use shared contracts; record live handoff when applicable |
@@ -42,7 +42,7 @@ Append entries rather than overwriting prior evidence:
 ### 2026-11-15 - W01 design contract merged; standalone verified
 
 - Implemented or reviewed: mapped generic chat, approval and trace journeys to the committed conversation, task, proposal and profile contracts; distinguished server state from local form state and recorded role/data boundaries.
-- Files / commit / PR: the initial `docs/API.md` contract, Chapter 4 update and evidence were committed as `364248a0c4ec097f0220413f066b97d7b384e7f3`; [PR #7](https://github.com/wasam0110/AgentHive--FYP/pull/7) merged to `main` at `cb4a4b277bb452dadff06cef34cbfaa30f6ef601` on 2026-11-15. The later layout addendum and refreshed progress evidence are local on `asad/w02-overview-counts`; commit pending, not pushed.
+- Files / commit / PR: the initial `docs/API.md` contract, Chapter 4 update and evidence were committed as `364248a0c4ec097f0220413f066b97d7b384e7f3`; [PR #7](https://github.com/wasam0110/AgentHive--FYP/pull/7) merged to `main` at `cb4a4b277bb452dadff06cef34cbfaa30f6ef601` on 2026-11-15. The later layout addendum and refreshed W01/W02 evidence were pushed in `8494e866734b5d53309b16f770dd9ed53d8ae76d` on `asad/w02-overview-counts`; a new PR has not been opened.
 - Commands run and observed results: from the isolated candidate snapshot, Node assertions against `sample_payloads.json`, the screen contract and its report link passed; `git diff --check` and the new-file trailing-whitespace check passed. The first inline assertion had a wording typo; the corrected assertion passed without source changes. GitHub push and pull-request CI both passed the "Starter checks (no application tests yet)" job; this job checks required starter files, tracked-file hygiene and patch whitespace only.
 - Mocked dependencies versus real integrations: design and committed synthetic sample only; no API, frontend, authentication or browser journey ran.
 - W01 outcome and limits: the initial journeys and screen/data contract are merged. The separate low-fidelity layout addendum is recorded below. This remains design documentation only; no frontend, API, authentication or browser journey was implemented or tested.
@@ -54,7 +54,7 @@ Append entries rather than overwriting prior evidence:
 ### 2026-11-15 - W02 overview count candidate
 
 - Implemented or reviewed: defined a count-only overview response and meanings for the eight shared conversation statuses. Added a pure helper that returns all status buckets, including zeros, and rejects an unknown status.
-- Files / branch / commit: `backend/services/overview.py`, `tests/unit/test_overview.py`, `docs/API.md`, `Asad-progress.md`, `docs/VERIFICATION.md`, and `docs/commits/verification.md`; branch `asad/w02-overview-counts`; commit pending, not pushed.
+- Files / branch / commit: `backend/services/overview.py`, `tests/unit/test_overview.py`, `docs/API.md`, `Asad-progress.md`, `docs/VERIFICATION.md`, and `docs/commits/verification.md`; pushed in commit `8494e866734b5d53309b16f770dd9ed53d8ae76d` on `asad/w02-overview-counts`; PR not opened.
 - Commands run and observed results: `python -m unittest discover -s tests/unit -p 'test_overview.py'` passed 3 tests in a clean snapshot based on `cb4a4b277bb452dadff06cef34cbfaa30f6ef601`. The first run from the parent directory could not import `backend`; rerunning from the repository root and then the clean snapshot passed.
 - Mocked dependencies versus real integrations: synthetic status strings only; no database, endpoint, authentication or frontend integration is included.
 - W02 outcome and limits: the count contract/helper are standalone-verified. `origin/main` now contains an authenticated, business-scoped `/api/v1/overview` route from B06, but it uses dynamic status buckets and does not call this helper. The zero-bucket contract is therefore not integrated.
@@ -66,7 +66,7 @@ Append entries rather than overwriting prior evidence:
 ### 2026-11-17 - W01 layout addendum
 
 - Implemented or reviewed: added low-fidelity text layouts for chat, approval and trace, preserving exact-version decisions, separate customer/admin consent, evidence sources, and failure/waiting states.
-- Files / branch / commit: `docs/API.md` and `Asad-progress.md`; branch `asad/w02-overview-counts`; commit pending, not pushed.
+- Files / branch / commit: `docs/API.md` and `Asad-progress.md`; pushed in commit `8494e866734b5d53309b16f770dd9ed53d8ae76d` on `asad/w02-overview-counts`; PR not opened.
 - Commands run and observed results: layout assertions and tracked/new-file whitespace checks passed in the combined clean snapshot based on `origin/main` `0303cf15a509f7ff9ca6831967a54d0a40d4c084`. Revalidation details are recorded in `docs/commits/verification.md`.
 - Mocked dependencies versus real integrations: documentation only; no rendered UI, API, or browser flow.
 - What to review/understand: these are text wireframes that define information hierarchy, not screenshots or implemented screens. Human review remains pending.
@@ -79,6 +79,17 @@ Append entries rather than overwriting prior evidence:
 - Reviewed `origin/main` at `0303cf15a509f7ff9ca6831967a54d0a40d4c084`: `backend/api/operations.py` exposes an authenticated, role-checked, business-scoped `/api/v1/overview` route.
 - The route returns `total`, dynamic `status_counts`, and additional operational values. It currently uses `Counter` directly and does not call `backend/services/overview.py`; the W02 helper's fixed zero buckets and unknown-status rejection remain standalone only.
 - Next handoff: ask Wasam to review this difference before changing the shared route. No route integration or application test is claimed in this contribution.
+
+### 2026-11-17 - W03 overview route test candidate
+
+- Implemented or reviewed: inspected the B06 `/api/v1/overview` route on main. It authenticates the user, permits operator/admin/evaluator roles, and filters conversations by `user.business_id`. The route implementation is Wasam's B06 work; Asad did not change it.
+- Files / branch / commit: added customer-denial, empty-aggregate, and conversation-status count tests in `tests/test_auth.py` on `asad/w03-overview-tests`; W03 changes remain local and uncommitted.
+- Commands run and observed results: in a clean snapshot based on merged `origin/main` `1bce284da8517ad9ba3892c25d0088e742f31021`, with only `tests/test_auth.py` overlaid, `python -m pytest -q tests/test_auth.py` passed (10 tests) under Python 3.12; `ruff check tests/test_auth.py` passed.
+- Mocked dependencies versus real integrations: synthetic records, SQLite and FastAPI TestClient; no external model or live business service.
+- W03 outcome and limits: empty results, counts for queued/waiting/completed conversations, and customer-role denial are verified. The endpoint still uses dynamic status buckets and does not call the W02 fixed-bucket helper; cross-business isolation is implemented by the query filter but not specifically asserted in this added test slice.
+- What to review/understand: route role checks authorize staff roles, while the query independently scopes records to the authenticated user's business. The added tests exercise response counts and customer denial.
+- Blocker, owner and next action: request Wasam's review before integrating the fixed W02 response shape. W03 tests are not yet pushed.
+- Reviewer and review date: pending.
 
 - Session and actual date:
 - Implemented or reviewed:
@@ -95,4 +106,4 @@ Append entries rather than overwriting prior evidence:
 - Standalone verification: W01 design/sample assertions and local layout assertions passed; W02 aggregation tests passed in a clean snapshot; no application tests were run.
 - Live integration verification: Not started.
 - Documentation reviewed: Human/team review pending.
-- Known limitations: W01 layout addendum and W02 changes are uncommitted. W01 remains design-only. The main overview route exists but does not use the W02 helper; no frontend/browser journey was verified. Human review and helper-integration review remain pending.
+- Known limitations: W01 layout addendum and W02 changes are merged by PR #9. W01 remains design-only. W02 helper is not wired to the main overview route. W03 route tests pass in an isolated Python 3.12 snapshot but remain uncommitted/unpushed. Human/owner review and frontend/browser verification remain pending.
