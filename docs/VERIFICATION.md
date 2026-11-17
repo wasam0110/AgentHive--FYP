@@ -47,3 +47,18 @@ GitHub push run `43750137494` and pull-request run `43750314776` both succeeded.
 - Checks: W02 standard-library `unittest` passed (3 tests); Node assertions verified the W01 layouts, parsed the W02 response JSON, matched its eight status keys to the helper, and confirmed the current-main integration note; `git diff --check` and new-file trailing-whitespace checks passed.
 - Limits: no pytest/Ruff, database/API test, or browser journey ran. The current B06 route exists but does not call the helper or emit all known zero-count buckets. CI remains starter-only.
 - SHA-256: `backend/services/overview.py` `76f41b9597135c58f55c63b152823ab511534610f274416a8479f343f461eeff`; `tests/unit/test_overview.py` `a66b05d290df5667d1c99476fb1dd01eea960b1c7eff318d8da7201ee10784e3`; `docs/API.md` `204f955cc0b1597f03f051f7f7934e7935e145681424a307eef82ca6f2640585`.
+
+## Asad W03 overview route test candidate - 17 November 2026
+
+- Base: merged `origin/main` at `1bce284da8517ad9ba3892c25d0088e742f31021`, with only `tests/test_auth.py` overlaid in `/tmp/AgentHive-FYP-w03-merged-snapshot`.
+- Reviewed current B06 `/api/v1/overview`: authenticated, role-restricted to operator/admin/evaluator, and filtered by the caller's business. The route implementation was not changed by Asad.
+- Checks: `python -m pytest -q tests/test_auth.py` passed (10 tests) under Python 3.12; `ruff check tests/test_auth.py` passed.
+- Added coverage: customer denial, empty aggregates, and counts across queued/waiting/completed conversations. Existing auth/CSRF/ownership tests also passed.
+- Limits: no UI/browser journey ran. The route's business filter was reviewed but not explicitly asserted as a cross-business case in this W03 addition. The current route uses dynamic status buckets and does not call the W02 helper.
+- SHA-256: `tests/test_auth.py` `76b6bfa434e04c70187ef028402466fcf9566b823396712b710fd60f2de51fea`.
+
+## Asad W03 publication follow-up - 17 November 2026
+
+- Commit `e94d2b04b2df8b46065286cd270504d4e45dc858` was pushed to `asad/w03-overview-tests`; [PR #10](https://github.com/wasam0110/AgentHive--FYP/pull/10) is open against `main`.
+- GitHub reports the PR check passed. The repository workflow is `Starter checks (no application tests yet)`, so this does not replace the local Python 3.12 pytest/Ruff results above.
+- Human review and merge are pending; no merge is claimed.
