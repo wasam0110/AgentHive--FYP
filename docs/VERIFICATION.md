@@ -56,3 +56,9 @@ GitHub push run `43750137494` and pull-request run `43750314776` both succeeded.
 - Added coverage: customer denial, empty aggregates, and counts across queued/waiting/completed conversations. Existing auth/CSRF/ownership tests also passed.
 - Limits: no UI/browser journey ran. The route's business filter was reviewed but not explicitly asserted as a cross-business case in this W03 addition. The current route uses dynamic status buckets and does not call the W02 helper.
 - SHA-256: `tests/test_auth.py` `76b6bfa434e04c70187ef028402466fcf9566b823396712b710fd60f2de51fea`.
+
+## Asad W03 publication follow-up - 17 November 2026
+
+- Commit `e94d2b04b2df8b46065286cd270504d4e45dc858` was pushed to `asad/w03-overview-tests`; [PR #10](https://github.com/wasam0110/AgentHive--FYP/pull/10) is open against `main`.
+- GitHub reports the PR check passed. The repository workflow is `Starter checks (no application tests yet)`, so this does not replace the local Python 3.12 pytest/Ruff results above.
+- Human review and merge are pending; no merge is claimed.

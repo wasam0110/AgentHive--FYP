@@ -83,12 +83,12 @@ Append entries rather than overwriting prior evidence:
 ### 2026-11-17 - W03 overview route test candidate
 
 - Implemented or reviewed: inspected the B06 `/api/v1/overview` route on main. It authenticates the user, permits operator/admin/evaluator roles, and filters conversations by `user.business_id`. The route implementation is Wasam's B06 work; Asad did not change it.
-- Files / branch / commit: added customer-denial, empty-aggregate, and conversation-status count tests in `tests/test_auth.py` on `asad/w03-overview-tests`; W03 changes remain local and uncommitted.
+- Files / branch / commit: added customer-denial, empty-aggregate, and conversation-status count tests in `tests/test_auth.py`; commit `e94d2b04b2df8b46065286cd270504d4e45dc858` pushed to `asad/w03-overview-tests`; [PR #10](https://github.com/wasam0110/AgentHive--FYP/pull/10) opened on 2026-11-17, review/merge pending.
 - Commands run and observed results: in a clean snapshot based on merged `origin/main` `1bce284da8517ad9ba3892c25d0088e742f31021`, with only `tests/test_auth.py` overlaid, `python -m pytest -q tests/test_auth.py` passed (10 tests) under Python 3.12; `ruff check tests/test_auth.py` passed.
 - Mocked dependencies versus real integrations: synthetic records, SQLite and FastAPI TestClient; no external model or live business service.
 - W03 outcome and limits: empty results, counts for queued/waiting/completed conversations, and customer-role denial are verified. The endpoint still uses dynamic status buckets and does not call the W02 fixed-bucket helper; cross-business isolation is implemented by the query filter but not specifically asserted in this added test slice.
 - What to review/understand: route role checks authorize staff roles, while the query independently scopes records to the authenticated user's business. The added tests exercise response counts and customer denial.
-- Blocker, owner and next action: request Wasam's review before integrating the fixed W02 response shape. W03 tests are not yet pushed.
+- Blocker, owner and next action: request Wasam's review before integrating the fixed W02 response shape. Keep PR #10 open for review; do not merge without approval.
 - Reviewer and review date: pending.
 
 - Session and actual date:
@@ -106,4 +106,4 @@ Append entries rather than overwriting prior evidence:
 - Standalone verification: W01 design/sample assertions and local layout assertions passed; W02 aggregation tests passed in a clean snapshot; no application tests were run.
 - Live integration verification: Not started.
 - Documentation reviewed: Human/team review pending.
-- Known limitations: W01 layout addendum and W02 changes are merged by PR #9. W01 remains design-only. W02 helper is not wired to the main overview route. W03 route tests pass in an isolated Python 3.12 snapshot but remain uncommitted/unpushed. Human/owner review and frontend/browser verification remain pending.
+- Known limitations: W01 layout addendum and W02 changes are merged by PR #9. W01 remains design-only. W02 helper is not wired to the main overview route. W03 tests are pushed in PR #10, which remains open; human review and frontend/browser verification are pending.

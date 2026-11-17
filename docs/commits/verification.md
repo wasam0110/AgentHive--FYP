@@ -226,3 +226,9 @@ The W01-B low-fidelity text layouts for chat, approval and trace were added to `
 - Coverage includes customer denial, empty overview aggregates, exact counts for queued/waiting/completed conversations, and the existing authentication, CSRF, ownership, evaluator-role and request-validation tests.
 - SHA-256: `tests/test_auth.py` `76b6bfa434e04c70187ef028402466fcf9566b823396712b710fd60f2de51fea`.
 - Limits: the `/overview` route is B06 code already on main and was not changed here. Its business filter was reviewed but no cross-business regression case was added. The route still emits dynamic status buckets and does not use Asad's W02 fixed-bucket helper. No browser/UI test ran.
+
+### Asad W03 publication follow-up - 17 November 2026
+
+- Commit `e94d2b04b2df8b46065286cd270504d4e45dc858` was pushed to `asad/w03-overview-tests`; [PR #10](https://github.com/wasam0110/AgentHive--FYP/pull/10) is open against `main`.
+- GitHub showed the PR check passed. It is the starter-only CI job and does not execute application tests; local Python 3.12 pytest and Ruff results are recorded above.
+- Human review and merge remain pending.
