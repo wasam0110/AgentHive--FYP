@@ -160,3 +160,14 @@ ModuleNotFoundError: No module named 'backend.services.service_context'
 - Ruff on the exact B05 source/test paths: **passed**.
 - The test verifies repeatable profile-B seeding retains the original password hash, does not create disabled booking slots, and denies scheduling while allowing the seeded sales result.
 - This is focused B05 evidence only. B06 HTTP conversation, ownership, restart, queue and approval safety checks remain pending.
+
+## B06 persisted API and safety verification - 2026-11-16
+
+- Restored the planned conversation/API, worker, operations and integration-test paths after B04 and B05 were committed.
+- Fixed the coupled approval API gap required by the B06 routes (`confirm`, `decide`, `refresh`) and added explicit `isp-pitch` fixture registration for the profile-scoped integration fixture.
+- Aligned the quote validation error wording with the API contract: invalid discounts report that they are outside policy limits.
+- Focused command:
+  `.\.venv\Scripts\python.exe -m pytest -q tests/test_approvals.py tests/test_auth.py tests/test_profiles_rag.py tests/test_provider.py tests/test_workflow.py tests/test_reference_offers.py tests/test_service_context.py tests/unit/test_retrieval_service.py tests/unit/test_seed_workflow.py`
+- Result: **49 passed**.
+- Ruff passed for the exact B06 integration paths and coupled approval/fixture files.
+- Coverage includes conversation history, customer/business ownership, authentication/CSRF/expiry, queue idempotency and recovery, profile isolation, provider behavior, consent/approval/receipt replay and duplicate-booking safety. Provider behavior is demo/mocked; no paid model call was used.

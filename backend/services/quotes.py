@@ -42,7 +42,7 @@ def quote(db, profile, item_id, quantity, discount_pct, slot_id=None):
         or not isinstance(discount_pct, int)
         or not 0 <= discount_pct <= profile.policy.max_discount_pct
     ):
-        raise HTTPException(422, "Discount is outside the active business policy")
+        raise HTTPException(422, "Discount is outside policy limits for this business")
     if item_id is not None and (not isinstance(item_id, str) or not item_id.strip()):
         raise HTTPException(422, "Catalog item identifier is invalid")
     if slot_id is not None and (not isinstance(slot_id, str) or not slot_id.strip()):

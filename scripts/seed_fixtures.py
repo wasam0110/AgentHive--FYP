@@ -7,6 +7,7 @@ from backend.config import ROOT
 FIXTURES = {
     "demo-a-knowledge": "demo-a",
     "demo-b-knowledge": "demo-b",
+    "isp-pitch-knowledge": "isp-pitch",
 }
 
 
