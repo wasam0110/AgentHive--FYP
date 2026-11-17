@@ -22,6 +22,16 @@ from backend.services.redaction import redact
 from backend.services.security import require_role
 
 
+def _expiry(value: str) -> datetime:
+    try:
+        parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except (AttributeError, TypeError, ValueError) as exc:
+        raise HTTPException(422, "Proposal expiry is malformed") from exc
+    if parsed.tzinfo is None or parsed.utcoffset() is None:
+        raise HTTPException(422, "Proposal expiry must include a timezone")
+    return parsed.astimezone(timezone.utc)
+
+
 def deadline(profile):
     minutes = min(profile.policy.quote_expiry_minutes, profile.policy.approval_expiry_hours * 60)
     return (datetime.now(timezone.utc) + timedelta(minutes=minutes)).isoformat()
@@ -36,12 +46,33 @@ def get_locked(db, proposal_id, user):
 
 
 def validate(db, proposal, profile, version):
+    """Validate proposal shape, status, expiry and current authoritative terms."""
+    if isinstance(version, bool) or not isinstance(version, int) or version < 1:
+        raise HTTPException(422, "Proposal version is invalid")
+    if not all(
+        hasattr(proposal, field) for field in ("version", "status", "payload", "expires_at", "profile_hash")
+    ):
+        raise HTTPException(422, "Proposal is malformed")
+    if isinstance(proposal.version, bool) or not isinstance(proposal.version, int) or proposal.version < 1:
+        raise HTTPException(422, "Stored proposal version is malformed")
+    if not isinstance(proposal.profile_hash, str):
+        raise HTTPException(422, "Stored proposal policy fingerprint is malformed")
     if version != proposal.version:
         raise HTTPException(409, "Proposal changed; reload and review the new version")
-    if proposal.expires_at <= now():
+    if not isinstance(proposal.status, str):
+        raise HTTPException(422, "Stored proposal status is malformed")
+    if proposal.status not in {"awaiting_customer", "awaiting_admin"}:
+        raise HTTPException(409, "Proposal is not open for confirmation or approval")
+    if not isinstance(proposal.payload, dict) or set(proposal.payload) != {
+        "item_id", "item_name", "quantity", "unit_price", "discount_pct", "total",
+        "currency", "slot_id", "slot_start", "resource",
+    }:
+        raise HTTPException(422, "Proposal payload is malformed")
+    if _expiry(proposal.expires_at) <= datetime.now(timezone.utc):
         raise HTTPException(409, "Quote expired; request a new version")
     if proposal.profile_hash != profile.fingerprint:
         raise HTTPException(409, "Business policy changed; refresh the quote")
+
     payload = proposal.payload
     current = quote(
         db, profile, payload["item_id"], payload["quantity"], payload["discount_pct"], payload["slot_id"]

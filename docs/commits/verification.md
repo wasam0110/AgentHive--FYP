@@ -171,3 +171,11 @@ ModuleNotFoundError: No module named 'backend.services.service_context'
 - Result: **49 passed**.
 - Ruff passed for the exact B06 integration paths and coupled approval/fixture files.
 - Coverage includes conversation history, customer/business ownership, authentication/CSRF/expiry, queue idempotency and recovery, profile isolation, provider behavior, consent/approval/receipt replay and duplicate-booking safety. Provider behavior is demo/mocked; no paid model call was used.
+
+## W01-W03 completion revalidation - 2026-11-17
+
+- Combined command covered foundation, identity, fixture contracts, quote validation, B04 retrieval, B05 seed/read workflow and the B06 API/safety suites.
+- Result: **92 passed**.
+- Ruff passed across the affected backend, scripts and tests.
+- The approval validator was tightened to reject closed proposals and malformed versions, payloads and expiry values; the full B06 suite remained passing after this correction.
+- This establishes Wasam's implementation and automated verification through W03 on `prototype/fyp1-baseline`. Teammate/human review is not represented as completed by these automated checks.
