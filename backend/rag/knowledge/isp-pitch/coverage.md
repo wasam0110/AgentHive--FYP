@@ -1,0 +1,2 @@
+# Installation and service availability
+Alpha max internet services is the pitch workspace name supplied by the user. Karachi is the selected reference market, not proof of Alpha Max coverage. Coverage by address, installation lead time, support contacts and hours, outage policies and approved rates are pending. Collect an enquiry for manual follow-up; do not promise an installation appointment or activate a connection. All subscribers and tickets in this demo are synthetic.

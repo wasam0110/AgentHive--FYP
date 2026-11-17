@@ -135,3 +135,47 @@ The initial test attempt exposed missing timezone data in the minimal environmen
   - `docs/report/04-planning-and-requirements.md`: `64df9e31ed0ea3ab0aa6d34b4cb38b42f567782ece4597a4238e4959bd2b68d9`
 - Dependency evidence: B01 (`081b1be`) and B05a (`b0cf68a`) are ancestors of base. B03 code is also present, but the planned B02 authentication prerequisite is absent; B04, full B05, B06 and B07 are absent. Do not treat the presence of B03 as proof that B02 is satisfied.
 - Limits: this is a design/fixture-document check, not an API, frontend typecheck, browser, authorization or end-to-end result. W01-only publication was authorized after review; commit/push is pending. W01 remains in progress because the frontend type contract is deferred to B07.
+
+## W03/B06 dependency review - 2026-11-16
+
+The conversation/API candidate was checked after B03 quote validation and B05 fixture-contract work became available on `main`. Test collection stopped before execution with:
+
+```text
+ModuleNotFoundError: No module named 'backend.services.service_context'
+```
+
+`backend.services.service_context` is part of the uncommitted B04/prototype scope. Therefore W03 conversation persistence, history reload and cross-customer denial remain blocked; no B06 runtime result or integration completion is claimed. The candidate files remain preserved in the local `pre-B06 prototype worktree 2026-11-16` stash for a later exact-batch verification.
+
+## B04 retrieval/provider verification - 2026-11-16
+
+- Restored exact B04 retrieval/provider files from the preserved prototype stash; no B05 or B06 source was restored.
+- `.\.venv\Scripts\python.exe -m pytest -q tests/unit/test_retrieval_service.py`: **passed, 1 test**.
+- Ruff on `backend/agents`, `backend/rag` and `tests/unit/test_retrieval_service.py`: **passed**.
+- This is focused B04 evidence only. It does not establish B05 seed/read integration or B06 conversation/API, ownership, restart or safety behavior.
+
+## B05 seed/read workflow verification - 2026-11-16
+
+- Restored the planned B05 seed/read workflow after B04 was committed.
+- `.\.venv\Scripts\python.exe -m pytest -q tests/unit/test_seed_workflow.py`: **passed, 1 test**.
+- Ruff on the exact B05 source/test paths: **passed**.
+- The test verifies repeatable profile-B seeding retains the original password hash, does not create disabled booking slots, and denies scheduling while allowing the seeded sales result.
+- This is focused B05 evidence only. B06 HTTP conversation, ownership, restart, queue and approval safety checks remain pending.
+
+## B06 persisted API and safety verification - 2026-11-16
+
+- Restored the planned conversation/API, worker, operations and integration-test paths after B04 and B05 were committed.
+- Fixed the coupled approval API gap required by the B06 routes (`confirm`, `decide`, `refresh`) and added explicit `isp-pitch` fixture registration for the profile-scoped integration fixture.
+- Aligned the quote validation error wording with the API contract: invalid discounts report that they are outside policy limits.
+- Focused command:
+  `.\.venv\Scripts\python.exe -m pytest -q tests/test_approvals.py tests/test_auth.py tests/test_profiles_rag.py tests/test_provider.py tests/test_workflow.py tests/test_reference_offers.py tests/test_service_context.py tests/unit/test_retrieval_service.py tests/unit/test_seed_workflow.py`
+- Result: **49 passed**.
+- Ruff passed for the exact B06 integration paths and coupled approval/fixture files.
+- Coverage includes conversation history, customer/business ownership, authentication/CSRF/expiry, queue idempotency and recovery, profile isolation, provider behavior, consent/approval/receipt replay and duplicate-booking safety. Provider behavior is demo/mocked; no paid model call was used.
+
+## W01-W03 completion revalidation - 2026-11-17
+
+- Combined command covered foundation, identity, fixture contracts, quote validation, B04 retrieval, B05 seed/read workflow and the B06 API/safety suites.
+- Result: **92 passed**.
+- Ruff passed across the affected backend, scripts and tests.
+- The approval validator was tightened to reject closed proposals and malformed versions, payloads and expiry values; the full B06 suite remained passing after this correction.
+- This establishes Wasam's implementation and automated verification through W03 on `prototype/fyp1-baseline`. Teammate/human review is not represented as completed by these automated checks.

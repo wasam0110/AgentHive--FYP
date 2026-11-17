@@ -1,0 +1,2 @@
+# Getting support
+This is a synthetic training business. If you have a complaint or problem with a previous service, describe what happened and include your request reference. A support case can be recorded for manual review. We do not promise a resolution time without a verified status record. مدد کے لیے اپنی شکایت اور درخواست کی تفصیل بتائیں۔ Madad ke liye apna masla aur request reference batayein.
