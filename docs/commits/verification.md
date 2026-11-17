@@ -179,3 +179,15 @@ ModuleNotFoundError: No module named 'backend.services.service_context'
 - Ruff passed across the affected backend, scripts and tests.
 - The approval validator was tightened to reject closed proposals and malformed versions, payloads and expiry values; the full B06 suite remained passing after this correction.
 - This establishes Wasam's implementation and automated verification through W03 on `prototype/fyp1-baseline`. Teammate/human review is not represented as completed by these automated checks.
+
+## W04 reviewed-document ingestion verification - 2026-11-17
+
+- Added deterministic fixed-offset chunking and optional front matter for reviewed documents.
+- Chunk metadata now includes `source`, stable `source_id`, source `version`, `language`, `review_date`, `audience` and `review_status`.
+- Reviewed documents require an ISO `review_date`; legacy documents without front matter remain explicitly marked `unreviewed`.
+- Focused command:
+  `.\.venv\Scripts\python.exe -m pytest -q tests/unit/test_retrieval_service.py tests/test_profiles_rag.py`
+- Focused result: **11 passed**.
+- Full regression command: `.\.venv\Scripts\python.exe -m pytest -q`; result: **93 passed**.
+- Ruff passed for `backend`, `scripts` and `tests`.
+- No hosted or paid model call was used. Teammate/human review remains pending.

@@ -3,11 +3,15 @@
 import hashlib
 import math
 import re
+from datetime import date
 from pathlib import Path
 
 import chromadb
 from chromadb.config import Settings as ChromaSettings
 from chromadb.utils.embedding_functions import DefaultEmbeddingFunction
+
+
+DOCUMENT_FIELDS = {"language", "review_date", "audience", "review_status"}
 
 
 def lexical_vector(text):
@@ -18,6 +22,38 @@ def lexical_vector(text):
         vector[index] += 1
     norm = math.sqrt(sum(v * v for v in vector)) or 1
     return [v / norm for v in vector]
+
+
+def _document_content(text):
+    """Return optional reviewed-document metadata and content without its front matter."""
+    if not text.startswith("---\n"):
+        return {}, text
+    marker = text.find("\n---\n", 4)
+    if marker == -1:
+        raise ValueError("Document front matter is not closed")
+    values = {}
+    for line in text[4:marker].splitlines():
+        key, separator, value = line.partition(":")
+        if not separator or key not in DOCUMENT_FIELDS or not value.strip():
+            raise ValueError("Document front matter is malformed")
+        if key in values:
+            raise ValueError(f"Duplicate document field: {key}")
+        values[key] = value.strip()
+    if "review_date" in values:
+        try:
+            date.fromisoformat(values["review_date"])
+        except ValueError as exc:
+            raise ValueError("Document review_date must be an ISO date") from exc
+    if values.get("review_status") == "reviewed" and "review_date" not in values:
+        raise ValueError("Reviewed documents require review_date")
+    return values, text[marker + 5 :]
+
+
+def chunk_text(text, size=800, step=650):
+    """Yield stable character offsets and bounded chunks for one document."""
+    if size <= 0 or step <= 0 or step > size:
+        raise ValueError("Chunk size and step must be positive, with step no larger than size")
+    return [(offset, text[offset : offset + size]) for offset in range(0, len(text), step)]
 
 
 class Retriever:
@@ -41,15 +77,16 @@ class Retriever:
         return [lexical_vector(t) for t in texts]
 
     def ingest(self, directory):
-        """Stable chunk IDs preserve source attribution; bounded chunks limit prompt size."""
+        """Rebuild the profile index with stable chunks and source-review metadata."""
         paths = sorted(Path(directory).glob("*.md"))
         if not paths:
             raise ValueError(f"No knowledge documents found in {directory}")
         ids, docs, metadata = [], [], []
         for path in paths:
-            text = path.read_text(encoding="utf-8")
-            for offset in range(0, len(text), 650):
-                chunk = text[offset : offset + 800]
+            raw_text = path.read_text(encoding="utf-8")
+            fields, text = _document_content(raw_text)
+            source_hash = hashlib.sha256(text.encode()).hexdigest()[:12]
+            for offset, chunk in chunk_text(text):
                 ids.append(f"{path.stem}:{offset}")
                 docs.append(chunk)
                 metadata.append(
@@ -57,7 +94,11 @@ class Retriever:
                         "source": path.name,
                         "source_id": f"{path.stem}:{offset}",
                         "offset": offset,
-                        "version": hashlib.sha256(text.encode()).hexdigest()[:12],
+                        "version": source_hash,
+                        "language": fields.get("language", "en"),
+                        "review_date": fields.get("review_date"),
+                        "audience": fields.get("audience", "customer"),
+                        "review_status": fields.get("review_status", "unreviewed"),
                     }
                 )
         existing = self.collection.get()["ids"]
