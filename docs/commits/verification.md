@@ -134,7 +134,7 @@ The initial test attempt exposed missing timezone data in the minimal environmen
   - `docs/API.md`: `0e0b21ef249d4219e573184f606786c93df5005f8540be59574473c767f49617`
   - `docs/report/04-planning-and-requirements.md`: `64df9e31ed0ea3ab0aa6d34b4cb38b42f567782ece4597a4238e4959bd2b68d9`
 - Dependency evidence: B01 (`081b1be`) and B05a (`b0cf68a`) are ancestors of base. B03 code is also present, but the planned B02 authentication prerequisite is absent; B04, full B05, B06 and B07 are absent. Do not treat the presence of B03 as proof that B02 is satisfied.
-- Limits: this is a design/fixture-document check, not an API, frontend typecheck, browser, authorization or end-to-end result. W01-only publication was authorized after review; commit/push is pending. W01 remains in progress because the frontend type contract is deferred to B07.
+- Limits: this is a design/fixture-document check, not an API, frontend typecheck, browser, authorization or end-to-end result. At candidate-verification time, publication was pending; see the dated follow-up below for the actual merge result. W01 remains design-only; frontend types and integration are future work.
 
 ## W03/B06 dependency review - 2026-11-16
 
@@ -191,3 +191,29 @@ ModuleNotFoundError: No module named 'backend.services.service_context'
 - Full regression command: `.\.venv\Scripts\python.exe -m pytest -q`; result: **93 passed**.
 - Ruff passed for `backend`, `scripts` and `tests`.
 - No hosted or paid model call was used. Teammate/human review remains pending.
+- Limits: this is a design/fixture-document check, not an API, frontend typecheck, browser, authorization or end-to-end result. At candidate-verification time, publication was pending; see the dated follow-up below for the actual merge result. W01 remains design-only; frontend types and integration are future work.
+
+### Asad W01 publication follow-up - 15 November 2026
+
+Commit `364248a0c4ec097f0220413f066b97d7b384e7f3` on `asad/w01-screen-contract` was merged by [PR #7](https://github.com/wasam0110/AgentHive--FYP/pull/7) into `main` at `cb4a4b277bb452dadff06cef34cbfaa30f6ef601`. GitHub push run `43750137494` and pull-request run `43750314776` passed the starter checks only; they do not verify application behavior. The published W01 scope remains design documentation, with UI/API integration and human review pending.
+
+### Asad W02 standalone overview counts - 15 November 2026
+
+- Base: committed `main` at `cb4a4b277bb452dadff06cef34cbfaa30f6ef601`.
+- Snapshot: detached worktree at `/tmp/AgentHive-FYP-w02-snapshot`, based on that commit and overlaid with `backend/services/overview.py`, `tests/unit/test_overview.py`, and final `docs/API.md` containing the W01 layout addendum and W02 contract. Unpushed progress edits were not included.
+- Environment: Python 3.9.6 venv with standard-library tests; pytest and Ruff were unavailable and no packages were installed.
+- Checks: `python -m unittest discover -s tests/unit -p 'test_overview.py'` passed (3 tests); Node assertions checked all three W01 layouts, parsed the W02 API JSON, and matched its eight status keys to the helper; tracked whitespace and new-file trailing-whitespace checks passed.
+- SHA-256: `backend/services/overview.py` `76f41b9597135c58f55c63b152823ab511534610f274416a8479f343f461eeff`; `tests/unit/test_overview.py` `a66b05d290df5667d1c99476fb1dd01eea960b1c7eff318d8da7201ee10784e3`; `docs/API.md` `9be44e1f6d6088bf54f6ccff40201244b2baa22a3ef53c0908bf02fd9cfbe7a6`.
+- Limits: pure count aggregation only; no database query, authenticated route, business scoping, frontend, or browser journey. B06 overview review remains pending; commit/push pending.
+
+### Asad W01 layout addendum - 17 November 2026
+
+The W01-B low-fidelity text layouts for chat, approval and trace were added to `docs/API.md` on the local `asad/w02-overview-counts` branch. Node assertions for all three layouts, the local draft/send area, exact proposal details, evidence IDs and separate customer/admin decisions passed in the combined clean snapshot. This addendum is not part of merged PR #7 and has not been committed or pushed; no rendered UI or browser test was produced.
+
+### Asad W01/W02 revalidation on updated main - 17 November 2026
+
+- Base: `origin/main` at `0303cf15a509f7ff9ca6831967a54d0a40d4c084`.
+- Snapshot: `/tmp/AgentHive-FYP-w01-w02-pr-snapshot`, detached at that base with only the candidate's W01/W02 files overlaid.
+- Results: 3 standard-library W02 tests passed. Node assertions verified the three layouts, W02 JSON/status-key agreement, and the B06 current-main note. `git diff --check` and new-file trailing-whitespace checks passed.
+- Source hashes: `backend/services/overview.py` `76f41b9597135c58f55c63b152823ab511534610f274416a8479f343f461eeff`; `tests/unit/test_overview.py` `a66b05d290df5667d1c99476fb1dd01eea960b1c7eff318d8da7201ee10784e3`; `docs/API.md` `204f955cc0b1597f03f051f7f7934e7935e145681424a307eef82ca6f2640585`.
+- Limits: the B06 overview route exists on this base but does not call this helper; no route/database/authorization test or browser flow ran. Human and owner review remain pending.
