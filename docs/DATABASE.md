@@ -23,7 +23,8 @@ Unique proposal constraints prevent duplicate service requests, and a unique slo
 constraint prevents competing bookings from both committing. A separate request-level
 idempotency key is not yet represented in the schema.
 
-The current B01 schema includes these record shapes, but quote calculation and proposal
-revalidation are standalone service logic only. Consent, administrator decisions,
-transactional execution and receipt replay still require the later dependency-gated
-integration work.
+The current B01 schema includes these record shapes. As verified on 18 November 2026,
+the committed synthetic application also connects quote calculation, proposal
+revalidation, customer consent, administrator decisions, sandbox execution and receipt
+replay. This integration is covered by SQLite/API tests; PostgreSQL and external
+production adapters remain unverified.

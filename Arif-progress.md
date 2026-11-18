@@ -10,13 +10,13 @@ Statuses: Not started → In progress → Standalone verified → Integration pe
 
 | Session | Planned date | Deliverable | Status | Actual date | Evidence / PR / test | Dependency / next handoff |
 |---|---|---|---|---|---|---|
-| W01-A | 2026-10-26 | Define profile-driven policy matrix and approval/consent requirements | Standalone verified | 2026-11-10 | Documentation contract review on `arif/w01-policy-contracts`; `python scripts/check_repository.py` and `git diff --check` passed | Human/team review and B02/B03 integration remain pending |
+| W01-A | 2026-10-26 | Define profile-driven policy matrix and approval/consent requirements | Standalone verified | 2026-11-10 | Documentation contract review on `arif/w01-policy-contracts`; repository hygiene and `git diff --check` passed | Human/team review and confirmation that the documented contracts match the current integrated flow remain pending |
 | W01-B | 2026-10-29 | Agree proposal/receipt contracts and safety examples | In progress | — | Draft contract and examples exist; teammate agreement/review is pending | Ask contract owners to confirm; do not claim team agreement |
-| W02-A | 2026-11-02 | Implement Decimal quote service using configured catalog/currency/policy | Standalone verified | 2026-11-12 | `tests/unit/test_quote_service.py`; 28 tests passed with W02/W03 validation coverage | B02/API integration and controlled approval remain pending |
-| W02-B | 2026-11-05 | Test price differences, invalid discounts and missing catalog values | Standalone verified | 2026-11-12 | Profile A/B prices/currencies and invalid catalog/policy cases in `tests/unit/test_quote_service.py` | Uses fake adapter; live catalog integration remains pending |
-| W03-A | 2026-11-09 | Implement proposal validation with fake data adapter | Standalone verified | 2026-11-12 | `backend/services/approvals.py::validate`; stale, expired and changed terms rejected | Not wired to authenticated APIs; B02 integration pending |
-| W03-B | 2026-11-12 | Test denied, stale and malformed proposals | Standalone verified | 2026-11-12 | Denied, stale, closed, malformed, expiry, changed-policy/price and booking-conflict cases in 28 passing focused tests | Consent, admin approval and execution tests are later work |
-| W04-A | 2026-11-16 | Add proposal/confirmation/approval data models and migrations | Not started | — | — | Use shared contracts; record live handoff when applicable |
+| W02-A | 2026-11-02 | Implement Decimal quote service using configured catalog/currency/policy | Integrated and verified | 2026-11-18 | `tests/test_approvals.py` and full suite passed on integrated `main`; focused quote tests passed previously | Synthetic catalog integration verified; production catalog/integrations are out of baseline |
+| W02-B | 2026-11-05 | Test price differences, invalid discounts and missing catalog values | Integrated and verified | 2026-11-18 | Full suite passed; focused tests cover Profile A/B prices and invalid catalog/policy cases | Synthetic fixtures only |
+| W03-A | 2026-11-09 | Implement proposal validation with fake data adapter | Integrated and verified | 2026-11-18 | Integrated approval routes revalidate proposal version, profile, expiry, price and booking state; full suite passed | No production business adapter is enabled |
+| W03-B | 2026-11-12 | Test denied, stale and malformed proposals | Integrated and verified | 2026-11-18 | `tests/test_approvals.py` and full suite passed, including denial, expiry, stale price/policy and receipt replay cases | PostgreSQL/concurrency beyond SQLite fixtures remains unverified |
+| W04-A | 2026-11-16 | Add proposal/confirmation/approval data models and migrations | Not started | — | Equivalent schema already exists in shared B01 on `main`; fresh SQLite migration and metadata checks passed 2026-11-18. No new Arif-owned schema change was made or claimed. | Confirm with the team whether the pre-existing shared schema satisfies this owner task; do not add duplicate tables/revisions |
 | W04-B | 2026-11-19 | Verify approval is bound to exact proposal version | Not started | — | — | Use shared contracts; record live handoff when applicable |
 | W05-A | 2026-11-23 | Implement approve/reject service with authorized actor checks | Not started | — | — | Use shared contracts; record live handoff when applicable |
 | W05-B | 2026-11-26 | Test missing consent, unauthorized approver and expired proposals | Not started | — | — | Use shared contracts; record live handoff when applicable |
@@ -63,9 +63,19 @@ Append entries rather than overwriting prior evidence:
 
 - Publication evidence: 2026-11-12 22:05:27 +05:00 — `git push -u origin arif/w02-w03-pricing-validation` succeeded. GitHub suggested creating a pull request; no PR was created and CI status was not checked.
 
+- Session and actual date: 2026-11-18
+- Implemented or reviewed: Verified the already-integrated W02/W03 quote and approval flow on the latest committed baseline. Inspected W04-A models and migration; these were already present in the shared B01 schema, so no duplicate migration or teammate work was added.
+- Files / commit / PR: Progress and verification evidence only; branch `arif/nov18-verification`; no commit or PR created.
+- Commands run and observed results: `.venv\Scripts\python.exe -m pytest -q tests\test_approvals.py tests\test_auth.py tests\unit\test_identity.py tests\unit\test_foundation.py` — 29 passed; `.venv\Scripts\python.exe -m pytest -q` — 99 passed; `.venv\Scripts\python.exe -m ruff check backend scripts tests` — passed; fresh SQLite `alembic upgrade head` and `alembic check` — passed, no new upgrade operations; `scripts\check_repository.py` — passed.
+- Mocked dependencies versus real integrations: Repository integration tests use synthetic SQLite fixtures; the schema/migrations are committed and tested. No external production catalog, payment, PostgreSQL, or deployment integration was exercised.
+- What I can explain: proposal version/profile fingerprint fields, separately persisted decisions, unique receipt-per-proposal and booking-slot constraints, migration-chain verification, and why an existing shared schema should not be duplicated.
+- Report sections updated: None; verification evidence is recorded in `docs/commits/verification.md`; no new behavior or research result was introduced.
+- Blocker, owner and next action: W01-B still needs teammate agreement on the proposal/receipt contract. W04-A's schema already exists in shared B01; ask the team to confirm attribution/acceptance rather than claiming the earlier shared implementation as Arif's work. W04-B is scheduled for 2026-11-19 and remains future work as of this session.
+- Reviewer and review date, if actually reviewed: No human reviewer recorded.
+
 ## Final handoff
 
-- Standalone verification: Quote and proposal-validation candidate tests pass; exact B03 dependency-gated verification remains pending B02.
-- Live integration verification: Not started.
+- Standalone verification: Quote and proposal-validation tests passed.
+- Live integration verification: Current synthetic SQLite/API integration suite passed on 2026-11-18; PostgreSQL and production adapters remain unverified.
 - Documentation reviewed: Updated by the contributor; peer review pending.
-- Known limitations: Authentication, ownership checks, consent/admin decisions, execution transactions and receipt replay are not implemented in this contribution.
+- Known limitations: Current synthetic SQLite/API flows pass tests, but PostgreSQL, real business adapters, live payment, and deployment are not verified. W01-B still needs teammate agreement; W04-A's pre-existing shared schema has not been attributed to Arif.
