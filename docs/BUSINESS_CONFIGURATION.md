@@ -1,6 +1,6 @@
 # Business configuration contract
 
-Profile validation is implemented in `backend/config.py`; the standalone seed-fixture contract is implemented in `scripts/seed_fixtures.py`. Database seeding, read adapters, and workflow wiring remain pending. Agent Hive uses a reusable core plus validated profiles and allowlisted adapters. No industry or named client is assumed.
+Profile validation is implemented in `backend/config.py`; the standalone seed-fixture contract is implemented in `scripts/seed_fixtures.py`. The committed baseline also includes profile-scoped database seeding (`scripts/seed.py`), read-only reference adapters (`backend/tools/reference.py`), and specialist workflow wiring (`backend/agents/workflow.py`). These use synthetic data and do not imply a live customer-service integration. Agent Hive uses a reusable core plus validated profiles and allowlisted adapters. No industry or named client is assumed.
 
 ## Proposed fields
 
@@ -46,7 +46,7 @@ Keep customer, conversation, proposal and receipt identity stable. Pin profile/p
 
 `examples/business-profiles/profile-a.json` enables support, quote, and booking; `profile-b.json` enables support and quote, with booking disabled. They intentionally use different policy values and currencies. `scripts/seed_fixtures.py` maps only the registered knowledge references to `examples/seed-fixtures/demo-a.json` and `demo-b.json`, validates their catalog/resource references, and rejects unknown references before a seeding caller can write records. The fixtures contain fictional sample customers and catalog entries, not credentials or client data.
 
-This standalone contract does not create database rows, ingest knowledge documents, or provide read adapters. Those remain part of the dependency-gated seed/read workflow. Full acceptance still requires isolated A/B seeding, catalog/evidence identity, locale/branding, discount enforcement, disabled-tool behavior, and proposal profile-version checks.
+This standalone contract alone does not create database rows, ingest knowledge documents, or provide read adapters; the committed B05 seed/read workflow supplies those behaviors. Full acceptance still requires isolated A/B seeding, catalog/evidence identity, locale/branding, discount enforcement, disabled-tool behavior, and proposal profile-version checks.
 
 ## Ownership
 

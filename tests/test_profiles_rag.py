@@ -13,6 +13,24 @@ from backend.services.redaction import redact
 from scripts.seed import seed
 
 
+class FakeRetriever:
+    def __init__(self, refs):
+        self.refs = refs
+
+    def search(self, _query):
+        return [dict(ref) for ref in self.refs]
+
+
+def run_support(env, retriever):
+    workflow = Workflow(env.profile, Provider(env.settings), retriever, env.factory)
+    state = {
+        "content": "My connection is not working",
+        "_customer_id": f"{env.profile.business_id}-customer-1",
+    }
+    result = asyncio.run(workflow.run(state, "en"))
+    return next(item for item in result["results"] if item["worker"] == "support")
+
+
 def test_profile_unknown_capability_and_missing_reference_rejected(env):
     data = env.profile.model_dump()
     data["capabilities"] = ["run_arbitrary_sql"]
@@ -70,6 +88,30 @@ def test_retrieval_keeps_sources_and_returns_no_unrelated_evidence(env):
     refs = env.app.state.retriever.search("help complaint support")
     assert refs and all(ref["source_id"] and ref["excerpt"] for ref in refs)
     assert env.app.state.retriever.search("zzxyqzvxyz") == []
+
+
+def test_support_worker_cites_fake_retrieval_evidence(env):
+    evidence = {
+        "source_type": "rag_chunk",
+        "source_id": "support-fixture:0",
+        "excerpt": "Synthetic guidance: restart the device before retrying.",
+    }
+
+    result = run_support(env, FakeRetriever([evidence]))
+
+    assert result["status"] == "completed"
+    assert evidence in result["evidence"]
+    assert "Synthetic guidance: restart the device before retrying." in result["summary"]
+    assert "Sources: support-fixture:0" in result["summary"]
+
+
+def test_support_worker_escalates_when_retrieval_has_no_guidance(env):
+    result = run_support(env, FakeRetriever([]))
+
+    assert result["status"] == "completed"
+    assert result["evidence"] == []
+    assert "I could not find supporting guidance." in result["summary"]
+    assert "an operator can help." in result["summary"]
 
 
 def test_trace_redaction_preserves_nonsecret_evidence():
