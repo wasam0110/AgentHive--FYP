@@ -68,6 +68,31 @@ The local `batch-evidence.json` in the snapshot records each overlaid file's SHA
 commands and observed results. Any source edit invalidates those hashes and requires a
 fresh snapshot run.
 
+## Arif integration/schema review - 18 November 2026
+
+Reviewed latest committed `main` (`0418388`) after fetching and fast-forwarding the local
+branch. The integrated identity, proposal, decision, receipt and booking models were
+already present in the committed B01 schema and approval implementation; no duplicate
+model or migration was added.
+
+Observed checks:
+
+| Check | Result |
+|---|---|
+| `.\.venv\Scripts\python.exe -m pytest -q tests\test_approvals.py tests\test_auth.py tests\unit\test_identity.py tests\unit\test_foundation.py` | 29 passed |
+| `.\.venv\Scripts\python.exe -m pytest -q` | 99 passed |
+| `.\.venv\Scripts\python.exe -m ruff check backend scripts tests` | Passed |
+| Fresh disposable SQLite `.\.venv\Scripts\python.exe -m alembic upgrade head` | Passed at revision `20261104_context` |
+| `.\.venv\Scripts\python.exe -m alembic check` | No new upgrade operations |
+| `.\.venv\Scripts\python.exe scripts\check_repository.py` and `git diff --check` | Passed |
+
+Schema inspection confirmed proposal version/profile hash/expiry, decision version/actor,
+one receipt per proposal, and a unique booking slot. This verifies the current integrated
+synthetic baseline; it does not attribute the earlier shared-schema implementation to
+Arif or establish PostgreSQL/production integration. W01-B remains pending teammate
+agreement, W04-A is recorded as pre-existing shared implementation pending owner/team
+acceptance, and W04-B is not yet due.
+
 ## B02?B09
 
 Not independently verified. Their prerequisites have not been committed. The complete imported application passed 49 backend tests, frontend checks and two browser journeys, but that does not satisfy the independent batch rule. First commit the approved prerequisites, then export that committed base and overlay only the next batch's exact files, run its listed checks and record results with actual dates. No future work is complete.

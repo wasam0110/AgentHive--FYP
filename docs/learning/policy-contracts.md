@@ -2,9 +2,10 @@
 
 ## Scope and user flow
 
-This note explains Arif's pricing and proposal-validation work. Quote calculation and
-proposal revalidation are implemented as standalone services; no HTTP endpoint,
-customer-consent handler, admin-approval handler or executor is wired yet.
+This note explains Arif's pricing and proposal-validation work. The 12 November quote
+and validation candidate was standalone. On 18 November, the current committed synthetic
+application was verified with authenticated consent/approval routes, sandbox execution
+and receipt replay. This does not establish a production business integration.
 
 ## User flow
 
@@ -27,21 +28,24 @@ revalidation and, when terms change, fresh consent and approval.
 - `validate(db, proposal, profile, version)` returns no value and raises an explicit
   HTTP error for malformed, closed, stale, expired or changed terms. It rechecks current
   profile, catalog price and booking state. It does **not** authenticate a user or
-  authorize an action; its future caller must do that separately.
+  authorize an action; the integrated confirmation/approval handlers perform those
+  separate checks before proceeding.
 - `redact(value)` returns a recursively filtered copy for traces, preserving safe IDs
   while hiding common credentials and email addresses.
-- Customer consent and administrator approval are separate append-only decisions.
+- Customer consent and administrator approval are separate append-only decisions. The
+  integrated tests verify that admin approval cannot precede consent and must match the
+  current proposal version.
 - The current schema permits one receipt per proposal; request-level idempotency is not
-  modeled or implemented.
-- Future execution must recheck policy and authoritative data; an agent result cannot
-  authorize a write. Transactions, consent, admin approval, and receipt replay are not
-  implemented in this standalone slice.
+  modeled as a separate receipt field. Repeated approval returns the proposal's canonical
+  receipt; message submission has its own idempotency key.
+- The sandbox executor rechecks policy and authoritative data and stores the simulated
+  mutation and receipt in its transaction. It does not charge real payments.
 
 The catalog is read through the supplied database session rather than accepting a price
 from a worker. An alternative is to store prices as integer minor units; Decimal strings
 match the existing contract and are easy to inspect, so no conversion layer is needed.
-The current validator uses a fake adapter in its unit tests; an event-sourced history
-could model every decision, but it is unnecessary for these focused checks.
+Focused quote tests use a fake adapter for deterministic edge cases, while the
+integration suite exercises the synthetic SQLite/API flow. PostgreSQL remains unverified.
 
 ## Verification
 
@@ -51,5 +55,6 @@ python -m ruff check backend/services/quotes.py backend/services/approvals.py ba
 ```
 
 The fake adapter covers different profile prices/currencies, policy denials, malformed
-data, stale terms, expiry, price changes, booking conflicts and redaction. These tests do
-not establish B02 identity integration or consent/approval/execution safety.
+data, stale terms, expiry, price changes, booking conflicts and redaction. The integration
+suite additionally covers authentication, consent, approval, execution and receipt replay
+against synthetic SQLite fixtures; it does not establish PostgreSQL or production safety.
