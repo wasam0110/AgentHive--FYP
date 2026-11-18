@@ -62,3 +62,14 @@ GitHub push run `43750137494` and pull-request run `43750314776` both succeeded.
 - Commit `e94d2b04b2df8b46065286cd270504d4e45dc858` was pushed to `asad/w03-overview-tests`; [PR #10](https://github.com/wasam0110/AgentHive--FYP/pull/10) is open against `main`.
 - GitHub reports the PR check passed. The repository workflow is `Starter checks (no application tests yet)`, so this does not replace the local Python 3.12 pytest/Ruff results above.
 - Human review and merge are pending; no merge is claimed.
+
+## Shizza W02-B unblock and W03 support candidate - 18 November 2026
+
+- Base: committed `main` at `0cbfa88a7935cd81c548cb14bacf155e106dad61`. B01, B02, B04 and B05a prerequisites are ancestors of this base. The existing B05 seed/read workflow and support worker were committed by Wasam in `9c5257de0f7deeae21c0e75c5942ca64bb2a754f`; this candidate changes tests and documentation, not that implementation.
+- Exact candidate paths: `tests/test_profiles_rag.py`, `docs/BUSINESS_CONFIGURATION.md`, `docs/VERIFICATION.md`, `docs/commits/verification.md`, and `shizza-progress.md`. The test file SHA-256 is `DF7F1E67DB9D22824DD2B232B091A9D46627E88505A499CD963228F3E0102A9E`.
+- Clean snapshot: `C:\Users\mhamz\Downloads\AgentHive-verify-20261118-W02-W03`, created from `git archive HEAD`; only the candidate files were overlaid. `backend.__file__` resolved inside the snapshot. The test database and retrieval index used disposable fixture paths.
+- Environment: Python 3.14.0 with a fresh virtual environment installed from pinned `requirements.txt`; Python 3.12 is unavailable on this machine. `PYTHONPATH`, `TEST_DATABASE_URL`, `DATABASE_URL`, `BUSINESS_PROFILE`, and `CHROMA_PATH` were cleared; no provider credentials or paid/live calls were used.
+- Checks: `python -m pytest -q -p no:cacheprovider tests/unit/test_seed_workflow.py tests/test_profiles_rag.py tests/test_workflow.py` passed (**20 passed**, 14 dependency deprecation warnings). Focused Ruff passed for `backend/agents/workflow.py`, `backend/tools/reference.py`, `scripts/seed.py`, `tests/test_profiles_rag.py`, `tests/unit/test_seed_workflow.py`, and `tests/test_workflow.py`. `git diff --check` passed.
+- Added W03 coverage: a deterministic fake retriever's evidence/source ID reaches the support summary; an empty retrieval returns the clarification/operator handoff and no evidence/status assertion.
+- Candidate SHA-256: `tests/test_profiles_rag.py` `DF7F1E67DB9D22824DD2B232B091A9D46627E88505A499CD963228F3E0102A9E`.
+- Scope/limits: verifies the selected W02-B read/seed and W03 support paths only; it is not complete independent verification of all B05 paths. No PostgreSQL, live customer-service integration, browser journey, full suite, or remote CI result is claimed. Human review and student explanation remain pending. Nothing was staged, committed, or pushed.

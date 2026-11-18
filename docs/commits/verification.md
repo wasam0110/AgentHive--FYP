@@ -257,3 +257,13 @@ The W01-B low-fidelity text layouts for chat, approval and trace were added to `
 - Commit `e94d2b04b2df8b46065286cd270504d4e45dc858` was pushed to `asad/w03-overview-tests`; [PR #10](https://github.com/wasam0110/AgentHive--FYP/pull/10) is open against `main`.
 - GitHub showed the PR check passed. It is the starter-only CI job and does not execute application tests; local Python 3.12 pytest and Ruff results are recorded above.
 - Human review and merge remain pending.
+
+### Shizza W02-B unblock and W03 support candidate - 18 November 2026
+
+- Base: committed `main` `0cbfa88a7935cd81c548cb14bacf155e106dad61`; snapshot: `C:\Users\mhamz\Downloads\AgentHive-verify-20261118-W02-W03`, exported from that base and overlaid only with candidate files. The module import check resolved `backend` inside the snapshot.
+- Exact candidate paths: `tests/test_profiles_rag.py`, `docs/BUSINESS_CONFIGURATION.md`, `docs/VERIFICATION.md`, `docs/commits/verification.md`, and `shizza-progress.md`. The test file SHA-256 is `DF7F1E67DB9D22824DD2B232B091A9D46627E88505A499CD963228F3E0102A9E`.
+- Prerequisites B01 (`081b1bebce1c5d9852d1350ec47e4a47b3028d59`), B02 (`621c53b7a3dd43cfe0ca6f542ea2a33bbc2ef6a7`), B04 (`311eef50210461c7ed9137655e18078915d6d669`) and B05a (`b0cf68af9ddf9ab5637c942b3d6952208c2d646e`) are committed in base. Existing B05 seed/read and support code came from Wasam's `9c5257de0f7deeae21c0e75c5942ca64bb2a754f`; no Shizza authorship is claimed for it.
+- `python -m pytest -q -p no:cacheprovider tests/unit/test_seed_workflow.py tests/test_profiles_rag.py tests/test_workflow.py`: **20 passed**, with 14 third-party deprecation warnings. Focused Ruff passed on the W02-B/W03 source and test modules; `git diff --check` passed.
+- The candidate adds two fake-retriever checks in `tests/test_profiles_rag.py`: evidence is preserved/cited; empty retrieval yields the clarification/operator handoff. Test SHA-256: `DF7F1E67DB9D22824DD2B232B091A9D46627E88505A499CD963228F3E0102A9E`.
+- Environment: Python 3.14.0 in a clean venv from pinned requirements; Python 3.12 is absent. Environment overrides were cleared; fixture DB/index are disposable. No provider credentials, PostgreSQL, browser, full-suite, live integration or remote CI checks.
+- This is task-level verification, not full B05 isolated verification. W02-B blocker is cleared, but W02-B and W03 remain In progress pending human review and explanation. Nothing was staged, committed or pushed.
