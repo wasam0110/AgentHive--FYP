@@ -1,8 +1,8 @@
 # Asad's Week 4 Frontend Component Plan & Mock Response Fixtures (W04-A & W04-B)
 
-**Owner:** Asad  
-**Module:** Frontend dashboard/simulator and read-only operations overview  
-**Status:** Completed & Documented  
+**Owner:** Asad
+**Module:** Frontend dashboard/simulator and read-only operations overview
+**Status:** Completed & Documented
 
 ---
 
@@ -97,7 +97,7 @@ Mock payloads aligned with `backend/schemas/contracts/sample_payloads.json`:
 
 ### B. Error Handling
 - **Trigger:** 401 Unauthorized, 403 Forbidden (cross-customer or role denial), 422 Unprocessable Entity (malformed payload), or 500 server errors.
-- **UI Behavior:** 
+- **UI Behavior:**
   - Render an inline error banner with the exact error message returned by the backend.
   - Prevent optimistic updates: if a message send fails, keep the message in the local draft box so the user does not lose input.
 
