@@ -15,11 +15,11 @@ Statuses: Not started → In progress → Standalone verified → Integration pe
 | W02-A | 2026-11-02 | Define overview count response and status meanings | Standalone verified | 2026-11-15 | Count response JSON and eight meanings checked against helper; published in `8494e86`; current B06 route uses dynamic buckets, so exact response alignment needs owner review | Review current route with Wasam; helper is not integrated |
 | W02-B | 2026-11-05 | Write small aggregation function with synthetic fixture tests | Standalone verified | 2026-11-15 | Pure status aggregator; 3 focused tests passed on `cb4a4b2` and reran on current main `0303cf1`; published in `8494e86` | Helper is not called by current B06 route; ask Wasam before wiring it in |
 | W03-A | 2026-11-09 | Implement protected read-only overview endpoint | Integrated and verified | 2026-11-17 | B06 route is on main; implementation is Wasam's. Asad verified access/count behavior without changing the shared endpoint | Review count-contract alignment before frontend integration |
-| W03-B | 2026-11-12 | Test counts, empty data and denied access using agreed backend adapter | Standalone verified | 2026-11-17 | 10 tests in `tests/test_auth.py` passed in a clean Python 3.12 snapshot; Ruff passed | Tests are local on `asad/w03-overview-tests`; commit/PR review still needed |
+| W03-B | 2026-11-12 | Test counts, empty data and denied access using agreed backend adapter | Standalone verified | 2026-11-17 | 10 tests in `tests/test_auth.py` passed in a clean Python 3.12 snapshot; Ruff passed; merged by PR #10 (`0418388`) | Endpoint implementation is Wasam's; Asad's test changes are merged, frontend/browser verification remains future work |
 | W04-A | 2026-11-16 | Prepare frontend component plan and mock response fixtures | Standalone verified | 2026-11-19 | Completed frontend component plan and mock response fixtures in `docs/frontend-W04-plan.md` mapped to shared backend contracts. | Use shared contracts; review with Wasam |
 | W04-B | 2026-11-19 | Define waiting/error/loading and approval-confirmation behavior | Standalone verified | 2026-11-19 | Defined waiting, error, loading states and version-bound approval confirmation behavior in `docs/frontend-W04-plan.md`. | Use shared contracts; review with Wasam |
-| W05-A | 2026-11-23 | Specify API client contract and frontend acceptance cases | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W05-B | 2026-11-26 | Review mock events for each supported demo journey | Not started | — | — | Use shared contracts; record live handoff when applicable |
+| W05-A | 2026-11-23 | Specify API client contract and frontend acceptance cases | Standalone verified | 2026-11-24 | `docs/frontend-W05-api-client.md` records current REST/auth/CSRF/idempotency/error behavior and W5-A01–A11 acceptance cases; no frontend client or browser run | Contract uses current backend shapes; implementation remains future work |
+| W05-B | 2026-11-26 | Review mock events for each supported demo journey | Standalone verified | 2026-11-24 | `examples/frontend/demo-journeys.json` covers PRD scenarios; fixture checks pass. Mixed-language clarification is explicitly target-only because current demo intake does not persist clarification | Ask Wasam to define persisted clarification/follow-up behavior before claiming this journey integrated |
 | W06-A | 2026-11-30 | Review Chapter 4 interface requirements; light mids session | Not started | — | — | Use shared contracts; record live handoff when applicable |
 | W06-B | 2026-12-03 | Check accessible labels and Urdu layout requirements; light session | Not started | — | — | Use shared contracts; record live handoff when applicable |
 | W07-A | 2026-12-07 | Review screen flow and sample API data; light mids session | Not started | — | — | Use shared contracts; record live handoff when applicable |
@@ -80,6 +80,16 @@ Append entries rather than overwriting prior evidence:
 - The route returns `total`, dynamic `status_counts`, and additional operational values. It currently uses `Counter` directly and does not call `backend/services/overview.py`; the W02 helper's fixed zero buckets and unknown-status rejection remain standalone only.
 - Next handoff: ask Wasam to review this difference before changing the shared route. No route integration or application test is claimed in this contribution.
 
+### 2026-11-24 - W05 API client contract and mock journey review
+
+- Implemented or reviewed: specified the client contract against current REST routes, including cookie/CSRF handling, idempotent message submission, recovery, response/error states, and proposal version binding. Reviewed mock interactions for all three PRD demo journeys.
+- Files: `docs/frontend-W05-api-client.md`, `examples/frontend/demo-journeys.json`, `tests/unit/test_frontend_journey_fixtures.py`, `docs/API.md`, `docs/frontend-W04-plan.md`, and this progress record.
+- Commands and observed results: both fixture assertion functions passed when run directly with the standard library; `python -m json.tool`, `py_compile`, `ruff check tests/unit/test_frontend_journey_fixtures.py`, and `git diff --check` passed. Pytest collection was blocked because FastAPI is absent from the configured venv; repository-pinned pytest 9.2.0 was unavailable from the configured package index. No full test-suite result is claimed.
+- Mocked versus live: all UI journey interactions are synthetic fixtures; no frontend source, browser test, or live user journey is claimed. Support-plus-quote and rejection/expiry use currently implemented API behavior. The mixed-language clarification scenario is target-only because deterministic demo intake does not persist a clarification question/state.
+- W05 outcome and limits: API contract and acceptance cases are standalone design artifacts. The API route shapes are based on current backend source. No frontend integration or runtime clarification behavior was added.
+- Next handoff: Wasam to define/persist clarification state and follow-up semantics before this journey can be tested end to end. Human review remains pending.
+- Reviewer and review date: pending.
+
 ### 2026-11-17 - W03 overview route test candidate
 
 - Implemented or reviewed: inspected the B06 `/api/v1/overview` route on main. It authenticates the user, permits operator/admin/evaluator roles, and filters conversations by `user.business_id`. The route implementation is Wasam's B06 work; Asad did not change it.
@@ -103,7 +113,7 @@ Append entries rather than overwriting prior evidence:
 
 ## Final handoff
 
-- Standalone verification: W01 design/sample assertions and local layout assertions passed; W02 aggregation tests passed in a clean snapshot; no application tests were run.
-- Live integration verification: Not started.
+- Standalone verification: W01 design/sample assertions and local layout assertions passed; W02 aggregation tests passed in a clean snapshot; W03 overview tests passed and merged in PR #10; W05 fixture assertions, JSON parsing, Ruff and whitespace checks passed.
+- Frontend/live UI integration verification: Not started; no frontend source tree or browser test exists.
 - Documentation reviewed: Human/team review pending.
-- Known limitations: W01 layout addendum and W02 changes are merged by PR #9. W01 remains design-only. W02 helper is not wired to the main overview route. W03 tests are pushed in PR #10, which remains open; human review and frontend/browser verification are pending.
+- Known limitations: W01 layout addendum and W02 changes are merged by PR #9. W01 remains design-only. W02 helper is not wired to the main overview route. W03 tests are merged by PR #10. W05 API and UI journeys remain design/mock artifacts; the mixed-language clarification path needs a persisted backend contract before integration.
