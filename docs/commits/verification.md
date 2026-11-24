@@ -216,6 +216,15 @@ ModuleNotFoundError: No module named 'backend.services.service_context'
 - Full regression command: `.\.venv\Scripts\python.exe -m pytest -q`; result: **93 passed**.
 - Ruff passed for `backend`, `scripts` and `tests`.
 - No hosted or paid model call was used. Teammate/human review remains pending.
+
+## W05 intake and supervisor verification - 2026-11-24
+
+- Added typed `Intent`, `IntakeOutput`, and `TaskDefinition` schemas.
+- Added server-assigned task planning in `Workflow.build_task_plan`.
+- Dependency rules keep support and sales available, make scheduling wait for sales when both service and appointment intents are present, and avoid mutation tasks for manual refund/cancellation requests.
+- Direct runtime assertions validated multiple structured intents, typed task fields and support/sales/scheduling dependencies.
+- `backend/schemas/api.py` and `backend/agents/workflow.py` compile cleanly.
+- The focused pytest suite could not start on this Windows machine because Application Control blocked Chroma's `grpc/_cython/cygrpc` DLL. This is an environment import failure before test collection, not a passing or failing application assertion. No paid provider call was used.
 - Limits: this is a design/fixture-document check, not an API, frontend typecheck, browser, authorization or end-to-end result. At candidate-verification time, publication was pending; see the dated follow-up below for the actual merge result. W01 remains design-only; frontend types and integration are future work.
 
 ### Asad W01 publication follow-up - 15 November 2026

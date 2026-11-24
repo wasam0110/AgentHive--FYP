@@ -6,6 +6,28 @@ from backend.services.jobs import claim
 from conftest import new_conversation, send, run_job, proposal, consent, approve
 
 
+def test_supervisor_builds_dependency_aware_fake_task_plan(env):
+    workflow = env.app.state.workflow
+    state = {
+        "message": {
+            "content": "I need support and a quote for an appointment",
+            "item_id": "demo-a-item-1",
+            "slot_id": "demo-a-slot-1",
+            "_run_id": "run-123",
+            "_conversation_id": "conversation-123",
+        },
+        "language": "en",
+    }
+    intents = {"support": True, "sales": True, "scheduling": True, "manual": False}
+    plan = workflow.build_task_plan(state, intents)
+
+    assert [task["assigned_worker"] for task in plan] == ["support", "sales", "scheduling"]
+    by_worker = {task["assigned_worker"]: task for task in plan}
+    assert by_worker["support"]["dependencies"] == []
+    assert by_worker["sales"]["dependencies"] == [by_worker["support"]["task_id"]]
+    assert by_worker["scheduling"]["dependencies"] == [by_worker["sales"]["task_id"]]
+
+
 def test_message_idempotency_and_conflict(env):
     conv = new_conversation(env)
     path = f"/api/v1/conversations/{conv}/messages"

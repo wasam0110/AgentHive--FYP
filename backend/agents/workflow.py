@@ -3,6 +3,7 @@
 import asyncio
 from time import perf_counter
 from typing import TypedDict
+from uuid import uuid4
 
 from backend.tools import reference
 from backend.services.reference_offers import offer_evidence
@@ -15,6 +16,7 @@ class State(TypedDict, total=False):
     message: dict
     intents: dict
     results: list[dict]
+    task_plan: list[dict]
     language: str
 
 
@@ -30,6 +32,69 @@ class Workflow:
         graph.add_edge("specialists", END)
         self.graph = graph.compile()
 
+    def build_task_plan(self, state, intents):
+        """Build server-assigned task IDs and deterministic dependency rules."""
+        message = state["message"]
+        run_id = message.get("_run_id", "run")
+        conversation_id = message.get("_conversation_id", "conversation")
+        created_at = now()
+        plan = []
+        task_ids = {name: str(uuid4()) for name in ("support", "sales", "scheduling")}
+        if intents["support"]:
+            plan.append({
+                "task_id": task_ids["support"],
+                "run_id": run_id,
+                "conversation_id": conversation_id,
+                "intent_type": "support_complaint",
+                "assigned_worker": "support",
+                "dependencies": [],
+                "input_payload": {"content": message["content"]},
+                "created_at": created_at,
+            })
+        if intents["sales"]:
+            plan.append({
+                "task_id": task_ids["sales"],
+                "run_id": run_id,
+                "conversation_id": conversation_id,
+                "intent_type": "catalog_enquiry" if not message.get("item_id") else "service_request",
+                "assigned_worker": "sales",
+                "dependencies": [task_ids["support"]] if intents["support"] else [],
+                "input_payload": {
+                    "item_id": message.get("item_id"),
+                    "quantity": message.get("quantity", 1),
+                    "discount_pct": message.get("discount_pct", 0),
+                },
+                "created_at": created_at,
+            })
+        if intents["scheduling"]:
+            dependencies = []
+            if intents["sales"]:
+                dependencies.append(task_ids["sales"])
+            elif intents["support"]:
+                dependencies.append(task_ids["support"])
+            plan.append({
+                "task_id": task_ids["scheduling"],
+                "run_id": run_id,
+                "conversation_id": conversation_id,
+                "intent_type": "resource_appointment",
+                "assigned_worker": "scheduling",
+                "dependencies": dependencies,
+                "input_payload": {"slot_id": message.get("slot_id")},
+                "created_at": created_at,
+            })
+        if intents["manual"] and not plan:
+            plan.append({
+                "task_id": task_ids["support"],
+                "run_id": run_id,
+                "conversation_id": conversation_id,
+                "intent_type": "refund_cancellation",
+                "assigned_worker": "support",
+                "dependencies": [],
+                "input_payload": {"content": message["content"]},
+                "created_at": created_at,
+            })
+        return plan
+
     async def intake(self, state):
         result = await self.provider.intake(state["message"]["content"])
         # Explicit selectors describe user choices, not authorization to write.
@@ -41,6 +106,7 @@ class Workflow:
 
     async def specialists(self, state):
         intents, text = state["intents"], state["message"]["content"]
+        task_plan = self.build_task_plan(state, intents)
 
         async def reference_worker():
             refs = await asyncio.to_thread(offer_evidence, self.profile, text)
@@ -145,7 +211,7 @@ class Workflow:
                     "evidence": [],
                 }
             )
-        return {"results": results}
+        return {"task_plan": task_plan, "results": results}
 
     async def run(self, message, language):
         return await self.graph.ainvoke({"message": message, "language": language}, {"recursion_limit": 12})
