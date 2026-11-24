@@ -42,3 +42,39 @@ class Intake(StrictModel):
     scheduling: bool = False
     manual: bool = False
     language: Literal["en", "ur", "roman-ur"] = "en"
+
+
+class Intent(StrictModel):
+    intent_type: Literal[
+        "support_complaint",
+        "catalog_enquiry",
+        "service_request",
+        "resource_appointment",
+        "discount_request",
+        "refund_cancellation",
+        "unclear",
+    ]
+    confidence: Literal["high", "medium", "low"] = "medium"
+    entities: dict = Field(default_factory=dict)
+    missing_fields: list[str] = Field(default_factory=list)
+
+
+class IntakeOutput(StrictModel):
+    conversation_id: str
+    run_id: str
+    raw_message: str
+    language_detected: Literal["en", "ur", "roman-ur"]
+    intents: list[Intent] = Field(min_length=1)
+    clarification_needed: bool = False
+    clarification_question: str | None = None
+
+
+class TaskDefinition(StrictModel):
+    task_id: str
+    run_id: str
+    conversation_id: str
+    intent_type: str
+    assigned_worker: Literal["support", "sales", "scheduling"]
+    dependencies: list[str] = Field(default_factory=list)
+    input_payload: dict = Field(default_factory=dict)
+    created_at: str
