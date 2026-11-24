@@ -16,9 +16,9 @@ Statuses: Not started → In progress → Standalone verified → Integration pe
 | W02-B | 2026-11-05 | Test price differences, invalid discounts and missing catalog values | Integrated and verified | 2026-11-18 | Full suite passed; focused tests cover Profile A/B prices and invalid catalog/policy cases | Synthetic fixtures only |
 | W03-A | 2026-11-09 | Implement proposal validation with fake data adapter | Integrated and verified | 2026-11-18 | Integrated approval routes revalidate proposal version, profile, expiry, price and booking state; full suite passed | No production business adapter is enabled |
 | W03-B | 2026-11-12 | Test denied, stale and malformed proposals | Integrated and verified | 2026-11-18 | `tests/test_approvals.py` and full suite passed, including denial, expiry, stale price/policy and receipt replay cases | PostgreSQL/concurrency beyond SQLite fixtures remains unverified |
-| W04-A | 2026-11-16 | Add proposal/confirmation/approval data models and migrations | Not started | — | Equivalent schema already exists in shared B01 on `main`; fresh SQLite migration and metadata checks passed 2026-11-18. No new Arif-owned schema change was made or claimed. | Confirm with the team whether the pre-existing shared schema satisfies this owner task; do not add duplicate tables/revisions |
-| W04-B | 2026-11-19 | Verify approval is bound to exact proposal version | Not started | — | — | Use shared contracts; record live handoff when applicable |
-| W05-A | 2026-11-23 | Implement approve/reject service with authorized actor checks | Not started | — | — | Use shared contracts; record live handoff when applicable |
+| W04-A | 2026-11-16 | Add proposal/confirmation/approval data models and migrations | Blocked | 2026-11-24 | Equivalent schema already exists in shared B01 on `main`; fresh SQLite migration and metadata checks passed 2026-11-18. No new Arif-owned schema change was made or claimed. | Confirm with the team whether the pre-existing shared schema satisfies this owner task; do not add duplicate tables/revisions |
+| W04-B | 2026-11-19 | Verify approval is bound to exact proposal version | Integrated and verified | 2026-11-24 | Existing shared approval flow and `tests/test_approvals.py` verify stale versions and require fresh consent after refresh; focused approval/auth/workflow tests passed (29). Verification does not claim authorship of the existing implementation. | PostgreSQL and external production integrations remain unverified |
+| W05-A | 2026-11-23 | Implement approve/reject service with authorized actor checks | Integrated and verified | 2026-11-24 | Existing shared service enforces admin-only decisions, explicit consent, rejection reason and transactional execution; focused tests and full suite passed. No new Arif-authored service code is claimed. | PostgreSQL and external production integrations remain unverified |
 | W05-B | 2026-11-26 | Test missing consent, unauthorized approver and expired proposals | Not started | — | — | Use shared contracts; record live handoff when applicable |
 | W06-A | 2026-11-30 | Review policy documentation; light mids session | Not started | — | — | Use shared contracts; record live handoff when applicable |
 | W06-B | 2026-12-03 | Prepare deployment environment inventory; light session | Not started | — | — | Use shared contracts; record live handoff when applicable |
@@ -73,9 +73,19 @@ Append entries rather than overwriting prior evidence:
 - Blocker, owner and next action: W01-B still needs teammate agreement on the proposal/receipt contract. W04-A's schema already exists in shared B01; ask the team to confirm attribution/acceptance rather than claiming the earlier shared implementation as Arif's work. W04-B is scheduled for 2026-11-19 and remains future work as of this session.
 - Reviewer and review date, if actually reviewed: No human reviewer recorded.
 
+- Session and actual date: 2026-11-24
+- Implemented or reviewed: Rechecked W04-B exact-version approval and W05-A approve/reject authorization behavior on latest committed `main` (`501033e`). These behaviors were already in the shared integrated service and tests; no duplicate implementation was added or attributed to Arif.
+- Files / commit / PR: Updated this progress record, `docs/commits/verification.md` and `docs/learning/policy-contracts.md`; branch `arif/nov24-pending`; no commit or PR created.
+- Commands run and observed results: `.venv\Scripts\python.exe -m pytest -q tests\test_approvals.py tests\test_auth.py tests\test_workflow.py` — 29 passed; `.venv\Scripts\python.exe -m pytest -q` — 102 passed; `.venv\Scripts\python.exe -m ruff check backend scripts tests` — passed; fresh disposable SQLite `alembic upgrade head` — passed; `alembic check` — no new upgrade operations. Repository hygiene and `git diff --check` passed after documentation edits.
+- Mocked dependencies versus real integrations: Approval and workflow tests use synthetic SQLite fixtures. PostgreSQL, external business adapters and live payments were not exercised.
+- What I can explain: stale proposal versions cannot use prior consent; refreshed proposals require fresh consent; only an admin can decide; rejection requires a reason; the integrated executor persists its sandbox receipt transactionally.
+- Report sections updated: Updated policy-contract learning and verification evidence; no academic report claims or citations were added.
+- Blocker, owner and next action: W01-B still needs teammate agreement. W04-A's equivalent schema is pre-existing shared work; team confirmation is needed before accepting it for Arif's ownership task. W05-B is scheduled for 2026-11-26 and remains future work.
+- Reviewer and review date, if actually reviewed: No human reviewer recorded.
+
 ## Final handoff
 
 - Standalone verification: Quote and proposal-validation tests passed.
-- Live integration verification: Current synthetic SQLite/API integration suite passed on 2026-11-18; PostgreSQL and production adapters remain unverified.
+- Live integration verification: Synthetic SQLite/API integration suite passed on 2026-11-24 (102 full-suite tests); PostgreSQL and production adapters remain unverified.
 - Documentation reviewed: Updated by the contributor; peer review pending.
 - Known limitations: Current synthetic SQLite/API flows pass tests, but PostgreSQL, real business adapters, live payment, and deployment are not verified. W01-B still needs teammate agreement; W04-A's pre-existing shared schema has not been attributed to Arif.

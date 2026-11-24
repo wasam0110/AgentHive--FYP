@@ -3,9 +3,10 @@
 ## Scope and user flow
 
 This note explains Arif's pricing and proposal-validation work. The 12 November quote
-and validation candidate was standalone. On 18 November, the current committed synthetic
-application was verified with authenticated consent/approval routes, sandbox execution
-and receipt replay. This does not establish a production business integration.
+and validation candidate was standalone. The committed synthetic application was verified
+on 18 November and rechecked on 24 November with authenticated consent/approval routes,
+version-bound decisions, sandbox execution and receipt replay. This does not establish a
+production business integration.
 
 ## User flow
 
@@ -34,7 +35,8 @@ revalidation and, when terms change, fresh consent and approval.
   while hiding common credentials and email addresses.
 - Customer consent and administrator approval are separate append-only decisions. The
   integrated tests verify that admin approval cannot precede consent and must match the
-  current proposal version.
+  current proposal version. Refresh increments the version, making earlier consent
+  unusable; the refreshed proposal requires a new customer decision.
 - The current schema permits one receipt per proposal; request-level idempotency is not
   modeled as a separate receipt field. Repeated approval returns the proposal's canonical
   receipt; message submission has its own idempotency key.
