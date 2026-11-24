@@ -93,6 +93,30 @@ Arif or establish PostgreSQL/production integration. W01-B remains pending teamm
 agreement, W04-A is recorded as pre-existing shared implementation pending owner/team
 acceptance, and W04-B is not yet due.
 
+## Arif W04-B/W05-A integration review - 24 November 2026
+
+Reviewed latest committed `main` (`501033e`). Exact-version approval and authorized
+approve/reject behavior were already present in the shared approval service and tests;
+this entry records verification, not new Arif-authored implementation.
+
+Observed checks:
+
+| Check | Result |
+|---|---|
+| `.\.venv\Scripts\python.exe -m pytest -q tests\test_approvals.py tests\test_auth.py tests\test_workflow.py` | 29 passed |
+| `.\.venv\Scripts\python.exe -m pytest -q` | 102 passed |
+| `.\.venv\Scripts\python.exe -m ruff check backend scripts tests` | Passed |
+| Fresh disposable SQLite `.\.venv\Scripts\python.exe -m alembic upgrade head` | Passed |
+| `.\.venv\Scripts\python.exe -m alembic check` | No new upgrade operations |
+| `.\.venv\Scripts\python.exe scripts\check_repository.py` and `git diff --check` | Passed after documentation updates |
+
+Focused tests cover stale proposal versions, requiring fresh consent after a proposal
+refresh, admin-only decisions, rejection reasons, expiry, and duplicate/competing
+execution. These are synthetic SQLite/API checks, not PostgreSQL or production-adapter
+verification. W01-B still needs teammate agreement; W04-A's existing shared schema still
+needs team confirmation for Arif's ownership record. W05-B is scheduled for 26 November
+and is not claimed complete.
+
 ## B02?B09
 
 Not independently verified. Their prerequisites have not been committed. The complete imported application passed 49 backend tests, frontend checks and two browser journeys, but that does not satisfy the independent batch rule. First commit the approved prerequisites, then export that committed base and overlay only the next batch's exact files, run its listed checks and record results with actual dates. No future work is complete.
