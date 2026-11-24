@@ -1,0 +1,265 @@
+{
+  "schema_version": 1,
+  "classification": "synthetic mock UI interactions; not a server event stream",
+  "source": "docs/PRD.md, section 19",
+  "journeys": [
+    {
+      "id": "support-plus-quote",
+      "implementation_status": "api-supported-mock",
+      "interactions": [
+        {
+          "id": "create-conversation",
+          "request": {
+            "method": "POST",
+            "path": "/api/v1/conversations",
+            "body": {
+              "customer_id": "demo-a-customer-1",
+              "language": "en"
+            }
+          },
+          "expected_http_status": 201,
+          "ui_assertions": [
+            "Use the returned conversation id for all later requests.",
+            "The customer and business are synthetic demo data."
+          ]
+        },
+        {
+          "id": "load-demo-choices",
+          "request": {
+            "method": "GET",
+            "path": "/api/v1/reference-data"
+          },
+          "expected_http_status": 200,
+          "ui_assertions": [
+            "Select item and slot ids from this response; do not hardcode a price or availability."
+          ]
+        },
+        {
+          "id": "submit-support-and-quote",
+          "request": {
+            "method": "POST",
+            "path": "/api/v1/conversations/{conversation_id}/messages",
+            "headers": {
+              "Idempotency-Key": "{client_generated_key_8_to_100_chars}"
+            },
+            "body": {
+              "content": "I need help with my service and a quote for the selected item.",
+              "item_id": "{selected_item_id}",
+              "slot_id": "{selected_slot_id}",
+              "quantity": 1,
+              "discount_pct": 0
+            }
+          },
+          "expected_http_status": 202,
+          "ui_assertions": [
+            "Show queued/processing, not completed.",
+            "Keep the exact request body and key together if retrying after a timeout."
+          ]
+        },
+        {
+          "id": "recover-proposal",
+          "request": {
+            "method": "GET",
+            "path": "/api/v1/conversations/{conversation_id}"
+          },
+          "expected_http_status": 200,
+          "expected_state": {
+            "conversation_status": "waiting_customer",
+            "proposal_status": "awaiting_customer"
+          },
+          "ui_assertions": [
+            "Show support evidence separately from quote terms.",
+            "Display price, slot, expiry, and proposal version from the response only."
+          ]
+        },
+        {
+          "id": "load-support-evidence",
+          "request": {
+            "method": "GET",
+            "path": "/api/v1/conversations/{conversation_id}/trace?after=0"
+          },
+          "expected_http_status": 200,
+          "ui_assertions": [
+            "Render safe support summary and source-labelled evidence from trace rows.",
+            "Do not treat the support result as proof that the quote or booking was executed."
+          ]
+        },
+        {
+          "id": "record-customer-consent",
+          "request": {
+            "method": "POST",
+            "path": "/api/v1/proposals/{proposal_id}/confirmation",
+            "body": {
+              "version": "{current_proposal_version}",
+              "approved": true
+            }
+          },
+          "expected_http_status": 200,
+          "expected_state": {
+            "proposal_status": "awaiting_admin",
+            "conversation_status": "waiting_admin"
+          },
+          "ui_assertions": [
+            "Consent does not mean the service request or booking was executed."
+          ]
+        },
+        {
+          "id": "approve-and-show-sandbox-receipt",
+          "request": {
+            "method": "POST",
+            "path": "/api/v1/approvals/{proposal_id}/decision",
+            "body": {
+              "version": "{current_proposal_version}",
+              "approved": true,
+              "reason": ""
+            }
+          },
+          "expected_http_status": 200,
+          "expected_state": {
+            "proposal_status": "succeeded",
+            "conversation_status": "completed",
+            "receipt_simulated": true,
+            "service_request_recorded": true,
+            "booking_recorded": true
+          },
+          "ui_assertions": [
+            "Label the write as a simulated sandbox result.",
+            "Only show completion after the response contains the receipt."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sensitive-request-rejected-or-expired",
+      "implementation_status": "api-supported-mock",
+      "branches": [
+        {
+          "id": "admin-rejects",
+          "interactions": [
+            {
+              "id": "reject-with-reason",
+              "request": {
+                "method": "POST",
+                "path": "/api/v1/approvals/{proposal_id}/decision",
+                "body": {
+                  "version": "{current_proposal_version}",
+                  "approved": false,
+                  "reason": "Synthetic rejection reason."
+                }
+              },
+              "expected_http_status": 200,
+              "expected_state": {
+                "proposal_status": "rejected",
+                "receipt": null,
+                "conversation_status": "completed"
+              },
+              "ui_assertions": [
+                "Show the rejection outcome and reason.",
+                "Do not show a service request or booking as completed."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "proposal-expires",
+          "interactions": [
+            {
+              "id": "reload-expired-proposal",
+              "request": {
+                "method": "GET",
+                "path": "/api/v1/conversations/{conversation_id}"
+              },
+              "expected_http_status": 200,
+              "expected_state": {
+                "proposal_expired": true,
+                "proposal_status": "awaiting_admin"
+              },
+              "ui_assertions": [
+                "Show the offer as expired; do not show approval as available."
+              ]
+            },
+            {
+              "id": "server-rejects-expired-approval",
+              "request": {
+                "method": "POST",
+                "path": "/api/v1/approvals/{proposal_id}/decision",
+                "body": {
+                  "version": "{current_proposal_version}",
+                  "approved": true,
+                  "reason": ""
+                }
+              },
+              "expected_http_status": 409,
+              "expected_state": {
+                "receipt": null,
+                "mutation_performed": false
+              },
+              "ui_assertions": [
+                "Reload current proposal state after conflict.",
+                "Do not show a success state or retry approval automatically."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mixed-language-clarification-and-recovery",
+      "implementation_status": "target-only-backend-gap",
+      "blocker": "Current deterministic demo intake does not persist a clarification question or expose a clarification state. Do not replay the target response as if it came from the live API.",
+      "target_interactions": [
+        {
+          "id": "create-roman-urdu-conversation",
+          "request": {
+            "method": "POST",
+            "path": "/api/v1/conversations",
+            "body": {
+              "customer_id": "demo-a-customer-1",
+              "language": "roman-ur"
+            }
+          },
+          "expected_http_status": 201,
+          "ui_assertions": [
+            "Use the configured language preference; do not infer identity or authorization from message text."
+          ]
+        },
+        {
+          "id": "submit-ambiguous-mixed-language-request",
+          "request": {
+            "method": "POST",
+            "path": "/api/v1/conversations/{conversation_id}/messages",
+            "headers": {
+              "Idempotency-Key": "{client_generated_key_8_to_100_chars}"
+            },
+            "body": {
+              "content": "Mera service masla hai and I also need a quote.",
+              "quantity": 1,
+              "discount_pct": 0
+            }
+          },
+          "expected_http_status": 202,
+          "ui_assertions": [
+            "Show processing until a persisted REST state is available.",
+            "Do not fabricate a clarification question when the backend has not returned one."
+          ]
+        },
+        {
+          "id": "target-clarification-and-follow-up",
+          "request": {
+            "method": "GET",
+            "path": "/api/v1/conversations/{conversation_id}"
+          },
+          "expected_state": {
+            "target_only": true,
+            "clarification_question": "{persisted_backend_question}",
+            "after_customer_reply": "submit follow-up with a new idempotency key, then recover through detail and trace"
+          },
+          "ui_assertions": [
+            "This is a blocked target case, not an observed API response.",
+            "After backend support exists, restore the same conversation after reload and avoid duplicate runs."
+          ]
+        }
+      ]
+    }
+  ]
+}

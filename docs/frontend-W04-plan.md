@@ -4,6 +4,11 @@
 **Module:** Frontend dashboard/simulator and read-only operations overview
 **Status:** Completed & Documented
 
+> W05 API review: the `mock_conversation_detail` below is a conceptual W04
+> sketch, not a wire-compatible response from the current backend. Use the
+> [W05 API client contract](frontend-W05-api-client.md) and its reviewed
+> synthetic journeys for API-shaped mocks.
+
 ---
 
 ## 1. Frontend Component Plan (W04-A)

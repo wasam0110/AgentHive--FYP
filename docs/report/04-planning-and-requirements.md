@@ -47,7 +47,11 @@ expose hidden model reasoning or infer success from a missing result. Configured
 business terminology and currency affect display only, while identity, role and
 action authorization remain server-side. The contract is a design draft based
 on the committed shared samples, not evidence that these screens or APIs run;
-see [the screen/API contract](../API.md).
+see [the screen/API contract](../API.md). The W05 REST client contract and
+synthetic acceptance journeys are documented in
+[the frontend API client specification](../frontend-W05-api-client.md); they
+remain design/test fixtures, not a connected frontend. The mixed-language
+clarification journey is pending a persisted backend clarification contract.
 
 ## 4.3 Existing system study
 

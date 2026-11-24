@@ -17,6 +17,12 @@ the proposed screens are implemented.
 | Conversation list and chat | `conversation_id`, `status`, `language_preference`, `created_at`, `updated_at`; messages use `message_id`, `sender`, `content`, `language`, `created_at` | Treat IDs and status as server state. Keep an unsent message draft local; sending it does not mean it was accepted or completed. |
 | Task progress and trace | `run_id`, `task_id`, `intent_type`, `assigned_worker`, task `status`, `proposal_id`, `updated_at`; worker results include `summary` and source-labelled `evidence` | Show task outcomes and evidence sources, not hidden model reasoning. An absent result is not a successful result. |
 | Approval detail | `proposal_id`, `proposal_version`, `action_type`, typed `payload`, confirmation/approval requirements, policy/profile versions and expiry; decisions identify actor, decision type and the same proposal version | Customer consent and administrator approval are distinct decisions. A changed proposal version invalidates earlier decisions. |
+
+The W05 REST client binding, current request/response shapes, acceptance cases,
+and synthetic journey fixtures are documented in
+[Asad's W05 API client contract](frontend-W05-api-client.md). That contract
+reflects current routes and explicitly marks the mixed-language clarification
+journey as blocked on backend support; it does not claim a frontend is integrated. A changed proposal version invalidates earlier decisions. |
 | Business context | `display_name`, `currency`, `timezone`, `terminology`, and enabled `capabilities` | Use configured display values. A visible capability is not authorization to call an action. |
 
 The shared contracts require the backend to bind customer and business identity.
